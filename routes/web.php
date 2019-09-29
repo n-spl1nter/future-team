@@ -18,3 +18,10 @@ Route::get('/', function () {
 Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'], function () {
     Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
 });
+
+Route::group(['middleware' => ['guest'], 'as' => 'auth.'], function () {
+    /** Auth */
+    Route::get('/login', ['uses' => 'Auth\LoginController@showLoginForm', 'as' => 'login']);
+    Route::post('/login', ['uses' => 'Auth\LoginController@login', 'as' => 'loginUser']);
+    Route::post('/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'logout']);
+});
