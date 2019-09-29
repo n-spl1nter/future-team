@@ -33,6 +33,9 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
+ * @property int $role_id
+ * @property-read \App\RBAC\Role $role
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRoleId($value)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

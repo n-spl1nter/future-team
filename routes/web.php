@@ -15,11 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'], function () {
+Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => [
+    'auth', 'can:viewAdmin,App\Models\Permission',
+]], function () {
     Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
 });
 
-Route::group(['middleware' => ['guest'], 'as' => 'auth.'], function () {
+Route::group(['middleware' => ['guest']], function () {
     /** Auth */
     Route::get('/login', ['uses' => 'Auth\LoginController@showLoginForm', 'as' => 'login']);
     Route::post('/login', ['uses' => 'Auth\LoginController@login', 'as' => 'loginUser']);

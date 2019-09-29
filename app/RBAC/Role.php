@@ -6,6 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Entities\User;
 
+/**
+ * App\RBAC\Role
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\RBAC\Permission[] $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\User[] $users
+ * @property-read int|null $users_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\RBAC\Role newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\RBAC\Role newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\RBAC\Role query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\RBAC\Role whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\RBAC\Role whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\RBAC\Role whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\RBAC\Role whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\RBAC\Role whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Role extends Model
 {
     const USER = 1;
