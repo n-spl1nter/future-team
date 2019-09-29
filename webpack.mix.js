@@ -11,5 +11,17 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+if (process.env.npm_lifecycle_event !== 'hot') {
+    mix.version()
+}
+mix.disableNotifications();
+
+mix.js('resources/admin/js/app.js', 'public/assets/admin/js')
+    .sass('resources/admin/sass/app.scss', 'public/assets/admin/css', {
+        implementation: require('node-sass')
+    });
+
+mix.copyDirectory([
+    'resources/admin/img',
+], 'public/assets/admin/img');
+
