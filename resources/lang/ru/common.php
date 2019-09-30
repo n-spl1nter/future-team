@@ -7,4 +7,5 @@ return [
         'rolesManagement' => 'Управление ролями',
     ],
     'refresh' => 'Обновить',
+    'home' => 'Главная',
 ];

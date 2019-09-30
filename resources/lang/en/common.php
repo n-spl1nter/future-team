@@ -7,4 +7,5 @@ return [
         'rolesManagement' => 'Roles management',
     ],
     'refresh' => 'Refresh',
+    'home' => 'Home',
 ];

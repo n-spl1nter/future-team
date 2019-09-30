@@ -1,5 +1,7 @@
 global.$ = global.jQuery = require('jquery');
 require('bootstrap');
+require('icheck');
+require('select2');
 // require('admin-lte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker');
 // require('admin-lte/plugins/bootstrap-slider/bootstrap-slider');
 // require('admin-lte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox');
@@ -10,3 +12,10 @@ require('bootstrap');
 require('admin-lte');
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+
+$('input').iCheck({
+    checkboxClass: 'icheckbox_square-blue',
+    radioClass: 'iradio_square-blue',
+    increaseArea: '20%' /* optional */
+});
