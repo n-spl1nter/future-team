@@ -24,4 +24,14 @@ class PermissionPolicy
     {
         return $user->canDo(Permission::VIEW_ADMIN);
     }
+
+    public function view(User $user)
+    {
+        return $user->canDo(Permission::CHANGE_PERMISSIONS);
+    }
+
+    public function update(User $user)
+    {
+        return $user->canDo(Permission::CHANGE_PERMISSIONS);
+    }
 }

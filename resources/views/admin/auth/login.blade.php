@@ -11,8 +11,9 @@
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form action="{{ route('loginUser') }}" method="post">
+                    {{ csrf_field() }}
                     <div class="input-group mb-3">
-                        <input name="login" type="email" class="form-control" placeholder="Email">
+                        <input name="email" type="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -39,6 +40,9 @@
                         <!-- /.col -->
                         <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        </div>
+                        <div class="col-12 mt-2">
+                            @include('admin._partials.errors')
                         </div>
                         <!-- /.col -->
                     </div>

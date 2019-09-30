@@ -22,7 +22,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Starter Page</h1>
+                        <h1 class="m-0 text-dark">{{ isset($title) ? $title : 'Admin page' }}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -31,6 +31,9 @@
                             <li class="breadcrumb-item active">Starter Page</li>
                         </ol>
                     </div><!-- /.col -->
+                    <div class="col-12">
+                        @include('admin._partials.errors')
+                    </div>
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
         </div>
@@ -49,10 +52,10 @@
     <footer class="main-footer">
         <!-- To the right -->
         <div class="float-right d-none d-sm-inline">
-            Anything you want
+            Admin panel
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+        <strong>{{ env('APP_NAME') }}</strong> All rights reserved.
     </footer>
 </div>
 <script src="{{ mix('assets/admin/js/app.js') }}"></script>

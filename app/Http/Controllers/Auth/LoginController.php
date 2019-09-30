@@ -58,7 +58,7 @@ class LoginController extends Controller
 
         $user = User::whereEmail($request->get('email'))->first();
 
-        if (!$user || !$user->isAdmin() || !$this->attemptLogin($request)) {
+        if (!$user || !$this->attemptLogin($request)) {
             $this->incrementLoginAttempts($request);
             return redirect()->back();
         }

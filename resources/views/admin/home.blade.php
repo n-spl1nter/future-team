@@ -1,5 +1,5 @@
-@extends('admin.layouts.main')
+@extends('admin.layouts.main', ['title' => 'cyber kek'])
 
 @section('content')
-    <h1>KEK</h1>
+    <h4>KEK</h4>
 @endsection

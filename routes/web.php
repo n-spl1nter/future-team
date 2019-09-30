@@ -16,9 +16,11 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => [
-    'auth', 'can:viewAdmin,App\Models\Permission',
+    'auth', 'can:viewAdmin,App\RBAC\Permission',
 ]], function () {
     Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
+    Route::get('/permissions', ['uses' => 'PermissionsController@index', 'as' => 'permissions.index', 'middleware' => ['can:view,App\RBAC\Permission']]);
+    Route::put('/permissions', ['uses' => 'PermissionsController@update', 'as' => 'permissions.update', 'middleware' => ['can:update,App\RBAC\Permission']]);
 });
 
 Route::group(['middleware' => ['guest']], function () {

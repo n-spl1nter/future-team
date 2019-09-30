@@ -31,8 +31,6 @@ class Permission extends Model
     const MODERATE_ORDERS = 'MODERATE_ORDERS';
     const CHANGE_PERMISSIONS = 'CHANGE_PERMISSIONS';
     const MANAGE_USERS = 'MANAGE_USERS';
-    const MANAGE_CONTENT = 'MANAGE_CONTENT';
-    const USER_ENTER = 'USER_ENTER';
 
     public function roles()
     {

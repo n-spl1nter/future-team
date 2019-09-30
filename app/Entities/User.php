@@ -103,4 +103,9 @@ class User extends Authenticatable implements MustVerifyEmail
             return false;
         }
     }
+
+    public function setRole(int $roleId)
+    {
+        $this->role_id = $roleId;
+    }
 }

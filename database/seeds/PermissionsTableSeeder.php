@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Permission;
+use App\RBAC\Permission;
 use Illuminate\Database\Seeder;
 
 class PermissionsTableSeeder extends Seeder
@@ -31,15 +31,5 @@ class PermissionsTableSeeder extends Seeder
         $permission3->name = Permission::MANAGE_USERS;
         $permission3->description = 'Управление пользователями';
         $permission3->save();
-
-        $permission4 = new Permission();
-        $permission4->name = Permission::MANAGE_CONTENT;
-        $permission4->description = 'Управление контентом игры';
-        $permission4->save();
-
-        $permission5 = new Permission();
-        $permission5->name = Permission::USER_ENTER;
-        $permission5->description = 'Вход от имени пользователя';
-        $permission5->save();
     }
 }
