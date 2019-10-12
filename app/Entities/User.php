@@ -8,6 +8,37 @@ use Illuminate\Notifications\Notifiable;
 use App\RBAC\Role;
 use Illuminate\Support\Str;
 
+/**
+ * App\Entities\User
+ *
+ * @property int $id
+ * @property string $email
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property string $password
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $role_id
+ * @property int|null $company_profile
+ * @property int|null $user_profile
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \App\RBAC\Role $role
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereCompanyProfile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRoleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUserProfile($value)
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
@@ -18,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'email', 'password',
     ];
 
     /**
