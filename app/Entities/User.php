@@ -8,35 +8,6 @@ use Illuminate\Notifications\Notifiable;
 use App\RBAC\Role;
 use Illuminate\Support\Str;
 
-/**
- * App\Entities\User
- *
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null $notifications_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User query()
- * @mixin \Eloquent
- * @property int $id
- * @property string $name
- * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property string $password
- * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
- * @property int $role_id
- * @property-read \App\RBAC\Role $role
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRoleId($value)
- */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
@@ -107,15 +78,25 @@ class User extends Authenticatable implements MustVerifyEmail
     public function setRole(int $roleId)
     {
         $this->role_id = $roleId;
+        return $this;
     }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = \Hash::make($password);
+        return $this;
+    }
+
 
     public static function makeFromEmail(string $email): self
     {
+        $password = Str::random(8);
         $user = new self();
         $user->email = $email;
-        $user->setRole(Role::USER);
-        $user->save();
-        $user->sendEmailVerificationNotification();
+        $user->setRole(Role::USER)
+            ->setPassword($password)
+            ->save();
+//        $user->sendEmailVerificationNotification();
         return $user;
     }
 }
