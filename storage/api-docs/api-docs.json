@@ -1,0 +1,66 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "FutureTeam API",
+        "contact": {
+            "email": "razraz.odinodin@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://futureteam.local/api/v1"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register by email",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Auth\\RegisterController::register",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "example": "test@test.com"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successfull register, returns User"
+                    },
+                    "400": {
+                        "description": "Returns errors stack"
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "tags": [
+                    "Api base"
+                ],
+                "summary": "Base path",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\HomeController::index",
+                "responses": {
+                    "200": {
+                        "description": "Api information"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Api base",
+            "description": "API base page"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        }
+    ]
+}

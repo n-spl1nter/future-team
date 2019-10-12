@@ -18,6 +18,10 @@ use Illuminate\Http\Request;
  *   name="Api base",
  *   description="API base page"
  * )
+ * @OA\Tag(
+ *   name="Auth",
+ *   description="Auth"
+ * )
  */
 class HomeController extends Controller
 {

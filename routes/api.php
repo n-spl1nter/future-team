@@ -19,4 +19,8 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], function () {
     Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
+
+    Route::group(['middleware' => ['guest']], function () {
+        Route::post('/register', ['uses' => 'Auth\RegisterController@register', 'as' => 'register']);
+    });
 });

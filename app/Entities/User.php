@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'created_at', 'updated_at', 'email_verified_at', 'role_id',
     ];
 
     /**
@@ -107,5 +107,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function setRole(int $roleId)
     {
         $this->role_id = $roleId;
+    }
+
+    public static function makeFromEmail(string $email): self
+    {
+        $user = new self();
+        $user->email = $email;
+        $user->setRole(Role::USER);
+        $user->save();
+        $user->sendEmailVerificationNotification();
+        return $user;
     }
 }
