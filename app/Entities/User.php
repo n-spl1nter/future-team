@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Notifications\Auth\RegistrationNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -118,6 +119,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this;
     }
 
+    public function sendEmailVerificationNotificationOnRegister(string $password): void
+    {
+        $this->notify(new RegistrationNotification($password));
+    }
+
 
     public static function makeFromEmail(string $email): self
     {
@@ -127,7 +133,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $user->setRole(Role::USER)
             ->setPassword($password)
             ->save();
-//        $user->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotificationOnRegister($password);
         return $user;
     }
 }

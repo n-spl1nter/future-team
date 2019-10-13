@@ -15,5 +15,6 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
+    'thanksForRegistration' => 'Thanks for registration. Below is the password to enter the site',
+    'password' => 'Password',
 ];

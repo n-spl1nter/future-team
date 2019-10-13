@@ -16,11 +16,11 @@ class RegisterController extends Controller
      *  @OA\Parameter(name="email", required=true, in="query", example="test@test.com"),
      *  @OA\Response(
      *     response=201,
-     *     description="Successfull register, returns User"
+     *     description="Успешная регистрация, возвращает сущность User"
      *  ),
      *  @OA\Response(
      *     response=400,
-     *     description="Returns errors stack"
+     *     description="Возвращает массив ошибок"
      * )
      * )
      * @param Request $request
