@@ -30,4 +30,18 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'vkontakte' => [
+        'client_id' => env('VK_CLIENT_ID'),
+        'client_secret' => env('VK_CLIENT_SECRET_KEY'),
+        'redirect' => env('APP_URL') . '/login/vkontakte/callback',
+        'scopes' => ['email'],
+    ],
+
+    'facebook' => [
+        'client_id' => env('FB_CLIENT_ID'),
+        'client_secret' => env('FB_CLIENT_SECRET_KEY'),
+        'redirect' => env('APP_URL') . '/login/facebook/callback',
+        'scopes' => ['email'],
+    ],
+
 ];

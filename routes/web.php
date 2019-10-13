@@ -29,3 +29,13 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post('/login', ['uses' => 'Auth\LoginController@login', 'as' => 'loginUser']);
     Route::post('/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'logout']);
 });
+
+/** Auth via services */
+Route::get('/login/{serviceName}', [
+    'uses' => 'Auth\SocialServicesController@providerRedirect',
+    'as' => 'login.service',
+])->where(['serviceName' => '(vkontakte|facebook)']);
+Route::get('/login/{serviceName}/callback', [
+    'uses' => 'Auth\SocialServicesController@providerCallback',
+    'as' => 'login.callback'
+]);

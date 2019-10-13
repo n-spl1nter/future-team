@@ -4,10 +4,12 @@ namespace App\Entities;
 
 use App\Notifications\Auth\RegistrationNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\RBAC\Role;
 use Illuminate\Support\Str;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * App\Entities\User
@@ -39,10 +41,16 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUserProfile($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
+ * @property-read int|null $clients_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\SocialNetwork[] $socialNetworks
+ * @property-read int|null $social_networks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
+ * @property-read int|null $tokens_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -77,6 +85,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    public function socialNetworks()
+    {
+        return $this->hasMany(SocialNetwork::class, 'user_id', 'id');
     }
 
     /**
@@ -130,10 +143,32 @@ class User extends Authenticatable implements MustVerifyEmail
         $password = Str::random(8);
         $user = new self();
         $user->email = $email;
+        $user->email_verified_at = now();
         $user->setRole(Role::USER)
             ->setPassword($password)
             ->save();
         $user->sendEmailVerificationNotificationOnRegister($password);
+        return $user;
+    }
+
+    public static function findOrCreateViaNetworkService(string $serviceName, array $attributes): self
+    {
+        $user = self::whereHas('socialNetworks', function (Builder $query) use ($serviceName, $attributes) {
+            $query->where('service', $serviceName);
+            $query->where('identity', $attributes['identity']);
+        })->first();
+        if (!$user) {
+            $user = new self();
+            if (!empty($attributes['email'])) {
+                $user->email = $attributes['email'];
+                $user->email_verified_at = now();
+            }
+            $user->setRole(Role::USER)->save();
+            $user->socialNetworks()
+                ->create(array_merge(['service' => $serviceName], $attributes))
+                ->save();
+        }
+
         return $user;
     }
 }
