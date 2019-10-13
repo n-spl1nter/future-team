@@ -22,6 +22,23 @@ use Illuminate\Http\Request;
  *   name="Auth",
  *   description="Auth"
  * )
+ * @OA\Tag(
+ *   name="User",
+ *   description="Пользователи"
+ * )
+ *     @OA\Parameter(
+ *      parameter="token",
+ *      name="Authorization",
+ *      in="header",
+ *      required=true,
+ *      example="Bearer "
+ *     ),
+ * @OA\SecurityScheme(
+ * securityScheme="bearerAuth",
+ * type="http",
+ * scheme="bearer",
+ * bearerFormat="JWT",
+ * )
  */
 class HomeController extends Controller
 {

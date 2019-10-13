@@ -13,6 +13,61 @@
         }
     ],
     "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Логин через email",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Auth\\LoginController::login",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "Email",
+                        "required": true,
+                        "example": "test@test.com"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "example": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешная авторизация, возвращает токен"
+                    },
+                    "400": {
+                        "description": "Возвращает массив ошибок"
+                    },
+                    "401": {
+                        "description": "Неправильный пароль или email"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Выход из приложения",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Auth\\LoginController::logout",
+                "responses": {
+                    "204": {
+                        "description": "Удаляет все токены клиента"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/register": {
             "post": {
                 "tags": [
@@ -24,16 +79,24 @@
                     {
                         "name": "email",
                         "in": "query",
+                        "description": "unique email",
                         "required": true,
                         "example": "test@test.com"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "'company' or 'member'",
+                        "required": true,
+                        "example": "member"
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "Successfull register, returns User"
+                        "description": "Успешная регистрация, возвращает сущность User"
                     },
                     "400": {
-                        "description": "Returns errors stack"
+                        "description": "Возвращает массив ошибок"
                     }
                 }
             }
@@ -51,6 +114,59 @@
                     }
                 }
             }
+        },
+        "/account": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Возвращает профиль текущего пользователя",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\UsersController::account",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает профиль текущего пользователя"
+                    },
+                    "401": {
+                        "description": "Не авторизован"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "token": {
+                "name": "Authorization",
+                "in": "header",
+                "required": true,
+                "example": "Bearer "
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            },
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "http",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://futureteam.local/api/v1/login",
+                        "tokenUrl": "http://futureteam.local/api/v1/login",
+                        "refreshUrl": "http://futureteam.local/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
         }
     },
     "tags": [
@@ -61,6 +177,10 @@
         {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "User",
+            "description": "Пользователи"
         }
     ]
 }

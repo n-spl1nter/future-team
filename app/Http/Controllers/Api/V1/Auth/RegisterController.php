@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Auth;
 use App\Http\Controllers\Controller;
 use App\Entities\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -13,7 +14,8 @@ class RegisterController extends Controller
      *  path="/register",
      *  summary="Register by email",
      *  tags={"Auth"},
-     *  @OA\Parameter(name="email", required=true, in="query", example="test@test.com"),
+     *  @OA\Parameter(name="email", required=true, in="query", example="test@test.com", description="unique email"),
+     *  @OA\Parameter(name="type", required=true, in="query", example="member", description="'company' or 'member'"),
      *  @OA\Response(
      *     response=201,
      *     description="Успешная регистрация, возвращает сущность User"
@@ -30,6 +32,7 @@ class RegisterController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'email' => 'required|email|unique:users,email',
+            'type' => ['required', Rule::in(['company', 'member'])],
         ]);
         if ($validator->fails()) {
             return response()

@@ -47,9 +47,17 @@ use Laravel\Passport\HasApiTokens;
  * @property-read int|null $social_networks_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
  * @property-read int|null $tokens_count
+ * @property string $type
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereType($value)
+ * @property-read \App\Entities\CompanyProfile $companyProfile
+ * @property-read \App\Entities\Profile $profile
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\OauthAccessToken[] $oauthAccessTokens
+ * @property-read int|null $oauth_access_tokens_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
+    const TYPE_COMPANY = 'company';
+    const TYPE_MEMBER = 'member';
     use Notifiable, HasApiTokens;
 
     /**
@@ -91,6 +99,31 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(SocialNetwork::class, 'user_id', 'id');
     }
+
+    public function oauthAccessTokens(){
+        return $this->hasMany(OauthAccessToken::class);
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id');
+    }
+
+    public function companyProfile()
+    {
+        return $this->hasOne(CompanyProfile::class, 'user_id', 'id');
+    }
+
+    public function isCompany(): bool
+    {
+        return $this->type === self::TYPE_COMPANY;
+    }
+
+    public function isMember(): bool
+    {
+        return $this->type === self::TYPE_MEMBER;
+    }
+
 
     /**
      * Проверяет, имеет ли пользователь права
@@ -170,5 +203,26 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $user;
+    }
+
+
+    public function getAccountInfo(): array
+    {
+        $data = [
+            'email' => $this->email,
+            'type' => $this->type,
+        ];
+        if ($this->isMember() && $this->profile) {
+            $data = array_merge($data, $this->profile->toArray());
+        } elseif ($this->isCompany() && $this->companyProfile) {
+            $data = array_merge($data, $this->companyProfile->toArray());
+        }
+
+        return $data;
+    }
+
+    public function makeToken()
+    {
+        return $this->createToken('FutureTeam');
     }
 }
