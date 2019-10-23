@@ -26,6 +26,10 @@ use Illuminate\Http\Request;
  *   name="User",
  *   description="Пользователи"
  * )
+ * @OA\Tag(
+ *   name="Common",
+ *   description="Общая информация"
+ * )
  *     @OA\Parameter(
  *      parameter="token",
  *      name="Authorization",

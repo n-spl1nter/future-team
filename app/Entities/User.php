@@ -15,22 +15,30 @@ use Laravel\Passport\HasApiTokens;
  * App\Entities\User
  *
  * @property int $id
- * @property string $email
+ * @property string|null $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property string $password
+ * @property string|null $password
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $role_id
- * @property int|null $company_profile
- * @property int|null $user_profile
+ * @property string $type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
+ * @property-read int|null $clients_count
+ * @property-read \App\Entities\CompanyProfile $companyProfile
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\OauthAccessToken[] $oauthAccessTokens
+ * @property-read int|null $oauth_access_tokens_count
+ * @property-read \App\Entities\Profile $profile
  * @property-read \App\RBAC\Role $role
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\SocialNetwork[] $socialNetworks
+ * @property-read int|null $social_networks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
+ * @property-read int|null $tokens_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereCompanyProfile($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmailVerifiedAt($value)
@@ -38,21 +46,9 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRoleId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUserProfile($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
- * @property-read int|null $clients_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\SocialNetwork[] $socialNetworks
- * @property-read int|null $social_networks_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
- * @property-read int|null $tokens_count
- * @property string $type
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereType($value)
- * @property-read \App\Entities\CompanyProfile $companyProfile
- * @property-read \App\Entities\Profile $profile
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\OauthAccessToken[] $oauthAccessTokens
- * @property-read int|null $oauth_access_tokens_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

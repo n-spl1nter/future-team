@@ -13,6 +13,25 @@
         }
     ],
     "paths": {
+        "/activityfields": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Сферы деятельности",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\ActivityFieldsController::index",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список сфер деятельности",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
@@ -167,6 +186,10 @@
         {
             "name": "User",
             "description": "Пользователи"
+        },
+        {
+            "name": "Common",
+            "description": "Общая информация"
         }
     ]
 }

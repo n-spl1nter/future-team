@@ -20,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $motivation
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $user_id
+ * @property-read \App\Entities\ActivityField $activityField
+ * @property-read \App\Entities\City $city
  * @property-read \App\Entities\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile newQuery()
@@ -37,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile wherePhoto($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUserId($value)
  * @mixin \Eloquent
  */
 class Profile extends Model
@@ -46,5 +50,15 @@ class Profile extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'city_id');
+    }
+
+    public function activityField()
+    {
+        return $this->belongsTo(ActivityField::class, 'activity_field_id', 'id');
     }
 }

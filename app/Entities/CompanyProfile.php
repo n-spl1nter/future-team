@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $organization_type_id
+ * @property int $user_id
  * @property-read \App\Entities\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile newQuery()
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereLogo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereOrganizationTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereUserId($value)
  * @mixin \Eloquent
  */
 class CompanyProfile extends Model
