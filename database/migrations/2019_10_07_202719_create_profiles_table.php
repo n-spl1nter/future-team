@@ -22,14 +22,11 @@ class CreateProfilesTable extends Migration
             $table->string('photo');
             $table->smallInteger('age');
             $table->smallInteger('language_exchange_agreement')->default(0);
-            $table->unsignedBigInteger('city_id');
+            $table->integer('city_id');
             $table->unsignedBigInteger('activity_field_id');
             $table->text('motivation');
             $table->timestamps();
 
-            $table->foreign('city_id')
-                ->references('id')
-                ->on('cities');
             $table->foreign('activity_field_id')
                 ->references('id')
                 ->on('activity_fields');
@@ -45,7 +42,7 @@ class CreateProfilesTable extends Migration
     {
         Schema::table('profiles', function (Blueprint $table) {
             $table->dropForeign(['city_id']);
-            $table->dropForeign(['activity_fields']);
+            $table->dropForeign(['activity_field_id']);
         });
         Schema::dropIfExists('profiles');
     }

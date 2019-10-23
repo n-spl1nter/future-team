@@ -16,7 +16,7 @@ class CreateCompnayProfilesTable extends Migration
         Schema::create('company_profiles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('full_name');
-            $table->unsignedBigInteger('country_id');
+            $table->integer('country_id');
             $table->string('logo')->nullable();
             $table->text('description');
             $table->timestamps();

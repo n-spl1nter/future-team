@@ -152,20 +152,6 @@
                 "type": "http",
                 "bearerFormat": "JWT",
                 "scheme": "bearer"
-            },
-            "passport": {
-                "type": "oauth2",
-                "description": "Laravel passport oauth2 security.",
-                "in": "header",
-                "scheme": "http",
-                "flows": {
-                    "password": {
-                        "authorizationUrl": "http://futureteam.local/api/v1/login",
-                        "tokenUrl": "http://futureteam.local/api/v1/login",
-                        "refreshUrl": "http://futureteam.local/token/refresh",
-                        "scopes": []
-                    }
-                }
             }
         }
     },
