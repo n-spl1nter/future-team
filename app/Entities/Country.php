@@ -52,4 +52,11 @@ class Country extends Model
     {
         return $this->hasMany(City::class, 'city_id', 'country_id');
     }
+
+    public static function getMainLocales()
+    {
+        return self::select(['country_id', 'title_ru', 'title_en'])
+            ->orderBy('country_id')
+            ->get();
+    }
 }

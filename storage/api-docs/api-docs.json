@@ -120,6 +120,25 @@
                 }
             }
         },
+        "/countries": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Страны",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\CountriesController::index",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список стран",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/": {
             "get": {
                 "tags": [
