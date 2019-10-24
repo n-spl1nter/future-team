@@ -189,5 +189,9 @@ return [
         'time'                  => 'Время',
         'available'             => 'Доступно',
         'size'                  => 'Размер',
+        'activity_field_id'     => 'Сфера деятельности',
+        'city_id'               => 'Город',
+        'birth_date_at'         => 'Дата рождения',
+        'photo'                 => 'Фото',
     ],
 ];

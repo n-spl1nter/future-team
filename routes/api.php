@@ -10,6 +10,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::get('/account', ['uses' => 'UsersController@account', 'as' =>'account']);
+        Route::post('/profile', ['uses' => 'UsersController@setProfile', 'as' => 'storeProfile']);
     });
 
     Route::get('/activityfields', ['uses' => 'ActivityFieldsController@index', 'as' => 'activityFields']);

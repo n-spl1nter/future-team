@@ -20,15 +20,18 @@ class LoginController extends Controller
      *  @OA\Parameter(name="password", required=true, in="query", example="", description="Password"),
      *  @OA\Response(
      *     response=200,
-     *     description="Успешная авторизация, возвращает токен"
+     *     description="Успешная авторизация, возвращает токен",
+     *     @OA\JsonContent()
      *  ),
      *  @OA\Response(
      *     response=400,
-     *     description="Возвращает массив ошибок"
+     *     description="Возвращает массив ошибок",
+     *     @OA\JsonContent()
      * ),
      *  @OA\Response(
      *     response=401,
-     *     description="Неправильный пароль или email"
+     *     description="Неправильный пароль или email",
+     *     @OA\JsonContent()
      * )
      * )
      * @param Request $request

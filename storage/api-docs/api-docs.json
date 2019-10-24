@@ -57,13 +57,28 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Успешная авторизация, возвращает токен"
+                        "description": "Успешная авторизация, возвращает токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Возвращает массив ошибок"
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "401": {
-                        "description": "Неправильный пароль или email"
+                        "description": "Неправильный пароль или email",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
@@ -148,7 +163,12 @@
                 "operationId": "App\\Http\\Controllers\\Api\\V1\\HomeController::index",
                 "responses": {
                     "200": {
-                        "description": "Api information"
+                        "description": "Api information",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
@@ -162,10 +182,95 @@
                 "operationId": "App\\Http\\Controllers\\Api\\V1\\UsersController::account",
                 "responses": {
                     "200": {
-                        "description": "Возвращает профиль текущего пользователя"
+                        "description": "Возвращает профиль текущего пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "401": {
-                        "description": "Не авторизован"
+                        "description": "Не авторизован",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/profile": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Добавляет профиль к пользователю",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\UsersController::setProfile",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "description": "Имя"
+                                    },
+                                    "middle_name": {
+                                        "description": "Отчество"
+                                    },
+                                    "last_name": {
+                                        "description": "Фамилия"
+                                    },
+                                    "phone": {
+                                        "description": "Телефон"
+                                    },
+                                    "birth_date_at": {
+                                        "description": "Дата рождения"
+                                    },
+                                    "language_exchange_agreement": {
+                                        "description": "Согласие на участие в языковом обмене"
+                                    },
+                                    "city_id": {
+                                        "description": "ID города"
+                                    },
+                                    "activity_field_id": {
+                                        "description": "ID Сферы деятельности"
+                                    },
+                                    "photo": {
+                                        "description": "Фото",
+                                        "type": "file",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное добавление профиля к пользователю",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [

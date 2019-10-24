@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $last_name
  * @property string $phone
  * @property string $photo
- * @property int $age
+ * @property \Illuminate\Support\Carbon $birth_date_at
  * @property int $language_exchange_agreement
  * @property int $city_id
  * @property int $activity_field_id
@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereActivityFieldId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereAge($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereBirthDateAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCityId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereFirstName($value)
@@ -46,6 +46,11 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     protected $table = 'profiles';
+    protected $dates = ['birth_date_at'];
+    protected $fillable = [
+        'first_name', 'middle_name', 'last_name', 'phone', 'birth_date_at', 'language_exchange_agreement',
+        'city_id', 'activity_field_id', 'motivation',
+    ];
 
     public function user()
     {
@@ -60,5 +65,21 @@ class Profile extends Model
     public function activityField()
     {
         return $this->belongsTo(ActivityField::class, 'activity_field_id', 'id');
+    }
+
+    public static function getOnCreateValidationRules(): array
+    {
+        return [
+            'first_name' => 'required|string|min:2|max:255',
+            'middle_name' => 'nullable|string|min:2|max:255',
+            'last_name' => 'nullable|string|min:2|max:255',
+            'phone' => 'required|string|size:11|regex:/[0-9]{11}/',
+            'photo' => 'required|image|dimensions:min_width=140,min_height=140',
+            'birth_date_at' => 'required|date',
+            'language_exchange_agreement' => 'nullable|integer|in:0,1',
+            'city_id' => 'required|integer|exists:_cities,city_id',
+            'activity_field_id' => 'required|integer|exists:activity_fields,id',
+            'motivation' => 'required|string|max:500',
+        ];
     }
 }

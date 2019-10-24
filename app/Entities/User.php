@@ -221,4 +221,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->createToken('FutureTeam');
     }
+
+    public function addProfile(array $attributes)
+    {
+        $profile = new Profile($attributes);
+    }
 }

@@ -53,7 +53,8 @@ class HomeController extends Controller
      *   tags={"Api base"},
      *   @OA\Response(
      *      response=200,
-     *      description="Api information"
+     *      description="Api information",
+     *      @OA\JsonContent()
      *   )
      * )
      * @return string
