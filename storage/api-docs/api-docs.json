@@ -245,37 +245,41 @@
                                         "description": "ID Сферы деятельности",
                                         "type": "integer"
                                     },
-                                    "goals": {
+                                    "goals[]": {
                                         "description": "Цели(массив строк, длинна 1-5)",
                                         "type": "array",
                                         "items": {
                                             "type": "string"
-                                        }
+                                        },
+                                        "collectionFormat": "multi"
                                     },
-                                    "known_languages": {
+                                    "known_languages[]": {
                                         "description": "Языки, которыми владею(массив Id)",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"
-                                        }
+                                        },
+                                        "collectionFormat": "multi"
                                     },
-                                    "languages_wltl": {
+                                    "languages_wltl[]": {
                                         "description": "Языки, которые хочу выучить(массив Id)",
                                         "type": "array",
                                         "items": {
                                             "type": "integer"
-                                        }
+                                        },
+                                        "collectionFormat": "multi"
                                     },
                                     "language_exchange_agreement": {
                                         "description": "Согласие на участие в языковом обмене (0 или 1)",
                                         "type": "integer"
                                     },
-                                    "motivation": {
+                                    "motivation[]": {
                                         "description": "Цели(массив строк, длинна 1-5)",
                                         "type": "array",
                                         "items": {
                                             "type": "string"
-                                        }
+                                        },
+                                        "collectionFormat": "multi"
                                     },
                                     "photo": {
                                         "description": "Фото",
@@ -293,10 +297,12 @@
                                         "description": "Согласие на обработку данных"
                                     },
                                     "organization_id": {
-                                        "description": "id существующей организации"
+                                        "description": "id существующей организации",
+                                        "type": "integer"
                                     },
                                     "organization_name": {
-                                        "description": "Имя организации"
+                                        "description": "Имя организации",
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"

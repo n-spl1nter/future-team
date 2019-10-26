@@ -88,4 +88,11 @@ class Profile extends Model
             'organization_name' => 'nullable|string|max:100',
         ];
     }
+
+    public static function getOnUpdateValidationRules(): array
+    {
+        return [
+
+        ];
+    }
 }

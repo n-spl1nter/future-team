@@ -53,19 +53,22 @@ class UsersController extends Controller
      *              @OA\Property(property="city_id", description="ID города", type="integer"),
      *              @OA\Property(property="activity_field_id", description="ID Сферы деятельности", type="integer"),
      *              @OA\Property(
-     *                  property="goals",
+     *                  property="goals[]",
+     *                  collectionFormat="multi",
      *                  description="Цели(массив строк, длинна 1-5)",
      *                  type="array",
      *                  @OA\Items(type="string")
      *              ),
      *              @OA\Property(
-     *                  property="known_languages",
+     *                  property="known_languages[]",
+     *                  collectionFormat="multi",
      *                  description="Языки, которыми владею(массив Id)",
      *                  type="array",
      *                  @OA\Items(type="integer")
      *              ),
      *              @OA\Property(
-     *                  property="languages_wltl",
+     *                  property="languages_wltl[]",
+     *                  collectionFormat="multi",
      *                  description="Языки, которые хочу выучить(массив Id)",
      *                  type="array",
      *                  @OA\Items(type="integer")
@@ -76,7 +79,8 @@ class UsersController extends Controller
      *                  type="integer"
      *              ),
      *              @OA\Property(
-     *                  property="motivation",
+     *                  property="motivation[]",
+     *                  collectionFormat="multi",
      *                  description="Цели(массив строк, длинна 1-5)",
      *                  type="array",
      *                  @OA\Items(type="string")
@@ -87,8 +91,8 @@ class UsersController extends Controller
      *              ),
      *              @OA\Property(property="about", description="О себе", type="string"),
      *              @OA\Property(property="terms", description="Согласие на обработку данных"),
-     *              @OA\Property(property="organization_id", description="id существующей организации"),
-     *              @OA\Property(property="organization_name", description="Имя организации"),
+     *              @OA\Property(property="organization_id", description="id существующей организации", type="integer"),
+     *              @OA\Property(property="organization_name", description="Имя организации", type="string"),
      *          ),
      *      ),
      *     ),
@@ -118,5 +122,7 @@ class UsersController extends Controller
             return response()->json(['errors' => $validator->errors()->getMessages()], 400);
         }
 
+        $account = \Auth::user()->getAccountInfo();
+        return response()->json(['user' => $account], 201);
     }
 }
