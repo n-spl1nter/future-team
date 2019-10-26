@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $middle_name
  * @property string $last_name
  * @property string $phone
- * @property string $photo
  * @property \Illuminate\Support\Carbon $birth_date_at
  * @property int $language_exchange_agreement
  * @property int $city_id
@@ -38,7 +37,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereMiddleName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereMotivation($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile wherePhoto($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUserId($value)
  * @mixin \Eloquent
