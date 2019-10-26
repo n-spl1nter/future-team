@@ -14,5 +14,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
     });
 
     Route::get('/activityfields', ['uses' => 'ActivityFieldsController@index', 'as' => 'activityFields']);
-    Route::get('/countries', ['uses' => 'CountriesController@index', 'as' => 'countries']);
+    Route::get('/countries', ['uses' => 'PlacesController@countries', 'as' => 'countries']);
+    Route::get('/cities', ['uses' => 'PlacesController@cities', 'as' => 'cities']);
 });
