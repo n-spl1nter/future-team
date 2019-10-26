@@ -218,28 +218,64 @@
                             "schema": {
                                 "properties": {
                                     "first_name": {
-                                        "description": "Имя"
+                                        "description": "Имя",
+                                        "type": "string"
                                     },
                                     "middle_name": {
-                                        "description": "Отчество"
+                                        "description": "Отчество",
+                                        "type": "string"
                                     },
                                     "last_name": {
-                                        "description": "Фамилия"
+                                        "description": "Фамилия",
+                                        "type": "string"
                                     },
                                     "phone": {
-                                        "description": "Телефон"
+                                        "description": "Телефон",
+                                        "type": "string"
                                     },
                                     "birth_date_at": {
-                                        "description": "Дата рождения"
-                                    },
-                                    "language_exchange_agreement": {
-                                        "description": "Согласие на участие в языковом обмене"
+                                        "description": "Дата рождения",
+                                        "type": "string"
                                     },
                                     "city_id": {
-                                        "description": "ID города"
+                                        "description": "ID города",
+                                        "type": "integer"
                                     },
                                     "activity_field_id": {
-                                        "description": "ID Сферы деятельности"
+                                        "description": "ID Сферы деятельности",
+                                        "type": "integer"
+                                    },
+                                    "goals": {
+                                        "description": "Цели(массив строк, длинна 1-5)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "known_languages": {
+                                        "description": "Языки, которыми владею(массив Id)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "languages_wltl": {
+                                        "description": "Языки, которые хочу выучить(массив Id)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "language_exchange_agreement": {
+                                        "description": "Согласие на участие в языковом обмене (0 или 1)",
+                                        "type": "integer"
+                                    },
+                                    "motivation": {
+                                        "description": "Цели(массив строк, длинна 1-5)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
                                     },
                                     "photo": {
                                         "description": "Фото",
@@ -266,6 +302,14 @@
                     },
                     "400": {
                         "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка авторизации",
                         "content": {
                             "application/json": {
                                 "schema": {}

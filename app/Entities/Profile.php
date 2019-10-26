@@ -45,6 +45,7 @@ class Profile extends Model
 {
     protected $table = 'profiles';
     protected $dates = ['birth_date_at'];
+    protected $casts = ['motivation' => 'array'];
     protected $fillable = [
         'first_name', 'middle_name', 'last_name', 'phone', 'birth_date_at', 'language_exchange_agreement',
         'city_id', 'activity_field_id', 'motivation',
@@ -72,12 +73,19 @@ class Profile extends Model
             'middle_name' => 'nullable|string|min:2|max:255',
             'last_name' => 'nullable|string|min:2|max:255',
             'phone' => 'required|string|size:11|regex:/[0-9]{11}/',
-            'photo' => 'required|image|dimensions:min_width=140,min_height=140',
             'birth_date_at' => 'required|date',
-            'language_exchange_agreement' => 'nullable|integer|in:0,1',
             'city_id' => 'required|integer|exists:_cities,city_id',
             'activity_field_id' => 'required|integer|exists:activity_fields,id',
-            'motivation' => 'required|string|max:500',
+            'goals' => 'required|array|min:1|max:5',
+            'known_languages' => 'nullable|array|min:1',
+            'languages_wltl' => 'nullable|array|min:1',
+            'language_exchange_agreement' => 'nullable|integer|in:0,1',
+            'motivation' => 'required|array|min:1',
+            'photo' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=140,min_height=140',
+            'about' => 'nullable|string|max:400',
+            'terms' => 'required|accepted',
+            'organization_id' => 'nullable|integer|exists:users,id',
+            'organization_name' => 'nullable|string|max:100',
         ];
     }
 }

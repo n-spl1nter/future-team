@@ -36,6 +36,7 @@ class MediaFile extends Model
 {
     // file types
     const TYPE_AVATAR = 'TYPE_AVATAR';
+    const TYPE_ICON = 'TYPE_ICON';
 
     protected $table = 'media_files';
     protected $fillable = ['path', 'url', 'entity', 'entity_id',];
@@ -44,6 +45,8 @@ class MediaFile extends Model
     private static function getStoragePathByFileType(string $fileType): string
     {
         switch ($fileType) {
+            case self::TYPE_ICON:
+                return storage_path('icon');
             case self::TYPE_AVATAR:
                 return storage_path('avatar');
             default:
@@ -51,7 +54,7 @@ class MediaFile extends Model
         }
     }
 
-    public static function createFileNameByFilePath(UploadedFile $file, string $fileType): string
+    public static function createFileNameByFileType(UploadedFile $file, string $fileType): string
     {
         return self::getStoragePathByFileType($fileType)
             . '/' . Str::random(20)
