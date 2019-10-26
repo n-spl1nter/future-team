@@ -61,6 +61,7 @@ class PlacesController extends Controller
         $cities = City::whereCountryId($request->get('country_id'))
             ->where('title_ru', 'like', $request->get('value') . '%')
             ->select(['city_id', 'title_ru', 'area_ru', 'region_ru'])
+            ->orderBy('city_id')
             ->limit(10)
             ->get();
 
