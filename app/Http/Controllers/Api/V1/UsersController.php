@@ -85,6 +85,10 @@ class UsersController extends Controller
      *                   property="photo", description="Фото", type="file",
      *                   @OA\Items(type="string", format="binary")
      *              ),
+     *              @OA\Property(property="about", description="О себе", type="string"),
+     *              @OA\Property(property="terms", description="Согласие на обработку данных"),
+     *              @OA\Property(property="organization_id", description="id существующей организации"),
+     *              @OA\Property(property="organization_name", description="Имя организации"),
      *          ),
      *      ),
      *     ),

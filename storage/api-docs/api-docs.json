@@ -284,6 +284,19 @@
                                             "type": "string",
                                             "format": "binary"
                                         }
+                                    },
+                                    "about": {
+                                        "description": "О себе",
+                                        "type": "string"
+                                    },
+                                    "terms": {
+                                        "description": "Согласие на обработку данных"
+                                    },
+                                    "organization_id": {
+                                        "description": "id существующей организации"
+                                    },
+                                    "organization_name": {
+                                        "description": "Имя организации"
                                     }
                                 },
                                 "type": "object"
