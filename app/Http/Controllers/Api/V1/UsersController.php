@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Entities\Profile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator;
 
 class UsersController extends Controller
 {
@@ -119,9 +120,14 @@ class UsersController extends Controller
     {
         $user = \Auth::user();
         $validator = \Validator::make($request->all(), Profile::getOnCreateValidationRules());
-        if ($user->isCompany()) {
-            $validator->getMessageBag()->add('process', __('common.wrongUserType'));
-        }
+
+        $validator->after(function (Validator $validator) use ($user) {
+            if ($user->isCompany()) {
+                $validator->errors()->add('process', __('common.wrongUserType'));
+            } elseif ($user->profile) {
+                $validator->errors()->add('process', __('common.AlreadyHasProfile'));
+            }
+        });
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->getMessages()], 400);
         }

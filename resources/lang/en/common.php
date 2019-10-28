@@ -9,4 +9,5 @@ return [
     'refresh' => 'Refresh',
     'home' => 'Home',
     'wrongUserType' => 'User should be a company',
+    'AlreadyHasProfile' => 'User already has profile',
 ];
