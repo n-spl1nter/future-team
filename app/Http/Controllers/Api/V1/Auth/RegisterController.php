@@ -32,13 +32,13 @@ class RegisterController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'email' => 'required|email|unique:users,email',
-            'type' => ['required', Rule::in(['company', 'member'])],
+            'type' => ['required', Rule::in([User::TYPE_MEMBER, User::TYPE_COMPANY])],
         ]);
         if ($validator->fails()) {
             return response()
                 ->json(['errors' => $validator->errors()->getMessages()], 400);
         }
-        $user = User::makeFromEmail($request->get('email'));
+        $user = User::makeFromEmail($request->all());
 
         return response()->json(['user' => $user], 201);
     }

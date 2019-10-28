@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -47,7 +48,7 @@ class Profile extends Model
     protected $dates = ['birth_date_at'];
     protected $casts = ['motivation' => 'array'];
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'phone', 'birth_date_at', 'language_exchange_agreement',
+        'first_name', 'middle_name', 'last_name', 'phone', 'language_exchange_agreement',
         'city_id', 'activity_field_id', 'motivation',
     ];
 
@@ -64,6 +65,12 @@ class Profile extends Model
     public function activityField()
     {
         return $this->belongsTo(ActivityField::class, 'activity_field_id', 'id');
+    }
+
+    public function setBirthDate(string $date): self
+    {
+        $this->birth_date_at = Carbon::createFromFormat('Y-m-d', $date);
+        return $this;
     }
 
     public static function getOnCreateValidationRules(): array

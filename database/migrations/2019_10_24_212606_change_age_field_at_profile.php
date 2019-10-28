@@ -15,7 +15,7 @@ class ChangeAgeFieldAtProfile extends Migration
     {
         Schema::table('profiles', function (Blueprint $table) {
             $table->dropColumn('age');
-            $table->timestamp('birth_date_at')->after('photo');
+            $table->timestamp('birth_date_at')->after('photo')->nullable();
         });
     }
 

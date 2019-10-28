@@ -8,4 +8,5 @@ return [
     ],
     'refresh' => 'Refresh',
     'home' => 'Home',
+    'wrongUserType' => 'User should be a company',
 ];

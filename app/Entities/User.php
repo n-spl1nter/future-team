@@ -3,13 +3,16 @@
 namespace App\Entities;
 
 use App\Notifications\Auth\RegistrationNotification;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use App\RBAC\Role;
 use Illuminate\Support\Str;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Http\UploadedFile;
 
 /**
  * App\Entities\User
@@ -49,6 +52,10 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $organization_name
+ * @property int|null $organization_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereOrganizationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereOrganizationName($value)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -161,17 +168,46 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this;
     }
 
+    public function setOrganization(Request $request): self
+    {
+        if ($this->isCompany()) {
+            throw new \DomainException('Company can\'t have organization');
+        }
+        if ($request->has('organization_id')) {
+            $this->organization_id = $request->get('organization_id');
+            $this->organization_name = null;
+        } elseif ($request->has('organization_id')) {
+            $this->organization_id = null;
+            $this->organization_name = $request->get('organization_name');
+        }
+
+        return $this;
+    }
+
+    public function setAvatar(UploadedFile $file): self
+    {
+        list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_AVATAR);
+        $image = \Image::make($file);
+        $image->fit(600)->save($fullFileName, 70);
+        $image->fit(180)->save($smallFileName);
+
+        MediaFile::addImage($fullFileName, static::class, $this->id, MediaFile::TYPE_AVATAR);
+        MediaFile::addImage($smallFileName, static::class, $this->id, MediaFile::TYPE_AVATAR_SMALL);
+        return $this;
+    }
+
     public function sendEmailVerificationNotificationOnRegister(string $password): void
     {
         $this->notify(new RegistrationNotification($password));
     }
 
 
-    public static function makeFromEmail(string $email): self
+    public static function makeFromEmail(array $attributes): self
     {
         $password = Str::random(8);
         $user = new self();
-        $user->email = $email;
+        $user->email = $attributes['email'];
+        $user->type = $attributes['type'];
         $user->email_verified_at = now();
         $user->setRole(Role::USER)
             ->setPassword($password)
@@ -222,8 +258,19 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->createToken('FutureTeam');
     }
 
-    public function addProfile(array $attributes)
+    public function setProfile(Request $request)
     {
-        $profile = new Profile($attributes);
+        $profile = new Profile($request->all());
+        $profile->setBirthDate($request->get('birth_date_at'));
+        $this->setOrganization($request)
+            ->setAvatar($request->file('photo'))
+            ->profile()
+            ->save($profile);
+        $this->save();
+    }
+
+    public function updateProfile(Request $request)
+    {
+
     }
 }

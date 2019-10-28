@@ -36,29 +36,37 @@ class MediaFile extends Model
 {
     // file types
     const TYPE_AVATAR = 'TYPE_AVATAR';
+    const TYPE_AVATAR_SMALL = 'TYPE_AVATAR_SMALL';
     const TYPE_ICON = 'TYPE_ICON';
 
     protected $table = 'media_files';
-    protected $fillable = ['path', 'url', 'entity', 'entity_id',];
+    protected $fillable = ['path', 'url', 'entity', 'entity_id', 'file_type'];
     protected $hidden = ['entity_id', 'entity', 'file_type', 'path'];
 
     private static function getStoragePathByFileType(string $fileType): string
     {
         switch ($fileType) {
             case self::TYPE_ICON:
-                return storage_path('icon');
+                return storage_path('app/public/icon');
             case self::TYPE_AVATAR:
-                return storage_path('avatar');
+            case self::TYPE_AVATAR_SMALL:
+                if (!is_dir(storage_path('app/public/avatar'))) {
+                    mkdir(storage_path('app/public/avatar'));
+                }
+                return storage_path('app/public/avatar');
             default:
-                return storage_path('common');
+                return storage_path('app/public/common');
         }
     }
 
-    public static function createFileNameByFileType(UploadedFile $file, string $fileType): string
+    public static function createFileNameByFileType(UploadedFile $file, string $fileType = null): array
     {
-        return self::getStoragePathByFileType($fileType)
-            . '/' . Str::random(20)
-            . '.' . $file->extension();
+        $name = self::getStoragePathByFileType($fileType)
+            . '/' . Str::random(20);
+        return [
+            $name . '.' . $file->extension(),
+            $name . '_small' . '.' . $file->extension(),
+        ];
     }
 
     public static function addImage(string $filePath, string $entityName, int $entityId, string $fileType): self

@@ -117,12 +117,16 @@ class UsersController extends Controller
      */
     public function setProfile(Request $request)
     {
+        $user = \Auth::user();
         $validator = \Validator::make($request->all(), Profile::getOnCreateValidationRules());
+        if ($user->isCompany()) {
+            $validator->getMessageBag()->add('process', __('common.wrongUserType'));
+        }
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->getMessages()], 400);
         }
 
-        $account = \Auth::user()->getAccountInfo();
-        return response()->json(['user' => $account], 201);
+        $user->setProfile($request);
+        return response()->json(['user' => $user->getAccountInfo()], 201);
     }
 }
