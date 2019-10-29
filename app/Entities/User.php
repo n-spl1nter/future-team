@@ -56,6 +56,10 @@ use Illuminate\Http\UploadedFile;
  * @property int|null $organization_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereOrganizationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereOrganizationName($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Language[] $knownLanguages
+ * @property-read int|null $known_languages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Language[] $wouldLikeToLearnLanguages
+ * @property-read int|null $would_like_to_learn_languages_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -117,6 +121,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(CompanyProfile::class, 'user_id', 'id');
     }
 
+    public function knownLanguages()
+    {
+        return $this->belongsToMany(Language::class, 'known_languages', 'user_id', 'language_id');
+    }
+
+    public function wouldLikeToLearnLanguages()
+    {
+        return $this->belongsToMany(Language::class, 'languages_wltl', 'user_id', 'language_id');
+    }
+
     public function isCompany(): bool
     {
         return $this->type === self::TYPE_COMPANY;
@@ -173,13 +187,14 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($this->isCompany()) {
             throw new \DomainException('Company can\'t have organization');
         }
-        if ($request->has('organization_id')) {
+        if (!empty($request->get('organization_id'))) {
             $this->organization_id = $request->get('organization_id');
             $this->organization_name = null;
-        } elseif ($request->has('organization_id')) {
+        } elseif (!empty($request->get('organization_name'))) {
             $this->organization_id = null;
             $this->organization_name = $request->get('organization_name');
         }
+        $this->save();
 
         return $this;
     }
@@ -244,8 +259,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'email' => $this->email,
             'type' => $this->type,
         ];
+        $this->load(['profile', 'knownLanguages', 'wouldLikeToLearnLanguages', 'companyProfile']);
         if ($this->isMember() && $this->profile) {
-            $data = array_merge($data, $this->profile->toArray());
+            $data = array_merge(
+                $data,
+                $this->profile->toArray(),
+                [
+                    'known_languages' => $this->knownLanguages->toArray(),
+                    'would_like_to_learn_languages' => $this->wouldLikeToLearnLanguages->toArray(),
+                ]
+            );
         } elseif ($this->isCompany() && $this->companyProfile) {
             $data = array_merge($data, $this->companyProfile->toArray());
         }
@@ -262,6 +285,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $profile = new Profile($request->all());
         $profile->setBirthDate($request->get('birth_date_at'));
+        if ($request->has('languages_wltl')) {
+            $this->wouldLikeToLearnLanguages()->sync($request->get('languages_wltl'));
+        }
+        if ($request->has('known_languages')) {
+            $this->knownLanguages()->sync($request->get('known_languages'));
+        }
         $this->setOrganization($request)
             ->setAvatar($request->file('photo'))
             ->profile()

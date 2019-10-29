@@ -131,8 +131,8 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->getMessages()], 400);
         }
-
         $user->setProfile($request);
+
         return response()->json(['user' => $user->getAccountInfo()], 201);
     }
 }
