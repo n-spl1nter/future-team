@@ -154,6 +154,25 @@
                 }
             }
         },
+        "/languages": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Языки",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\LanguagesController::index",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список языков",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/countries": {
             "get": {
                 "tags": [

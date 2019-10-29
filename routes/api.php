@@ -13,7 +13,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
         Route::post('/profile', ['uses' => 'UsersController@setProfile', 'as' => 'storeProfile']);
     });
 
+    /** Common data */
     Route::get('/activityfields', ['uses' => 'ActivityFieldsController@index', 'as' => 'activityFields']);
     Route::get('/countries', ['uses' => 'PlacesController@countries', 'as' => 'countries']);
     Route::get('/cities', ['uses' => 'PlacesController@cities', 'as' => 'cities']);
+    Route::get('/languages', ['uses' => 'LanguagesController@index', 'as' => 'languages']);
 });
