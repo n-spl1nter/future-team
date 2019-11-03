@@ -60,12 +60,15 @@ use Illuminate\Http\UploadedFile;
  * @property-read int|null $known_languages_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Language[] $wouldLikeToLearnLanguages
  * @property-read int|null $would_like_to_learn_languages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Goal[] $goals
+ * @property-read int|null $goals_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
+    use Notifiable, HasApiTokens;
+
     const TYPE_COMPANY = 'company';
     const TYPE_MEMBER = 'member';
-    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -131,6 +134,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Language::class, 'languages_wltl', 'user_id', 'language_id');
     }
 
+    public function goals()
+    {
+        return $this->belongsToMany(Goal::class, 'users_to_goals', 'user_id', 'goal_id');
+    }
+
     public function isCompany(): bool
     {
         return $this->type === self::TYPE_COMPANY;
@@ -184,38 +192,62 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function setOrganization(Request $request): self
     {
+        $organizationId = $request->get('organization_id', null);
         if ($this->isCompany()) {
             throw new \DomainException('Company can\'t have organization');
         }
-        if (!empty($request->get('organization_id'))) {
-            $this->organization_id = $request->get('organization_id');
+        if (
+            $organizationId
+            && User::whereType(static::TYPE_COMPANY)->where('id', $organizationId)->first()
+        ) {
+            $this->organization_id = $organizationId;
             $this->organization_name = null;
         } elseif (!empty($request->get('organization_name'))) {
             $this->organization_id = null;
             $this->organization_name = $request->get('organization_name');
         }
-        $this->save();
+        if ($this->isDirty()) {
+            $this->save();
+        }
 
         return $this;
+    }
+
+    public function setGoals(Request $request): self
+    {
+        $this->goals()->sync($request->get('goals'));
+        return  $this;
     }
 
     public function setAvatar(UploadedFile $file): self
     {
         list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_AVATAR);
         $image = \Image::make($file);
-        $image->fit(600)->save($fullFileName, 70);
-        $image->fit(180)->save($smallFileName);
+        $image
+            ->fit(600)
+            ->save(storage_path('app/public/') . $fullFileName, 75)
+            ->fit(180)
+            ->save(storage_path('app/public/') . $smallFileName);
 
         MediaFile::addImage($fullFileName, static::class, $this->id, MediaFile::TYPE_AVATAR);
         MediaFile::addImage($smallFileName, static::class, $this->id, MediaFile::TYPE_AVATAR_SMALL);
         return $this;
     }
 
+    public function getAvatar()
+    {
+        $avatars = MediaFile::whereEntity(self::class)
+            ->whereEntityId($this->id)
+            ->whereIn('file_type', [MediaFile::TYPE_AVATAR, MediaFile::TYPE_AVATAR_SMALL])
+            ->get();
+
+        return $avatars;
+    }
+
     public function sendEmailVerificationNotificationOnRegister(string $password): void
     {
         $this->notify(new RegistrationNotification($password));
     }
-
 
     public static function makeFromEmail(array $attributes): self
     {
@@ -252,12 +284,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $user;
     }
 
-
     public function getAccountInfo(): array
     {
         $data = [
             'email' => $this->email,
             'type' => $this->type,
+            'avatar' => $this->getAvatar(),
         ];
         $this->load(['profile', 'knownLanguages', 'wouldLikeToLearnLanguages', 'companyProfile']);
         if ($this->isMember() && $this->profile) {
@@ -292,6 +324,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $this->knownLanguages()->sync($request->get('known_languages'));
         }
         $this->setOrganization($request)
+            ->setGoals($request)
             ->setAvatar($request->file('photo'))
             ->profile()
             ->save($profile);

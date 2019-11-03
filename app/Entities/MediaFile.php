@@ -41,21 +41,27 @@ class MediaFile extends Model
 
     protected $table = 'media_files';
     protected $fillable = ['path', 'url', 'entity', 'entity_id', 'file_type'];
-    protected $hidden = ['entity_id', 'entity', 'file_type', 'path'];
+    protected $hidden = ['id', 'entity_id', 'entity', 'file_type', 'path', 'uploaded_by'];
 
     private static function getStoragePathByFileType(string $fileType): string
     {
         switch ($fileType) {
             case self::TYPE_ICON:
-                return storage_path('app/public/icon');
+                if (!is_dir(storage_path('app/public/icon'))) {
+                    mkdir(storage_path('app/public/icon'));
+                }
+                return 'icon';
             case self::TYPE_AVATAR:
             case self::TYPE_AVATAR_SMALL:
                 if (!is_dir(storage_path('app/public/avatar'))) {
                     mkdir(storage_path('app/public/avatar'));
                 }
-                return storage_path('app/public/avatar');
+                return 'avatar';
             default:
-                return storage_path('app/public/common');
+                if (!is_dir(storage_path('app/public/common'))) {
+                    mkdir(storage_path('app/public/common'));
+                }
+                return 'common';
         }
     }
 

@@ -53,13 +53,8 @@ class UsersController extends Controller
      *              @OA\Property(property="birth_date_at", description="Дата рождения", type="string"),
      *              @OA\Property(property="city_id", description="ID города", type="integer"),
      *              @OA\Property(property="activity_field_id", description="ID Сферы деятельности", type="integer"),
-     *              @OA\Property(
-     *                  property="goals[]",
-     *                  collectionFormat="multi",
-     *                  description="Цели(массив строк, длинна 1-5)",
-     *                  type="array",
-     *                  @OA\Items(type="string")
-     *              ),
+     *              @OA\Property(property="goals[0]", description="ID Цели", type="integer"),
+     *              @OA\Property(property="goals[1]", description="ID Цели", type="integer"),
      *              @OA\Property(
      *                  property="known_languages[]",
      *                  collectionFormat="multi",
