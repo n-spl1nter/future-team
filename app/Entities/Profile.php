@@ -92,7 +92,7 @@ class Profile extends Model
             'languages_wltl.*' => 'integer|exists:languages,id',
             'language_exchange_agreement' => 'nullable|integer|in:0,1',
             'motivation' => 'required|array|min:1',
-            'photo' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=140,min_height=140',
+            'photo' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=500,min_height=500',
             'about' => 'nullable|string|max:400',
             'terms' => 'required|accepted',
             'organization_id' => 'nullable|integer|exists:users,id',

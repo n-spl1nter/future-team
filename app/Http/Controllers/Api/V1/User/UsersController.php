@@ -134,6 +134,53 @@ class UsersController extends Controller
         return response()->json(['user' => $user->getAccountInfo()], 201);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/user/companyprofile",
+     *     summary="Добавляет профиль к организации",
+     *     tags={"User"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *      @OA\MediaType(
+     *          mediaType="multipart/form-data",
+     *          @OA\Schema(
+     *              @OA\Property(property="full_name", description="Полное название", type="string"),
+     *              @OA\Property(property="country_id", description="ID страны", type="integer"),
+     *              @OA\Property(property="description", description="Описание(макс 1500 символов)", type="string"),
+     *              @OA\Property(property="contact_person_name", description="Контактное лицо", type="string"),
+     *              @OA\Property(property="contact_person_email", description="Email контактного лица", type="string"),
+     *              @OA\Property(property="cooperation_type", description="Пример желаемого сотрудничества(10-1500 символов)", type="string"),
+     *              @OA\Property(property="organization_type_id", description="Тип организации (id)", type="integer"),
+     *              @OA\Property(property="organization_type", description="Тип организации (свой)", type="string"),
+     *              @OA\Property(property="goals[0]", description="ID Цели", type="integer"),
+     *              @OA\Property(property="goals[1]", description="ID Цели", type="integer"),
+     *              @OA\Property(
+     *                   property="photo", description="Фото", type="file",
+     *                   @OA\Items(type="string", format="binary")
+     *              ),
+     *              @OA\Property(property="terms", description="Согласие на обработку данных"),
+     *          ),
+     *      ),
+     *     ),
+     *     @OA\Response(
+     *        response=201,
+     *        description="Успешное добавление профиля к компании",
+     *        @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *        response=400,
+     *        description="Возвращает массив ошибок",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=401,
+     *        description="Ошибка авторизации",
+     *        @OA\JsonContent()
+     *    ),
+     * )
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function setCompanyProfile(Request $request)
     {
         /** @var User $user */
@@ -149,5 +196,8 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->getMessages()], 400);
         }
+
+        $user->setCompanyProfile($request);
+        return response()->json(['user' => $user->getAccountInfo()], 201);
     }
 }

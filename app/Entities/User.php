@@ -224,9 +224,9 @@ class User extends Authenticatable implements MustVerifyEmail
         list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_AVATAR);
         $image = \Image::make($file);
         $image
-            ->fit(600)
+            ->widen(600)
             ->save(storage_path('app/public/') . $fullFileName, 75)
-            ->fit(180)
+            ->widen(180)
             ->save(storage_path('app/public/') . $smallFileName);
 
         MediaFile::addImage($fullFileName, static::class, $this->id, MediaFile::TYPE_AVATAR);

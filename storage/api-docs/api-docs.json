@@ -453,6 +453,108 @@
                     }
                 ]
             }
+        },
+        "/user/companyprofile": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Добавляет профиль к организации",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::setCompanyProfile",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "full_name": {
+                                        "description": "Полное название",
+                                        "type": "string"
+                                    },
+                                    "country_id": {
+                                        "description": "ID страны",
+                                        "type": "integer"
+                                    },
+                                    "description": {
+                                        "description": "Описание(макс 1500 символов)",
+                                        "type": "string"
+                                    },
+                                    "contact_person_name": {
+                                        "description": "Контактное лицо",
+                                        "type": "string"
+                                    },
+                                    "contact_person_email": {
+                                        "description": "Email контактного лица",
+                                        "type": "string"
+                                    },
+                                    "cooperation_type": {
+                                        "description": "Пример желаемого сотрудничества(10-1500 символов)",
+                                        "type": "string"
+                                    },
+                                    "organization_type_id": {
+                                        "description": "Тип организации (id)",
+                                        "type": "integer"
+                                    },
+                                    "organization_type": {
+                                        "description": "Тип организации (свой)",
+                                        "type": "string"
+                                    },
+                                    "goals[0]": {
+                                        "description": "ID Цели",
+                                        "type": "integer"
+                                    },
+                                    "goals[1]": {
+                                        "description": "ID Цели",
+                                        "type": "integer"
+                                    },
+                                    "photo": {
+                                        "description": "Фото",
+                                        "type": "file",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "terms": {
+                                        "description": "Согласие на обработку данных"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное добавление профиля к компании",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ConnectTypesWithCompanies extends Migration
+class ChangeCompaniesProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,10 @@ class ConnectTypesWithCompanies extends Migration
     public function up()
     {
         Schema::table('company_profiles', function (Blueprint $table) {
-            $table->unsignedBigInteger('organization_type_id')
-                ->nullable();
-
-            $table->foreign('organization_type_id')
-                ->references('id')
-                ->on('organization_types');
+            $table->string('organization_type')->nullable();
+            $table->text('cooperation_type');
+            $table->string('contact_person_name');
+            $table->string('contact_person_email');
         });
     }
 
@@ -31,8 +29,10 @@ class ConnectTypesWithCompanies extends Migration
     public function down()
     {
         Schema::table('company_profiles', function (Blueprint $table) {
-            $table->dropForeign(['organization_type_id']);
-            $table->dropColumn('organization_type_id');
+            $table->dropColumn('organization_type');
+            $table->dropColumn('cooperation_type');
+            $table->dropColumn('contact_person_name');
+            $table->dropColumn('contact_person_email');
         });
     }
 }

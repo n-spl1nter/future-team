@@ -41,7 +41,6 @@ class CreateProfilesTable extends Migration
     public function down()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->dropForeign(['city_id']);
             $table->dropForeign(['activity_field_id']);
         });
         Schema::dropIfExists('profiles');

@@ -12,6 +12,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
         Route::post('/auth/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'logout']);
         Route::get('/user/account', ['uses' => 'User\UsersController@account', 'as' =>'account']);
         Route::post('/user/profile', ['uses' => 'User\UsersController@setProfile', 'as' => 'storeProfile']);
+        Route::post('/user/companyprofile', ['uses' => 'User\UsersController@setCompanyProfile', 'as' => 'storeCompanyProfile']);
     });
 
     /** Common data */
