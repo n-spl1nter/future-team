@@ -221,6 +221,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function setAvatar(UploadedFile $file): self
     {
+        if (!$file) {
+            return $this;
+        }
         list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_AVATAR);
         $image = \Image::make($file);
         $image
@@ -339,5 +342,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function setCompanyProfile(Request $request)
     {
         $companyProfile = new CompanyProfile($request->all());
+        $orgTypeId = $request->get('organization_type_id', null);
+        $orgTypeValue = $request->get('organization_type');
+        if ($orgTypeId) {
+            $companyProfile->organization_type_id = $orgTypeId;
+        } else {
+            $companyProfile->organization_type = $orgTypeValue;
+        }
+        $this->setGoals($request)
+            ->setAvatar($request->file('photo'))
+            ->companyProfile()
+            ->save($companyProfile);
     }
 }
