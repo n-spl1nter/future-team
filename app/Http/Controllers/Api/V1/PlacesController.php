@@ -67,4 +67,27 @@ class PlacesController extends Controller
 
         return response()->json(['items' => $cities]);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/city/{city}",
+     *     summary="Город",
+     *     tags={"Common"},
+     *     @OA\Parameter(name="city", required=true, in="path", description="Id города"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Возвращает город по его id",
+     *     @OA\JsonContent()
+     *     ),
+     * )
+     * @param City $city
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function city(City $city)
+    {
+        return response()->json(array_merge(
+            $city->toArray(),
+            ['country' => $city->country->toArray()]
+        ));
+    }
 }

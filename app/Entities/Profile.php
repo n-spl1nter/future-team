@@ -51,6 +51,7 @@ class Profile extends Model
         'first_name', 'middle_name', 'last_name', 'phone', 'language_exchange_agreement',
         'city_id', 'activity_field_id', 'motivation',
     ];
+    protected $hidden = ['id'];
 
     public function user()
     {

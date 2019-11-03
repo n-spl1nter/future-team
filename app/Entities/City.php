@@ -108,9 +108,14 @@ use Illuminate\Database\Eloquent\Model;
 class City extends Model
 {
     protected $table = '_cities';
+    protected $primaryKey = 'city_id';
+    protected $visible = [
+        'city_id', 'country_id', 'title_ru', 'title_en', 'area_ru', 'area_en',
+        'region_ru', 'region_en',
+    ];
 
     public function country()
     {
-        return $this->belongsTo(Country::class, 'country_id', 'city_id');
+        return $this->belongsTo(Country::class, 'country_id', 'country_id');
     }
 }

@@ -135,6 +135,25 @@
                 }
             }
         },
+        "/goals": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Цели устойчивого развития ООН",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\GoalsController::index",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список целей",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/": {
             "get": {
                 "tags": [
@@ -224,6 +243,33 @@
                     },
                     "400": {
                         "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/city/{city}": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Город",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\PlacesController::city",
+                "parameters": [
+                    {
+                        "name": "city",
+                        "in": "path",
+                        "description": "Id города",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает город по его id",
                         "content": {
                             "application/json": {
                                 "schema": {}
