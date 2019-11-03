@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\Entities\OrganizationType|null $organizationType
  */
 class CompanyProfile extends Model
 {
@@ -49,6 +50,11 @@ class CompanyProfile extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function organizationType()
+    {
+        return $this->belongsTo(OrganizationType::class, 'organization_type_id', 'id');
+    }
+
     public static function getOnCreateValidationRules(): array
     {
         return [
@@ -58,8 +64,8 @@ class CompanyProfile extends Model
             'goals' => 'required|array|min:1|max:5',
             'goals.*' => 'required|integer|exists:goals,id',
             'organization_type_id' => 'nullable|organization_types:goals,id',
-            'organization_type' => 'nullable|string|max:100',
-            'photo' => 'image|mimes:jpeg,bmp,png|dimensions:min_width=500,min_height=500',
+            'organization_type' => 'nullable|required_without:organization_type_id|string|max:100',
+            'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=500,min_height=500',
             'terms' => 'required|accepted',
             'contact_person_name' => 'required|string|max:150',
             'contact_person_email' => 'required|email',

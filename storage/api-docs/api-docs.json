@@ -178,6 +178,25 @@
                 }
             }
         },
+        "/common/organizationtypes": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Типы организаций",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Common\\OrganizationTypesController::index",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список типов организаций",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/common/countries": {
             "get": {
                 "tags": [

@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ActivityFieldsSeeder::class);
         $this->call(LangaugesSeeder::class);
         $this->call(GoalsSeeder::class);
+        $this->call(OrganizationTypesSeeder::class);
     }
 }

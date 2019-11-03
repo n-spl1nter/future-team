@@ -23,5 +23,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
         Route::get('/city/{city}', ['uses' => 'PlacesController@city', 'as' => 'city']);
         Route::get('/languages', ['uses' => 'LanguagesController@index', 'as' => 'languages']);
         Route::get('/goals', ['uses' => 'GoalsController@index', 'as' => 'goals']);
+        Route::get('/organizationtypes', ['uses' => 'OrganizationTypesController@index', 'as' => 'organizationTypes']);
     });
 });
