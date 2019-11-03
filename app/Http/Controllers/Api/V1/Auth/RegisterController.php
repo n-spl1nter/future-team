@@ -11,7 +11,7 @@ class RegisterController extends Controller
 {
     /**
      * @OA\Post(
-     *  path="/register",
+     *  path="/auth/register",
      *  summary="Register by email",
      *  tags={"Auth"},
      *  @OA\Parameter(name="email", required=true, in="query", example="test@test.com", description="unique email"),

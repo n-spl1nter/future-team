@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Common;
 
 use App\Entities\City;
 use App\Entities\Country;
@@ -11,7 +11,7 @@ class PlacesController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/countries",
+     *     path="/common/countries",
      *     summary="Страны",
      *     tags={"Common"},
      *     @OA\Response(
@@ -29,7 +29,7 @@ class PlacesController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/cities",
+     *     path="/common/cities",
      *     summary="Города",
      *     tags={"Common"},
      *     @OA\Parameter(name="country_id", required=true, in="query", description="Id страны"),
@@ -70,7 +70,7 @@ class PlacesController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/city/{city}",
+     *     path="/common/city/{city}",
      *     summary="Город",
      *     tags={"Common"},
      *     @OA\Parameter(name="city", required=true, in="path", description="Id города"),

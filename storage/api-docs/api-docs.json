@@ -13,26 +13,7 @@
         }
     ],
     "paths": {
-        "/activityfields": {
-            "get": {
-                "tags": [
-                    "Common"
-                ],
-                "summary": "Сферы деятельности",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\ActivityFieldsController::index",
-                "responses": {
-                    "200": {
-                        "description": "Возвращает список сфер деятельности",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/login": {
+        "/auth/login": {
             "post": {
                 "tags": [
                     "Auth"
@@ -83,7 +64,7 @@
                 }
             }
         },
-        "/logout": {
+        "/auth/logout": {
             "post": {
                 "tags": [
                     "Auth"
@@ -92,7 +73,12 @@
                 "operationId": "App\\Http\\Controllers\\Api\\V1\\Auth\\LoginController::logout",
                 "responses": {
                     "204": {
-                        "description": "Удаляет все токены клиента"
+                        "description": "Удаляет все токены клиента",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -102,7 +88,7 @@
                 ]
             }
         },
-        "/register": {
+        "/auth/register": {
             "post": {
                 "tags": [
                     "Auth"
@@ -135,13 +121,32 @@
                 }
             }
         },
-        "/goals": {
+        "/common/activityfields": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Сферы деятельности",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Common\\ActivityFieldsController::index",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список сфер деятельности",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/common/goals": {
             "get": {
                 "tags": [
                     "Common"
                 ],
                 "summary": "Цели устойчивого развития ООН",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\GoalsController::index",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Common\\GoalsController::index",
                 "responses": {
                     "200": {
                         "description": "Возвращает список целей",
@@ -154,32 +159,13 @@
                 }
             }
         },
-        "/": {
-            "get": {
-                "tags": [
-                    "Api base"
-                ],
-                "summary": "Base path",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\HomeController::index",
-                "responses": {
-                    "200": {
-                        "description": "Api information",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/languages": {
+        "/common/languages": {
             "get": {
                 "tags": [
                     "Common"
                 ],
                 "summary": "Языки",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\LanguagesController::index",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Common\\LanguagesController::index",
                 "responses": {
                     "200": {
                         "description": "Возвращает список языков",
@@ -192,13 +178,13 @@
                 }
             }
         },
-        "/countries": {
+        "/common/countries": {
             "get": {
                 "tags": [
                     "Common"
                 ],
                 "summary": "Страны",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\PlacesController::countries",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Common\\PlacesController::countries",
                 "responses": {
                     "200": {
                         "description": "Возвращает список стран",
@@ -211,13 +197,13 @@
                 }
             }
         },
-        "/cities": {
+        "/common/cities": {
             "get": {
                 "tags": [
                     "Common"
                 ],
                 "summary": "Города",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\PlacesController::cities",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Common\\PlacesController::cities",
                 "parameters": [
                     {
                         "name": "country_id",
@@ -252,13 +238,13 @@
                 }
             }
         },
-        "/city/{city}": {
+        "/common/city/{city}": {
             "get": {
                 "tags": [
                     "Common"
                 ],
                 "summary": "Город",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\PlacesController::city",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Common\\PlacesController::city",
                 "parameters": [
                     {
                         "name": "city",
@@ -279,13 +265,32 @@
                 }
             }
         },
+        "/": {
+            "get": {
+                "tags": [
+                    "Api base"
+                ],
+                "summary": "Base path",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\HomeController::index",
+                "responses": {
+                    "200": {
+                        "description": "Api information",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/account": {
             "get": {
                 "tags": [
                     "User"
                 ],
                 "summary": "Возвращает профиль текущего пользователя",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\UsersController::account",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::account",
                 "responses": {
                     "200": {
                         "description": "Возвращает профиль текущего пользователя",
@@ -317,7 +322,7 @@
                     "User"
                 ],
                 "summary": "Добавляет профиль к пользователю",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\UsersController::setProfile",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::setProfile",
                 "requestBody": {
                     "content": {
                         "multipart/form-data": {

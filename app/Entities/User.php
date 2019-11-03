@@ -335,4 +335,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
 
     }
+
+    public function setCompanyProfile(Request $request)
+    {
+        $companyProfile = new CompanyProfile($request->all());
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Common;
 
 use App\Entities\ActivityField;
 use App\Http\Controllers\Controller;
@@ -10,7 +10,7 @@ class ActivityFieldsController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/activityfields",
+     *     path="/common/activityfields",
      *     summary="Сферы деятельности",
      *     tags={"Common"},
      *     @OA\Response(

@@ -34,9 +34,19 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyProfile extends Model
 {
     protected $table = 'company_profiles';
+    protected $fillable = [
+        'full_name', 'description'
+    ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public static function getOnCreateValidationRules(): array
+    {
+        return [
+
+        ];
     }
 }

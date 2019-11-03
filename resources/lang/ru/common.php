@@ -8,6 +8,7 @@ return [
     ],
     'refresh' => 'Обновить',
     'home' => 'Главная',
-    'wrongUserType' => 'Пользовтаель должен быть компанией.',
-    'AlreadyHasProfile' => 'Пользовтаель уже имеет профиль.',
+    'userShouldBeACompany' => 'Пользовтаель должен быть компанией.',
+    'userShouldNotBeACompany' => 'Пользовтаель не должен быть компанией.',
+    'AlreadyHasProfile' => 'Пользоватаель уже имеет профиль.',
 ];

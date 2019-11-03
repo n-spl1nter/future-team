@@ -13,7 +13,7 @@ class LoginController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/login",
+     *     path="/auth/login",
      *     summary="Логин через email",
      *     tags={"Auth"},
      *  @OA\Parameter(name="username", required=true, in="query", example="test@test.com", description="Email"),
@@ -69,14 +69,15 @@ class LoginController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/logout",
+     *     path="/auth/logout",
      *     summary="Выход из приложения",
      *     tags={"Auth"},
      *     security={{"bearerAuth": {}}},
-     *  @OA\Response(
-     *     response=204,
-     *     description="Удаляет все токены клиента"
-     *  )
+     *     @OA\Response(
+     *       response=204,
+     *       description="Удаляет все токены клиента",
+     *       @OA\JsonContent()
+     *     ),
      * )
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
@@ -84,6 +85,6 @@ class LoginController extends Controller
     {
         \Auth::user()->oauthAccessTokens()->delete();
 
-        return response('', 204);
+        return response()->json(null, 204);
     }
 }

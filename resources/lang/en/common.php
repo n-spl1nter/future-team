@@ -8,6 +8,7 @@ return [
     ],
     'refresh' => 'Refresh',
     'home' => 'Home',
-    'wrongUserType' => 'User should be a company',
+    'userShouldBeACompany' => 'User should be a company',
+    'userShouldNotBeACompany' => 'User shouldn\'t be a company',
     'AlreadyHasProfile' => 'User already has profile',
 ];

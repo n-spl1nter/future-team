@@ -47,6 +47,7 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     protected $table = '_countries';
+    protected $primaryKey = 'country_id';
     protected $visible = ['country_id', 'title_ru', 'title_en'];
 
     public function cities()

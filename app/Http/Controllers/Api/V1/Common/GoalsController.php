@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Common;
 
 use App\Entities\Goal;
 use App\Http\Controllers\Controller;
@@ -10,7 +10,7 @@ class GoalsController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/goals",
+     *     path="/common/goals",
      *     summary="Цели устойчивого развития ООН",
      *     tags={"Common"},
      *     @OA\Response(

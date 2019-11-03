@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\User;
 
+use App\Entities\CompanyProfile;
 use App\Entities\Profile;
+use App\Entities\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
@@ -113,12 +115,13 @@ class UsersController extends Controller
      */
     public function setProfile(Request $request)
     {
+        /** @var User $user */
         $user = \Auth::user();
         $validator = \Validator::make($request->all(), Profile::getOnCreateValidationRules());
 
         $validator->after(function (Validator $validator) use ($user) {
             if ($user->isCompany()) {
-                $validator->errors()->add('process', __('common.wrongUserType'));
+                $validator->errors()->add('process', __('common.userShouldBeACompany'));
             } elseif ($user->profile) {
                 $validator->errors()->add('process', __('common.AlreadyHasProfile'));
             }
@@ -129,5 +132,22 @@ class UsersController extends Controller
         $user->setProfile($request);
 
         return response()->json(['user' => $user->getAccountInfo()], 201);
+    }
+
+    public function setCompanyProfile(Request $request)
+    {
+        /** @var User $user */
+        $user = \Auth::user();
+        $validator = \Validator::make($request->all(), CompanyProfile::getOnCreateValidationRules());
+        $validator->after(function (Validator $validator) use ($user) {
+            if ($user->isMember()) {
+                $validator->errors()->add('process', __('common.userShouldNotBeACompany'));
+            } elseif ($user->companyProfile) {
+                $validator->errors()->add('process', __('common.AlreadyHasProfile'));
+            }
+        });
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->getMessages()], 400);
+        }
     }
 }

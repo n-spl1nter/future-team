@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Common;
 
 use App\Entities\Language;
 use App\Http\Controllers\Controller;
@@ -11,7 +11,7 @@ class LanguagesController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/languages",
+     *     path="/common/languages",
      *     summary="Языки",
      *     tags={"Common"},
      *     @OA\Response(
