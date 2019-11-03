@@ -13,7 +13,7 @@ class UsersController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/account",
+     *     path="/user/account",
      *     summary="Возвращает профиль текущего пользователя",
      *     tags={"User"},
      *     security={{"bearerAuth": {}}},
@@ -40,7 +40,7 @@ class UsersController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/profile",
+     *     path="/user/profile",
      *     summary="Добавляет профиль к пользователю",
      *     tags={"User"},
      *     security={{"bearerAuth": {}}},

@@ -284,7 +284,7 @@
                 }
             }
         },
-        "/account": {
+        "/user/account": {
             "get": {
                 "tags": [
                     "User"
@@ -316,7 +316,7 @@
                 ]
             }
         },
-        "/profile": {
+        "/user/profile": {
             "post": {
                 "tags": [
                     "User"
