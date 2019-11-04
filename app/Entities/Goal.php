@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
 class Goal extends Model
 {
     protected $table = 'goals';
+    protected $hidden = ['pivot', 'created_at', 'updated_at'];
 
     public function users()
     {
@@ -35,6 +36,6 @@ class Goal extends Model
 
     public function images()
     {
-        
+
     }
 }

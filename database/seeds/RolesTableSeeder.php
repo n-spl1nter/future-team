@@ -20,11 +20,6 @@ class RolesTableSeeder extends Seeder
         $roleUser->description = 'Пользователь';
         $roleUser->save();
 
-        $roleUser = new Role();
-        $roleUser->name = 'COMPANY';
-        $roleUser->description = 'Компания';
-        $roleUser->save();
-
         $role = new Role();
         $role->name = 'ADMIN';
         $role->description = 'Администратор';
@@ -35,5 +30,10 @@ class RolesTableSeeder extends Seeder
         $roleModerator->name = 'MODERATOR';
         $roleModerator->description = 'Модератор';
         $roleModerator->save();
+
+        $roleUser = new Role();
+        $roleUser->name = 'COMPANY';
+        $roleUser->description = 'Компания';
+        $roleUser->save();
     }
 }

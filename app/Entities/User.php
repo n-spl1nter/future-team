@@ -138,12 +138,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isCompany(): bool
     {
-        return $this->role->name === Role::COMPANY;
+        return in_array($this->role_id, [Role::COMPANY, Role::ADMIN]);
     }
 
     public function isMember(): bool
     {
-        return $this->role->name === Role::MEMBER;
+        return in_array($this->role_id, [Role::MEMBER, Role::MODERATOR]);
     }
 
     /**
@@ -194,7 +194,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         if (
             $organizationId
-            && User::whereType(static::TYPE_COMPANY)->where('id', $organizationId)->first()
+            && User::whereRoleId(Role::COMPANY)->where('id', $organizationId)->first()
         ) {
             $this->organization_id = $organizationId;
             $this->organization_name = null;
@@ -291,10 +291,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $data = [
             'email' => $this->email,
-            'type' => $this->type,
+            'type' => $this->role->name,
             'avatar' => $this->getAvatar(),
         ];
-        $this->load(['profile', 'knownLanguages', 'wouldLikeToLearnLanguages', 'companyProfile']);
+        $this->load(['profile', 'knownLanguages', 'wouldLikeToLearnLanguages', 'companyProfile', 'goals']);
         if ($this->isMember() && $this->profile) {
             $data = array_merge(
                 $data,
@@ -308,7 +308,9 @@ class User extends Authenticatable implements MustVerifyEmail
             $data = array_merge($data, $this->companyProfile->toArray());
         }
 
-        return $data;
+        return array_merge($data, [
+            'goals' => $this->goals->toArray(),
+        ]);
     }
 
     public function makeToken()
