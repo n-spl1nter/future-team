@@ -11,8 +11,16 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('/auth/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'logout']);
         Route::get('/user/account', ['uses' => 'User\UsersController@account', 'as' =>'account']);
-        Route::post('/user/profile', ['uses' => 'User\UsersController@setProfile', 'as' => 'storeProfile']);
-        Route::post('/user/companyprofile', ['uses' => 'User\UsersController@setCompanyProfile', 'as' => 'storeCompanyProfile']);
+        Route::post('/user/profile', [
+                'uses' => 'User\UsersController@setProfile',
+                'as' => 'storeProfile',
+                'middleware' => ['can:setUserProfile,App\Entities\User'],
+            ]);
+        Route::post('/user/companyprofile', [
+                'uses' => 'User\UsersController@setCompanyProfile',
+                'as' => 'storeCompanyProfile',
+                'middleware' => ['can:setCompanyProfile,App\Entities\User'],
+            ]);
     });
 
     Route::get('/user/companies/search', ['uses' => 'User\UsersController@findCompanies', 'companiesSearch']);

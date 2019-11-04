@@ -30,12 +30,14 @@ use App\Entities\User;
  */
 class Role extends Model
 {
-    const USER = 1;
+    const MEMBER = 1;
     const ADMIN = 2;
     const MODERATOR = 3;
+    const COMPANY = 4;
 
     const ROLE_NAME = [
-        self::USER => 'Пользователь',
+        self::MEMBER => 'Пользователь',
+        self::COMPANY => 'Компания',
         self::ADMIN => 'Администратор',
         self::MODERATOR => 'Модератор',
     ];

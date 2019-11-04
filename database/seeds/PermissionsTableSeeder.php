@@ -31,5 +31,15 @@ class PermissionsTableSeeder extends Seeder
         $permission3->name = Permission::MANAGE_USERS;
         $permission3->description = 'Управление пользователями';
         $permission3->save();
+
+        $permission3 = new Permission();
+        $permission3->name = Permission::SET_USER_PROFILE;
+        $permission3->description = 'Добавление\изменение профиля пользователя';
+        $permission3->save();
+
+        $permission3 = new Permission();
+        $permission3->name = Permission::SET_COMPANY_PROFILE;
+        $permission3->description = 'Добавление\изменение профиля компании';
+        $permission3->save();
     }
 }

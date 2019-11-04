@@ -26,9 +26,15 @@ use Illuminate\Http\UploadedFile;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $role_id
  * @property string $type
+ * @property string|null $organization_name
+ * @property int|null $organization_id
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
  * @property-read int|null $clients_count
  * @property-read \App\Entities\CompanyProfile $companyProfile
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Goal[] $goals
+ * @property-read int|null $goals_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Language[] $knownLanguages
+ * @property-read int|null $known_languages_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\OauthAccessToken[] $oauthAccessTokens
@@ -39,6 +45,8 @@ use Illuminate\Http\UploadedFile;
  * @property-read int|null $social_networks_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
  * @property-read int|null $tokens_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Language[] $wouldLikeToLearnLanguages
+ * @property-read int|null $would_like_to_learn_languages_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User query()
@@ -46,29 +54,18 @@ use Illuminate\Http\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereOrganizationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereOrganizationName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRoleId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property string|null $organization_name
- * @property int|null $organization_id
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereOrganizationId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereOrganizationName($value)
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Language[] $knownLanguages
- * @property-read int|null $known_languages_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Language[] $wouldLikeToLearnLanguages
- * @property-read int|null $would_like_to_learn_languages_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Goal[] $goals
- * @property-read int|null $goals_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasApiTokens;
-
-    const TYPE_COMPANY = 'company';
-    const TYPE_MEMBER = 'member';
 
     /**
      * The attributes that are mass assignable.
@@ -141,14 +138,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isCompany(): bool
     {
-        return $this->type === self::TYPE_COMPANY;
+        return $this->role->name === Role::COMPANY;
     }
 
     public function isMember(): bool
     {
-        return $this->type === self::TYPE_MEMBER;
+        return $this->role->name === Role::MEMBER;
     }
-
 
     /**
      * Проверяет, имеет ли пользователь права
@@ -226,8 +222,8 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!$file) {
             return $this;
         }
-        MediaFile::removeImage(static::class, $this->id, MediaFile::TYPE_AVATAR);
-        MediaFile::removeImage(static::class, $this->id, MediaFile::TYPE_AVATAR_SMALL);
+        MediaFile::removeFile(static::class, $this->id, MediaFile::TYPE_AVATAR);
+        MediaFile::removeFile(static::class, $this->id, MediaFile::TYPE_AVATAR_SMALL);
 
         list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_AVATAR);
         $image = \Image::make($file);
@@ -237,8 +233,8 @@ class User extends Authenticatable implements MustVerifyEmail
             ->widen(180)
             ->save(storage_path('app/public/') . $smallFileName);
 
-        MediaFile::addImage($fullFileName, static::class, $this->id, MediaFile::TYPE_AVATAR);
-        MediaFile::addImage($smallFileName, static::class, $this->id, MediaFile::TYPE_AVATAR_SMALL);
+        MediaFile::addFile($fullFileName, static::class, $this->id, MediaFile::TYPE_AVATAR);
+        MediaFile::addFile($smallFileName, static::class, $this->id, MediaFile::TYPE_AVATAR_SMALL);
         return $this;
     }
 
@@ -262,9 +258,8 @@ class User extends Authenticatable implements MustVerifyEmail
         $password = Str::random(8);
         $user = new self();
         $user->email = $attributes['email'];
-        $user->type = $attributes['type'];
         $user->email_verified_at = now();
-        $user->setRole(Role::USER)
+        $user->setRole($attributes['type'] === 'member' ? Role::MEMBER : Role::COMPANY)
             ->setPassword($password)
             ->save();
         $user->sendEmailVerificationNotificationOnRegister($password);
@@ -283,7 +278,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 $user->email = $attributes['email'];
                 $user->email_verified_at = now();
             }
-            $user->setRole(Role::USER)->save();
+            $user->setRole(Role::MEMBER)->save();
             $user->socialNetworks()
                 ->create(array_merge(['service' => $serviceName], $attributes))
                 ->save();
@@ -349,6 +344,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $companyProfile = $this->companyProfile;
         if (!$companyProfile) {
             $companyProfile = new CompanyProfile($request->all());
+            $companyProfile->full_name = $request->get('full_name');
         } else {
             $companyProfile->update($request->all());
         }

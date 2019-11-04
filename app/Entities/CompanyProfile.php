@@ -41,8 +41,7 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyProfile extends Model
 {
     protected $table = 'company_profiles';
-    protected $fillable = [
-        'full_name', 'description', 'contact_person_name', 'contact_person_email', 'cooperation_type',
+    protected $fillable = [ 'description', 'contact_person_name', 'contact_person_email', 'cooperation_type',
         'country_id',
     ];
     protected $hidden = [
@@ -67,10 +66,26 @@ class CompanyProfile extends Model
             'description' => 'nullable|string|max:1500',
             'goals' => 'required|array|min:1|max:5',
             'goals.*' => 'required|integer|exists:goals,id',
-            'organization_type_id' => 'nullable|organization_types:goals,id',
+            'organization_type_id' => 'nullable|exists:organization_types,id',
             'organization_type' => 'nullable|required_without:organization_type_id|string|max:100',
             'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=500,min_height=500',
             'terms' => 'required|accepted',
+            'contact_person_name' => 'required|string|max:150',
+            'contact_person_email' => 'required|email',
+            'cooperation_type' => 'required|string|min:10|max:1500',
+        ];
+    }
+
+    public static function getOnUpdateValidationRules(): array
+    {
+        return [
+            'country_id' => 'required|integer|exists:_countries,country_id',
+            'description' => 'nullable|string|max:1500',
+            'goals' => 'required|array|min:1|max:5',
+            'goals.*' => 'required|integer|exists:goals,id',
+            'organization_type_id' => 'nullable|exists:organization_types,id',
+            'organization_type' => 'nullable|required_without:organization_type_id|string|max:100',
+            'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=500,min_height=500',
             'contact_person_name' => 'required|string|max:150',
             'contact_person_email' => 'required|email',
             'cooperation_type' => 'required|string|min:10|max:1500',

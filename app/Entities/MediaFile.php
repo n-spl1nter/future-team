@@ -75,7 +75,7 @@ class MediaFile extends Model
         ];
     }
 
-    public static function addImage(string $filePath, string $entityName, int $entityId, string $fileType): self
+    public static function addFile(string $filePath, string $entityName, int $entityId, string $fileType): self
     {
         $file = new self([
             'path' => $filePath,
@@ -89,7 +89,7 @@ class MediaFile extends Model
         return $file;
     }
 
-    public static function removeImage(string $entityName, int $entityId, string $fileType)
+    public static function removeFile(string $entityName, int $entityId, string $fileType)
     {
         $mediaFile = static::whereEntity($entityName)
                 ->whereEntityId($entityId)

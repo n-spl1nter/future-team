@@ -16,8 +16,13 @@ class RolesTableSeeder extends Seeder
         $roleIds = Permission::pluck('id')->toArray();
 
         $roleUser = new Role();
-        $roleUser->name = 'USER';
+        $roleUser->name = 'MEMBER';
         $roleUser->description = 'Пользователь';
+        $roleUser->save();
+
+        $roleUser = new Role();
+        $roleUser->name = 'COMPANY';
+        $roleUser->description = 'Компания';
         $roleUser->save();
 
         $role = new Role();

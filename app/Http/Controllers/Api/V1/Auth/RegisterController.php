@@ -32,7 +32,7 @@ class RegisterController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'email' => 'required|email|unique:users,email',
-            'type' => ['required', Rule::in([User::TYPE_MEMBER, User::TYPE_COMPANY])],
+            'type' => ['required', Rule::in(['member', 'company'])],
         ]);
         if ($validator->fails()) {
             return response()

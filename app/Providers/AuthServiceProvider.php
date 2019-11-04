@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Entities\User;
 use App\Policies\PermissionPolicy;
+use App\Policies\UserPolicy;
 use App\RBAC\Permission;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Permission::class => PermissionPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**

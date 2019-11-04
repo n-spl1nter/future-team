@@ -24,7 +24,7 @@ class UsersController extends Controller
      *     ),
      *     @OA\Response(
      *      response=401,
-     *      description="Не авторизован",
+     *      description="Не аутентифицирован",
      *      @OA\JsonContent()
      *     )
      * )
@@ -106,6 +106,11 @@ class UsersController extends Controller
      *    ),
      *     @OA\Response(
      *        response=401,
+     *        description="Ошибка аутентификации",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=403,
      *        description="Ошибка авторизации",
      *        @OA\JsonContent()
      *    ),
@@ -119,12 +124,6 @@ class UsersController extends Controller
         $user = \Auth::user();
         $rules = $user->profile ? Profile::getOnUpdateValidationRules() : Profile::getOnCreateValidationRules();
         $validator = \Validator::make($request->all(), $rules);
-
-        $validator->after(function (Validator $validator) use ($user) {
-            if ($user->isCompany()) {
-                $validator->errors()->add('process', __('common.userShouldBeACompany'));
-            }
-        });
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->getMessages()], 400);
         }
@@ -174,6 +173,11 @@ class UsersController extends Controller
      *    ),
      *     @OA\Response(
      *        response=401,
+     *        description="Ошибка аутентификации",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=403,
      *        description="Ошибка авторизации",
      *        @OA\JsonContent()
      *    ),
@@ -185,14 +189,8 @@ class UsersController extends Controller
     {
         /** @var User $user */
         $user = \Auth::user();
-        $validator = \Validator::make($request->all(), CompanyProfile::getOnCreateValidationRules());
-        $validator->after(function (Validator $validator) use ($user) {
-            if ($user->isMember()) {
-                $validator->errors()->add('process', __('common.userShouldNotBeACompany'));
-            } elseif ($user->companyProfile) {
-                $validator->errors()->add('process', __('common.AlreadyHasProfile'));
-            }
-        });
+        $rules = $user->companyProfile ? CompanyProfile::getOnUpdateValidationRules() : CompanyProfile::getOnCreateValidationRules();
+        $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->getMessages()], 400);
         }

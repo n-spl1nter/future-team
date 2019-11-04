@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $revoked
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $expires_at
+ * @property \Illuminate\Support\Carbon|null $expires_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\OauthAccessToken newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\OauthAccessToken newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\OauthAccessToken query()
@@ -32,5 +32,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class OauthAccessToken extends Model
 {
-    //
+    protected $hidden = ['id', 'user_id', 'client_id', 'scopes', 'revoked'];
+    protected $dates = ['expires_at'];
 }
