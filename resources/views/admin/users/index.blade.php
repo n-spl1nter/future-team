@@ -8,12 +8,12 @@
     <section class="content">
         <div class="row">
             <div class="col-12">
-                <div class="box">
-                    <div class="box-header">
+                <div class="card">
+                    <div class="card-header">
                         Тут будут ссылки с экспортом
                     </div>
                     <div class="box-body">
-                        <table class="table table-bordered table-striped table-responsive">
+                        <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -46,7 +46,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="box-footer">
+                    <div class="card-footer">
                         @include('admin._partials.pagination', ['paginator' => $users])
                     </div>
                 </div>

@@ -5,8 +5,8 @@
     <section class="content">
         <div class="row">
             <div class="col-12">
-                <div class="hentry group box">
-                    <div class="box-body">
+                <div class="hentry group card">
+                    <div class="card-body">
                         {{ Form::open([
                             'route' => 'admin.permissions.update',
                             'method' => 'put',
