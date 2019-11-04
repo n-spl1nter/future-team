@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use App\RBAC\Role;
 use Illuminate\Support\Str;
+use Kyslik\ColumnSortable\Sortable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Http\UploadedFile;
 
@@ -25,7 +26,6 @@ use Illuminate\Http\UploadedFile;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $role_id
- * @property string $type
  * @property string|null $organization_name
  * @property int|null $organization_id
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
@@ -50,6 +50,7 @@ use Illuminate\Http\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User sortable($defaultParameters = null)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereEmailVerifiedAt($value)
@@ -59,44 +60,24 @@ use Illuminate\Http\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRoleId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasApiTokens, Sortable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'email', 'password',
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token', 'created_at', 'updated_at', 'email_verified_at', 'role_id',
     ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public $sortable = ['id', 'email', 'role_id'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
@@ -107,7 +88,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(SocialNetwork::class, 'user_id', 'id');
     }
 
-    public function oauthAccessTokens(){
+    public function oauthAccessTokens()
+    {
         return $this->hasMany(OauthAccessToken::class);
     }
 

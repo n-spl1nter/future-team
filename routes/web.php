@@ -1,26 +1,18 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
+    return 'Home Page';
 });
 
 Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => [
     'auth', 'can:viewAdmin,App\RBAC\Permission',
 ]], function () {
     Route::get('/', ['uses' => 'HomeController@index', 'as' => 'home']);
+    /** Permissions */
     Route::get('/permissions', ['uses' => 'PermissionsController@index', 'as' => 'permissions.index', 'middleware' => ['can:view,App\RBAC\Permission']]);
     Route::put('/permissions', ['uses' => 'PermissionsController@update', 'as' => 'permissions.update', 'middleware' => ['can:update,App\RBAC\Permission']]);
+    /** Users */
+    Route::get('/users', ['uses' => 'UsersController@index', 'as' => 'users.index', 'middleware' => ['can:manageUsers,App\Entities\User']]);
 });
 
 Route::group(['middleware' => ['guest']], function () {

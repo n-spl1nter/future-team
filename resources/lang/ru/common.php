@@ -6,6 +6,11 @@ return [
         'successMessage' => 'Привелегии ролей изменены',
         'rolesManagement' => 'Управление ролями',
     ],
+    'users' => [
+        'name' => 'Пользователи',
+        'successMessage' => 'Пользователь изменен',
+        'rolesManagement' => 'Пользователи',
+    ],
     'refresh' => 'Обновить',
     'home' => 'Главная',
     'userShouldBeACompany' => 'Пользовтаель должен быть компанией.',

@@ -29,4 +29,9 @@ class UserPolicy
     {
         return $user->canDo(Permission::SET_COMPANY_PROFILE);
     }
+
+    public function manageUsers(User $user)
+    {
+        return $user->canDo(Permission::MANAGE_USERS);
+    }
 }

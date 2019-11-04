@@ -28,12 +28,22 @@
                         <p>{{ __('common.home') }}</p>
                     </a>
                 </li>
+                @can('manageUsers', \App\Entities\User::class)
+                <li class="nav-item">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>{{ __('common.users.name') }}</p>
+                    </a>
+                </li>
+                @endcan
+                @can('view', \App\RBAC\Permission::class)
                 <li class="nav-item">
                     <a href="{{ route('admin.permissions.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-lock"></i>
                         <p>{{ __('common.permissions.name') }}</p>
                     </a>
                 </li>
+                @endcan
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
