@@ -15,6 +15,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
         Route::post('/user/companyprofile', ['uses' => 'User\UsersController@setCompanyProfile', 'as' => 'storeCompanyProfile']);
     });
 
+    Route::get('/user/companies/search', ['uses' => 'User\UsersController@findCompanies', 'companiesSearch']);
+
     /** Common data */
     Route::group(['prefix' => 'common', 'namespace' => 'Common'], function () {
         Route::get('/activityfields', ['uses' => 'ActivityFieldsController@index', 'as' => 'activityFields']);

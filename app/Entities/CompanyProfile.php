@@ -45,6 +45,9 @@ class CompanyProfile extends Model
         'full_name', 'description', 'contact_person_name', 'contact_person_email', 'cooperation_type',
         'country_id',
     ];
+    protected $hidden = [
+        'contact_person_email'
+    ];
 
     public function user()
     {

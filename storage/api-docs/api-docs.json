@@ -574,6 +574,33 @@
                     }
                 ]
             }
+        },
+        "/user/companies/search": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Поиск компаний",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::findCompanies",
+                "parameters": [
+                    {
+                        "name": "companyName",
+                        "in": "query",
+                        "description": "Начало ввода имени компании(мин длинна 2 символа))",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список наденных компаний",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
