@@ -215,15 +215,20 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function setGoals(Request $request): self
     {
-        $this->goals()->sync($request->get('goals'));
+        if ($request->has('goals')) {
+            $this->goals()->sync($request->get('goals'));
+        }
         return  $this;
     }
 
-    public function setAvatar(UploadedFile $file): self
+    public function setAvatar(UploadedFile $file = null): self
     {
         if (!$file) {
             return $this;
         }
+        MediaFile::removeImage(static::class, $this->id, MediaFile::TYPE_AVATAR);
+        MediaFile::removeImage(static::class, $this->id, MediaFile::TYPE_AVATAR_SMALL);
+
         list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_AVATAR);
         $image = \Image::make($file);
         $image
@@ -318,7 +323,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function setProfile(Request $request)
     {
-        $profile = new Profile($request->all());
+        $profile = $this->profile;
+        if (!$profile) {
+            $profile = new Profile($request->all());
+        } else {
+            $profile->update($request->all());
+        }
         $profile->setBirthDate($request->get('birth_date_at'));
         if ($request->has('languages_wltl')) {
             $this->wouldLikeToLearnLanguages()->sync($request->get('languages_wltl'));
@@ -334,19 +344,21 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->save();
     }
 
-    public function updateProfile(Request $request)
-    {
-
-    }
-
     public function setCompanyProfile(Request $request)
     {
-        $companyProfile = new CompanyProfile($request->all());
+        $companyProfile = $this->companyProfile;
+        if (!$companyProfile) {
+            $companyProfile = new CompanyProfile($request->all());
+        } else {
+            $companyProfile->update($request->all());
+        }
         $orgTypeId = $request->get('organization_type_id', null);
         $orgTypeValue = $request->get('organization_type');
         if ($orgTypeId) {
             $companyProfile->organization_type_id = $orgTypeId;
+            $companyProfile->organization_type = null;
         } else {
+            $companyProfile->organization_type_id = null;
             $companyProfile->organization_type = $orgTypeValue;
         }
         $this->setGoals($request)

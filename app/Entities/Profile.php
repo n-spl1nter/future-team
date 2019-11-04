@@ -70,7 +70,9 @@ class Profile extends Model
 
     public function setBirthDate(string $date): self
     {
-        $this->birth_date_at = Carbon::createFromFormat('Y-m-d', $date);
+        if ($date) {
+            $this->birth_date_at = Carbon::createFromFormat('Y-m-d', $date);
+        }
         return $this;
     }
 
@@ -79,7 +81,7 @@ class Profile extends Model
         return [
             'first_name' => 'required|string|min:2|max:255',
             'middle_name' => 'nullable|string|min:2|max:255',
-            'last_name' => 'nullable|string|min:2|max:255',
+            'last_name' => 'required|string|min:2|max:255',
             'phone' => 'required|string|size:11|regex:/[0-9]{11}/',
             'birth_date_at' => 'required|date',
             'city_id' => 'required|integer|exists:_cities,city_id',
@@ -103,7 +105,25 @@ class Profile extends Model
     public static function getOnUpdateValidationRules(): array
     {
         return [
-
+            'first_name' => 'required|string|min:2|max:255',
+            'middle_name' => 'nullable|string|min:2|max:255',
+            'last_name' => 'required|string|min:2|max:255',
+            'phone' => 'required|string|size:11|regex:/[0-9]{11}/',
+            'birth_date_at' => 'required|date',
+            'city_id' => 'required|integer|exists:_cities,city_id',
+            'activity_field_id' => 'required|integer|exists:activity_fields,id',
+            'goals' => 'required|array|min:1|max:5',
+            'goals.*' => 'required|integer|exists:goals,id',
+            'known_languages' => 'nullable|array|min:1',
+            'known_languages.*' => 'integer|exists:languages,id',
+            'languages_wltl' => 'nullable|array|min:1',
+            'languages_wltl.*' => 'integer|exists:languages,id',
+            'language_exchange_agreement' => 'nullable|integer|in:0,1',
+            'motivation' => 'required|array|min:1',
+            'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=500,min_height=500',
+            'about' => 'nullable|string|max:400',
+            'organization_id' => 'nullable|integer|exists:users,id',
+            'organization_name' => 'nullable|string|max:100',
         ];
     }
 }

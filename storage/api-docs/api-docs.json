@@ -340,7 +340,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "Добавляет профиль к пользователю",
+                "summary": "Добавление\\обновление профиля пользователя",
                 "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::setProfile",
                 "requestBody": {
                     "content": {
@@ -586,7 +586,7 @@
                     {
                         "name": "companyName",
                         "in": "query",
-                        "description": "Начало ввода имени компании(мин длинна 2 символа))",
+                        "description": "Начало имени компании(мин длинна 2 символа))",
                         "required": true
                     }
                 ],

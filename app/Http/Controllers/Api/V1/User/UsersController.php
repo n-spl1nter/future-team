@@ -41,7 +41,7 @@ class UsersController extends Controller
     /**
      * @OA\Post(
      *     path="/user/profile",
-     *     summary="Добавляет профиль к пользователю",
+     *     summary="Добавление\обновление профиля пользователя",
      *     tags={"User"},
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
@@ -117,18 +117,18 @@ class UsersController extends Controller
     {
         /** @var User $user */
         $user = \Auth::user();
-        $validator = \Validator::make($request->all(), Profile::getOnCreateValidationRules());
+        $rules = $user->profile ? Profile::getOnUpdateValidationRules() : Profile::getOnCreateValidationRules();
+        $validator = \Validator::make($request->all(), $rules);
 
         $validator->after(function (Validator $validator) use ($user) {
             if ($user->isCompany()) {
                 $validator->errors()->add('process', __('common.userShouldBeACompany'));
-            } elseif ($user->profile) {
-                $validator->errors()->add('process', __('common.AlreadyHasProfile'));
             }
         });
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->getMessages()], 400);
         }
+
         $user->setProfile($request);
 
         return response()->json(['user' => $user->getAccountInfo()], 201);

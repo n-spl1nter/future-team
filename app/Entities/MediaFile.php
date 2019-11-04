@@ -88,4 +88,17 @@ class MediaFile extends Model
         $file->save();
         return $file;
     }
+
+    public static function removeImage(string $entityName, int $entityId, string $fileType)
+    {
+        $mediaFile = static::whereEntity($entityName)
+                ->whereEntityId($entityId)
+                ->whereFileType($fileType)
+                ->first();
+        if (!$mediaFile) {
+            return;
+        }
+        \Storage::disk('public')->delete($mediaFile->path);
+        $mediaFile->delete();
+    }
 }
