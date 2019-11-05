@@ -9,9 +9,10 @@ use Illuminate\Http\Request;
  * @OA\Server(url="http://futureteam.local/api/v1")
  * @OA\Info(
  *   title="FutureTeam API",
- *   version="1.0.0",
+ *   version="0.1.0",
  *   @OA\Contact(
- *      email="razraz.odinodin@gmail.com"
+ *      email="razraz.odinodin@gmail.com",
+ *      name="Aleksey Rodin",
  *   )
  * )
  * @OA\Tag(
@@ -30,13 +31,17 @@ use Illuminate\Http\Request;
  *   name="Common",
  *   description="Общая информация"
  * )
- *     @OA\Parameter(
- *      parameter="token",
- *      name="Authorization",
- *      in="header",
- *      required=true,
- *      example="Bearer "
- *     ),
+ * @OA\Tag(
+ *   name="Main",
+ *   description="Основной функционал"
+ * )
+ * @OA\Parameter(
+ *  parameter="token",
+ *  name="Authorization",
+ *  in="header",
+ *  required=true,
+ *  example="Bearer "
+ * ),
  * @OA\SecurityScheme(
  * securityScheme="bearerAuth",
  * type="http",

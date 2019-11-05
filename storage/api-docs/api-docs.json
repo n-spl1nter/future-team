@@ -3,9 +3,10 @@
     "info": {
         "title": "FutureTeam API",
         "contact": {
+            "name": "Aleksey Rodin",
             "email": "razraz.odinodin@gmail.com"
         },
-        "version": "1.0.0"
+        "version": "0.1.0"
     },
     "servers": [
         {
@@ -303,6 +304,60 @@
                 }
             }
         },
+        "/main/event": {
+            "post": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Создание события(мероприятия)",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\EventsController::create",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "terms": {
+                                        "description": "Согласие на обработку данных"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное создание события",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка аутентификации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/user/account": {
             "get": {
                 "tags": [
@@ -320,7 +375,7 @@
                         }
                     },
                     "401": {
-                        "description": "Не авторизован",
+                        "description": "Не аутентифицирован",
                         "content": {
                             "application/json": {
                                 "schema": {}
@@ -458,6 +513,14 @@
                         }
                     },
                     "401": {
+                        "description": "Ошибка аутентификации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "403": {
                         "description": "Ошибка авторизации",
                         "content": {
                             "application/json": {
@@ -560,6 +623,14 @@
                         }
                     },
                     "401": {
+                        "description": "Ошибка аутентификации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "403": {
                         "description": "Ошибка авторизации",
                         "content": {
                             "application/json": {
@@ -636,6 +707,10 @@
         {
             "name": "Common",
             "description": "Общая информация"
+        },
+        {
+            "name": "Main",
+            "description": "Основной функционал"
         }
     ]
 }
