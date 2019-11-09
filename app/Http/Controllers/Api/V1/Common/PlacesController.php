@@ -40,7 +40,7 @@ class PlacesController extends Controller
      *     @OA\JsonContent()
      *     ),
      *     @OA\Response(
-     *      response=400,
+     *      response=422,
      *      description="Возвращает массив ошибок",
      *     @OA\JsonContent()
      *     ),
@@ -55,7 +55,7 @@ class PlacesController extends Controller
             'value' => 'required|string|min:2',
         ]);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], 400);
+            return response()->json(['errors' => $validator->errors()->getMessages()], 422);
         }
 
         $cities = City::whereCountryId($request->get('country_id'))

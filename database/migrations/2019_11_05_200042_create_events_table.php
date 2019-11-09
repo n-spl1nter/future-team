@@ -24,7 +24,14 @@ class CreateEventsTable extends Migration
             $table->unsignedInteger('status')->default(0);
             $table->timestamp('start_at')->nullable();
             $table->timestamp('end_at')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
@@ -35,6 +42,9 @@ class CreateEventsTable extends Migration
      */
     public function down()
     {
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('events');
     }
 }

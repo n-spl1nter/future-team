@@ -21,6 +21,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
                 'as' => 'storeCompanyProfile',
                 'middleware' => ['can:setCompanyProfile,App\Entities\User'],
             ]);
+
+        Route::post('/main/event', ['uses' => 'Main\EventsController@create', 'as' => 'eventCreate']);
     });
 
     Route::get('/user/companies/search', ['uses' => 'User\UsersController@findCompanies', 'companiesSearch']);

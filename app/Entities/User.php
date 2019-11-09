@@ -120,12 +120,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isCompany(): bool
     {
-        return in_array($this->role_id, [Role::COMPANY, Role::ADMIN]);
+        return in_array($this->role_id, [Role::COMPANY]);
     }
 
     public function isMember(): bool
     {
-        return in_array($this->role_id, [Role::MEMBER, Role::MODERATOR]);
+        return in_array($this->role_id, [Role::MEMBER, Role::MODERATOR, Role::ADMIN]);
     }
 
     /**
@@ -205,7 +205,6 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this;
         }
         MediaFile::removeFile(static::class, $this->id, MediaFile::TYPE_AVATAR);
-        MediaFile::removeFile(static::class, $this->id, MediaFile::TYPE_AVATAR_SMALL);
 
         list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_AVATAR);
         $image = \Image::make($file);
@@ -215,8 +214,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->widen(180)
             ->save(storage_path('app/public/') . $smallFileName);
 
-        MediaFile::addFile($fullFileName, static::class, $this->id, MediaFile::TYPE_AVATAR);
-        MediaFile::addFile($smallFileName, static::class, $this->id, MediaFile::TYPE_AVATAR_SMALL);
+        MediaFile::addFile(static::class, $this->id, MediaFile::TYPE_AVATAR, [$fullFileName, $smallFileName]);
         return $this;
     }
 
@@ -224,7 +222,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $avatars = MediaFile::whereEntity(self::class)
             ->whereEntityId($this->id)
-            ->whereIn('file_type', [MediaFile::TYPE_AVATAR, MediaFile::TYPE_AVATAR_SMALL])
+            ->whereFileType(MediaFile::TYPE_AVATAR)
             ->get();
 
         return $avatars;

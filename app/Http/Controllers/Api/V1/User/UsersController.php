@@ -100,7 +100,7 @@ class UsersController extends Controller
      *        @OA\JsonContent()
      *     ),
      *     @OA\Response(
-     *        response=400,
+     *        response=422,
      *        description="Возвращает массив ошибок",
      *        @OA\JsonContent()
      *    ),
@@ -125,7 +125,7 @@ class UsersController extends Controller
         $rules = $user->profile ? Profile::getOnUpdateValidationRules() : Profile::getOnCreateValidationRules();
         $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], 400);
+            return response()->json(['errors' => $validator->errors()->getMessages()], 422);
         }
 
         $user->setProfile($request);
@@ -167,7 +167,7 @@ class UsersController extends Controller
      *        @OA\JsonContent()
      *     ),
      *     @OA\Response(
-     *        response=400,
+     *        response=422,
      *        description="Возвращает массив ошибок",
      *        @OA\JsonContent()
      *    ),
@@ -192,7 +192,7 @@ class UsersController extends Controller
         $rules = $user->companyProfile ? CompanyProfile::getOnUpdateValidationRules() : CompanyProfile::getOnCreateValidationRules();
         $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], 400);
+            return response()->json(['errors' => $validator->errors()->getMessages()], 422);
         }
 
         $user->setCompanyProfile($request);
@@ -219,7 +219,7 @@ class UsersController extends Controller
             'companyName' => 'required|string|min:2',
         ]);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], 400);
+            return response()->json(['errors' => $validator->errors()->getMessages()], 422);
         }
 
         $value = $request->get('companyName') . '%';

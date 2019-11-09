@@ -2,7 +2,10 @@
 
 namespace App\Entities;
 
+use App\Http\Requests\CreateEventRequest;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+
 
 /**
  * App\Entities\Event
@@ -17,9 +20,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property \Illuminate\Support\Carbon|null $start_at
  * @property \Illuminate\Support\Carbon|null $end_at
+ * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Entities\City $city
+ * @property-read \App\Entities\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event query()
@@ -35,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereStartAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereUserId($value)
  * @mixin \Eloquent
  */
 class Event extends Model
@@ -52,24 +58,25 @@ class Event extends Model
         return $this->belongsTo(City::class, 'city_id', 'city_id');
     }
 
-    public static function make()
+    public function user()
     {
-
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public static function getOnCreateValidationRules(): array
+    protected function setImages(CreateEventRequest $request): void
     {
-        return [
-            'name' => 'required|string|min:5|max:255',
-            'conditions' => 'required|string|min:5|max:1000',
-            'reasons' => 'required|string|min:5|max:400',
-            'contact_data' => 'required|string|min:5|max:255',
-            'additional_info' => 'required|string|min:5|max:1000',
-            'photos' => 'required|array|min:3|max:5',
-            'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=800,min_height=800',
-            'city_id' => 'required|integer|exists:_cities,city_id',
-            'start_at' => 'required|date|after:tomorrow',
-            'end_at' => 'required|date|after:start_at',
-        ];
+        foreach ($request->file('photos') as $file) {
+            list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_EVENT);
+            $image = \Image::make();
+        }
+    }
+
+    public static function make(CreateEventRequest $request): self
+    {
+        $event = new self($request->all());
+        $event->start_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('start_at'));
+        $event->end_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('end_at'));
+        $event->status = static::ACTIVE;
+        $event->setImages($request);
     }
 }

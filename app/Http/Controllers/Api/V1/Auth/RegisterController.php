@@ -21,7 +21,7 @@ class RegisterController extends Controller
      *     description="Успешная регистрация, возвращает сущность User"
      *  ),
      *  @OA\Response(
-     *     response=400,
+     *     response=422,
      *     description="Возвращает массив ошибок"
      * )
      * )
@@ -36,7 +36,7 @@ class RegisterController extends Controller
         ]);
         if ($validator->fails()) {
             return response()
-                ->json(['errors' => $validator->errors()->getMessages()], 400);
+                ->json(['errors' => $validator->errors()->getMessages()], 422);
         }
         $user = User::makeFromEmail($request->all());
 

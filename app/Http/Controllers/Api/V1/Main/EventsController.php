@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Main;
 
 use App\Entities\Event;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateEventRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -39,7 +40,7 @@ class EventsController extends Controller
      *        @OA\JsonContent()
      *     ),
      *     @OA\Response(
-     *        response=400,
+     *        response=422,
      *        description="Возвращает массив ошибок",
      *        @OA\JsonContent()
      *    ),
@@ -49,17 +50,13 @@ class EventsController extends Controller
      *        @OA\JsonContent()
      *    ),
      * )
-     * @param Request $request
+     * @param CreateEventRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create(Request $request)
+    public function create(CreateEventRequest $request)
     {
-        $validator = \Validator::make($request->all(), Event::getOnCreateValidationRules());
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], Response::HTTP_BAD_REQUEST);
-        }
-
-        return response()->json([], 201);
+        $event = Event::make($request);
+        return response()->json($event, 201);
     }
 
     public function update()
