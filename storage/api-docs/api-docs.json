@@ -319,6 +319,46 @@
                         "multipart/form-data": {
                             "schema": {
                                 "properties": {
+                                    "name": {
+                                        "description": "Название"
+                                    },
+                                    "conditions": {
+                                        "description": "Условия участия"
+                                    },
+                                    "reasons": {
+                                        "description": "Чем ваше мероприятие может быть полезно"
+                                    },
+                                    "contact_data": {
+                                        "description": "Контактные данные организаторов"
+                                    },
+                                    "additional_info": {
+                                        "description": "Контактные данные организаторов"
+                                    },
+                                    "photos[0]": {
+                                        "description": "Массив фото",
+                                        "type": "file",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "photos[1]": {
+                                        "description": "Массив фото",
+                                        "type": "file",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "city_id": {
+                                        "description": "ID города"
+                                    },
+                                    "start_at": {
+                                        "description": "Дата и время начало в формате Y-m-d H:i:s"
+                                    },
+                                    "end_at": {
+                                        "description": "Дата и время конца в формате Y-m-d H:i:s"
+                                    },
                                     "terms": {
                                         "description": "Согласие на обработку данных"
                                     }

@@ -25,6 +25,7 @@ class CreateEventsTable extends Migration
             $table->timestamp('start_at')->nullable();
             $table->timestamp('end_at')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->string('slug')->unique();
             $table->timestamps();
 
             $table->foreign('user_id')

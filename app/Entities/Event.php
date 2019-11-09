@@ -4,6 +4,8 @@ namespace App\Entities;
 
 use App\Http\Requests\CreateEventRequest;
 use Carbon\Carbon;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -21,10 +23,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $start_at
  * @property \Illuminate\Support\Carbon|null $end_at
  * @property int $user_id
+ * @property string $slug
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Entities\City $city
  * @property-read \App\Entities\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event findSimilarSlugs($attribute, $config, $slug)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event query()
@@ -37,6 +41,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereReasons($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereStartAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereUpdatedAt($value)
@@ -45,6 +50,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Event extends Model
 {
+    use Sluggable, SluggableScopeHelpers;
+
     const ACTIVE = 0;
     const EXPIRED = 1;
     const DELETED = 2;
@@ -52,6 +59,16 @@ class Event extends Model
 
     protected $dates = ['start_at', 'end_at'];
     protected $fillable = ['name', 'conditions', 'reasons', 'contact_data', 'additional_info'];
+    protected $hidden = ['updated_at'];
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'city.country.title_en', 'city.title_en', 'start_at',
+            ],
+        ];
+    }
 
     public function city()
     {
@@ -63,11 +80,21 @@ class Event extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function getRouteKeyName()
+    {
+        return $this->getSlugKeyName();
+    }
+
     protected function setImages(CreateEventRequest $request): void
     {
         foreach ($request->file('photos') as $file) {
             list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_EVENT);
-            $image = \Image::make();
+            $image = \Image::make($file);
+            $image->save(storage_path('app/public/') . $fullFileName, 75)
+                ->widen(1280)
+                ->widen(450)
+                ->save(storage_path('app/public/') . $smallFileName);
+            MediaFile::addFile(self::class, $this->id, MediaFile::TYPE_EVENT, [$fullFileName, $smallFileName]);
         }
     }
 
@@ -77,6 +104,10 @@ class Event extends Model
         $event->start_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('start_at'));
         $event->end_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('end_at'));
         $event->status = static::ACTIVE;
+        $event->user_id = \Auth::id();
+        $event->save();
         $event->setImages($request);
+
+        return $event;
     }
 }

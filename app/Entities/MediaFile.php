@@ -6,6 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
+/**
+ * App\Entities\MediaFile
+ *
+ * @property int $id
+ * @property array $path
+ * @property array $url
+ * @property string $entity
+ * @property int $entity_id
+ * @property string $file_type
+ * @property int $uploaded_by
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile whereEntity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile whereEntityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile whereFileType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile whereUploadedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\MediaFile whereUrl($value)
+ * @mixin \Eloquent
+ */
 class MediaFile extends Model
 {
     // file types

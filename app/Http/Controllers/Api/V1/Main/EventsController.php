@@ -30,6 +30,22 @@ class EventsController extends Controller
      *      @OA\MediaType(
      *          mediaType="multipart/form-data",
      *          @OA\Schema(
+     *              @OA\Property(property="name", description="Название"),
+     *              @OA\Property(property="conditions", description="Условия участия"),
+     *              @OA\Property(property="reasons", description="Чем ваше мероприятие может быть полезно"),
+     *              @OA\Property(property="contact_data", description="Контактные данные организаторов"),
+     *              @OA\Property(property="additional_info", description="Контактные данные организаторов"),
+     *              @OA\Property(
+     *                   property="photos[0]", description="Массив фото", type="file",
+     *                   @OA\Items(type="string", format="binary")
+     *              ),
+     *              @OA\Property(
+     *                   property="photos[1]", description="Массив фото", type="file",
+     *                   @OA\Items(type="string", format="binary")
+     *              ),
+     *              @OA\Property(property="city_id", description="ID города"),
+     *              @OA\Property(property="start_at", description="Дата и время начало в формате Y-m-d H:i:s"),
+     *              @OA\Property(property="end_at", description="Дата и время конца в формате Y-m-d H:i:s"),
      *              @OA\Property(property="terms", description="Согласие на обработку данных"),
      *          ),
      *      )
