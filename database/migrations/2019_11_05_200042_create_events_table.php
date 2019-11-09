@@ -21,7 +21,7 @@ class CreateEventsTable extends Migration
             $table->text('reasons');
             $table->string('contact_data');
             $table->text('additional_info');
-            $table->unsignedInteger('status')->default(0);
+            $table->string('status');
             $table->timestamp('start_at')->nullable();
             $table->timestamp('end_at')->nullable();
             $table->unsignedBigInteger('user_id');
