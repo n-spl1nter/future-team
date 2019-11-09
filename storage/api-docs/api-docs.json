@@ -307,6 +307,41 @@
                 }
             }
         },
+        "/main/events/{event}": {
+            "get": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Событие",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\EventsController::view",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "Slug события",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает событие",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Не найдено",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/main/event": {
             "post": {
                 "tags": [
@@ -332,10 +367,10 @@
                                         "description": "Контактные данные организаторов"
                                     },
                                     "additional_info": {
-                                        "description": "Контактные данные организаторов"
+                                        "description": "Дополнительная информация"
                                     },
                                     "photos[0]": {
-                                        "description": "Массив фото",
+                                        "description": "Массив фото(min_width=1280,min_height=800)",
                                         "type": "file",
                                         "items": {
                                             "type": "string",
@@ -387,6 +422,14 @@
                     },
                     "401": {
                         "description": "Ошибка аутентификации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Ошибка авторизации",
                         "content": {
                             "application/json": {
                                 "schema": {}

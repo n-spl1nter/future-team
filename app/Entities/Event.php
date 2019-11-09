@@ -6,6 +6,7 @@ use App\Http\Requests\CreateEventRequest;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -98,6 +99,14 @@ class Event extends Model
         }
     }
 
+    public function getImages(): Collection
+    {
+        return MediaFile::whereEntity(self::class)
+            ->whereEntityId($this->id)
+            ->whereFileType(MediaFile::TYPE_EVENT)
+            ->get();
+    }
+
     public static function make(CreateEventRequest $request): self
     {
         $event = new self($request->all());
@@ -109,5 +118,14 @@ class Event extends Model
         $event->setImages($request);
 
         return $event;
+    }
+
+    public function toArray()
+    {
+        $this->load('city');
+        return array_merge(parent::toArray(), [
+            'images' => $this->getImages()->toArray(),
+        ]);
+
     }
 }

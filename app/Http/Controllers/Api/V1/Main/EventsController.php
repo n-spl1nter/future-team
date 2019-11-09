@@ -6,7 +6,6 @@ use App\Entities\Event;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateEventRequest;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class EventsController extends Controller
 {
@@ -15,9 +14,29 @@ class EventsController extends Controller
         // @todo Implement
     }
 
-    public function view()
+    /**
+     * @OA\Get(
+     *     path="/main/events/{event}",
+     *     summary="Событие",
+     *     tags={"Main"},
+     *     @OA\Parameter(name="event", required=true, in="path", description="Slug события"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Возвращает событие",
+     *     @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *      response=404,
+     *      description="Не найдено",
+     *     @OA\JsonContent()
+     *     ),
+     * )
+     * @param Event $event
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function view(Event $event)
     {
-        // @todo Implement
+        return response()->json($event);
     }
 
     /**

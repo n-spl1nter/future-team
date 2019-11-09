@@ -28,6 +28,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
     });
 
     Route::get('/user/companies/search', ['uses' => 'User\UsersController@findCompanies', 'companiesSearch']);
+    Route::get('/main/events/{event}', ['uses' => 'Main\EventsController@view', 'eventView']);
 
     /** Common data */
     Route::group(['prefix' => 'common', 'namespace' => 'Common'], function () {
