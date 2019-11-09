@@ -58,14 +58,14 @@ class Event extends Model
     const BLOCKED = 3;
 
     protected $dates = ['start_at', 'end_at'];
-    protected $fillable = ['name', 'conditions', 'reasons', 'contact_data', 'additional_info'];
+    protected $fillable = ['name', 'conditions', 'reasons', 'contact_data', 'additional_info', 'city_id'];
     protected $hidden = ['updated_at'];
 
     public function sluggable(): array
     {
         return [
             'slug' => [
-                'city.country.title_en', 'city.title_en', 'start_at',
+                'source' => ['city.country.title_en', 'city.title_en', 'start_at',],
             ],
         ];
     }

@@ -34,9 +34,9 @@ class EventsController extends Controller
      *              @OA\Property(property="conditions", description="Условия участия"),
      *              @OA\Property(property="reasons", description="Чем ваше мероприятие может быть полезно"),
      *              @OA\Property(property="contact_data", description="Контактные данные организаторов"),
-     *              @OA\Property(property="additional_info", description="Контактные данные организаторов"),
+     *              @OA\Property(property="additional_info", description="Дополнительная информация"),
      *              @OA\Property(
-     *                   property="photos[0]", description="Массив фото", type="file",
+     *                   property="photos[0]", description="Массив фото(min_width=1280,min_height=800)", type="file",
      *                   @OA\Items(type="string", format="binary")
      *              ),
      *              @OA\Property(
@@ -63,6 +63,11 @@ class EventsController extends Controller
      *     @OA\Response(
      *        response=401,
      *        description="Ошибка аутентификации",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=403,
+     *        description="Ошибка авторизации",
      *        @OA\JsonContent()
      *    ),
      * )

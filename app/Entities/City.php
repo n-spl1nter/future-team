@@ -109,6 +109,7 @@ class City extends Model
 {
     protected $table = '_cities';
     protected $primaryKey = 'city_id';
+    protected $fillable = ['title_en'];
     protected $visible = [
         'city_id', 'country_id', 'title_ru', 'title_en', 'area_ru', 'area_en',
         'region_ru', 'region_en',

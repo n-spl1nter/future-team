@@ -128,6 +128,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return in_array($this->role_id, [Role::MEMBER, Role::MODERATOR, Role::ADMIN]);
     }
 
+    public function hasFilledProfile(): bool
+    {
+        return ($this->isMember() && $this->profile)
+            || ($this->isCompany() && $this->companyProfile);
+    }
+
     /**
      * Проверяет, имеет ли пользователь права
      * @param string|string[] $permission - название разрешения или массив разрешений

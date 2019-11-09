@@ -48,6 +48,7 @@ class Country extends Model
 {
     protected $table = '_countries';
     protected $primaryKey = 'country_id';
+    protected $fillable = ['title_en'];
     protected $visible = ['country_id', 'title_ru', 'title_en'];
 
     public function cities()
