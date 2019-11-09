@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entities\Event;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -23,9 +24,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+        Route::bind('event', function ($value) {
+            return Event::
+                whereSlug($value)
+                ->whereNotIn('status', [Event::DELETED, Event::BLOCKED])->firstOrFail();
+        });
     }
 
     /**
