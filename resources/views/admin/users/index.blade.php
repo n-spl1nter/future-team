@@ -32,14 +32,13 @@
                                     <tr>
                                         <td>{{ $user->id }}</td>
                                         <td>
-                                            @if (!$user->getAvatar()->isEmpty())
-                                            <img src="{{ $user->getAvatar()->last()->url }}" alt="">
+                                            @if ($user->getAvatar())
+                                                <img src="{{ $user->getAvatar()->url[1] }}" alt="">
                                             @else
-                                                &nbsp;
                                             @endif
                                         </td>
-                                        <td>
-                                            Name
+                                        <td>Name
+
                                         </td>
                                     </tr>
                                 @endforeach
