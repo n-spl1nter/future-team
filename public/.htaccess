@@ -3,6 +3,8 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    Header unset X-Powered-By
+
     RewriteEngine On
 
     # Handle Authorization Header
