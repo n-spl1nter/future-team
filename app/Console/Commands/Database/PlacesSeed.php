@@ -38,20 +38,13 @@ class PlacesSeed extends Command
     public function handle()
     {
         ini_set('memory_limit', '2295M');
-//        $this->seedCountries();
-//        $this->seedRegions();
-//        $this->seedCities();
+        $this->seedCountries();
+        $this->seedCities();
     }
 
     private function seedCities()
     {
         $path = base_path('database/sql/_cities.sql');
-        $this->seed($path);
-    }
-
-    private function seedRegions()
-    {
-        $path = base_path('database/sql/_regions.sql');
         $this->seed($path);
     }
 
