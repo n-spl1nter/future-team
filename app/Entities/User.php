@@ -266,6 +266,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $user;
     }
 
+    public function toArray()
+    {
+        $userData = [
+            'type' => $this->role->name,
+            'avatar' => $this->getAvatar(),
+        ];
+        // @todo implement short user info
+        return $userData;
+    }
+
+    public function getPublicProfile(): array
+    {
+        $data = [
+            'type' => $this->role->name,
+            'avatar' => $this->getAvatar(),
+        ];
+        // @todo implement short user info
+        return [];
+    }
+
     public function getAccountInfo(): array
     {
         $data = [
@@ -343,11 +363,4 @@ class User extends Authenticatable implements MustVerifyEmail
             ->companyProfile()
             ->save($companyProfile);
     }
-
-    /*public function toArray()
-    {
-        $userData = [];
-        // @todo implement short user info
-        return $userData;
-    }*/
 }
