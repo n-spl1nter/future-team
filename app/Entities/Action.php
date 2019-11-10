@@ -87,11 +87,19 @@ class Action extends Model
         $action->start_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('start_at'));
         $action->end_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('end_at'));
         $action->status = static::ACTIVE;
-        $action->domains = $request->get('domains');
+        $action->domains = array_values($request->get('domains'));
         $action->user_id = \Auth::id();
         $action->save();
         $action->setImage($request->file('photos'), MediaFile::TYPE_ACTION);
 
         return $action;
+    }
+
+    public function toArray()
+    {
+        $this->load('city', 'user');
+        return array_merge(parent::toArray(),[
+            'images' => $this->getImages(MediaFile::TYPE_ACTION),
+        ]);
     }
 }

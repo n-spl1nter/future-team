@@ -87,14 +87,6 @@ class Event extends Model
         return $this->getSlugKeyName();
     }
 
-    public function getImages(): Collection
-    {
-        return MediaFile::whereEntity(self::class)
-            ->whereEntityId($this->id)
-            ->whereFileType(MediaFile::TYPE_EVENT)
-            ->get();
-    }
-
     public static function make(Request $request): self
     {
         $event = new self($request->all());
@@ -110,10 +102,9 @@ class Event extends Model
 
     public function toArray()
     {
-        $this->load('city');
+        $this->load('city', 'user');
         return array_merge(parent::toArray(), [
-            'images' => $this->getImages()->toArray(),
+            'images' => $this->getImages(MediaFile::TYPE_EVENT)->toArray(),
         ]);
-
     }
 }

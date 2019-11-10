@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
 
 trait HasImage
@@ -28,5 +29,29 @@ trait HasImage
             ->widen($smallWidth)
             ->save(storage_path('app/public/') . $smallFileName);
         MediaFile::addFile(self::class, $this->id, $imageType, [$fullFileName, $smallFileName]);
+    }
+
+    /**
+     * @param string $type
+     * @return Collection
+     */
+    public function getImages(string $type): Collection
+    {
+        return MediaFile::whereEntity(self::class)
+            ->whereEntityId($this->id)
+            ->whereFileType($type)
+            ->get();
+    }
+
+    /**
+     * @param string $type
+     * @return MediaFile|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
+     */
+    public function getImage(string $type)
+    {
+        return MediaFile::whereEntity(self::class)
+            ->whereEntityId($this->id)
+            ->whereFileType($type)
+            ->first();
     }
 }

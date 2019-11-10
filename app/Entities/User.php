@@ -67,13 +67,13 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasApiTokens, Sortable, HasImage;
 
-    private $avatars = [];
+    private $avatar = null;
 
     protected $fillable = [
         'email', 'password',
     ];
     protected $hidden = [
-        'password', 'remember_token', 'created_at', 'updated_at', 'email_verified_at', 'role_id',
+        'password', 'remember_token', 'created_at', 'updated_at', 'email_verified_at', 'role_id', 'email',
     ];
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -220,14 +220,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatar()
     {
         if (empty($this->avatars)) {
-            $avatars = MediaFile::whereEntity(self::class)
-                ->whereEntityId($this->id)
-                ->whereFileType(MediaFile::TYPE_AVATAR)
-                ->first();
-            $this->avatars = $avatars;
+            $avatar = $this->getImage(MediaFile::TYPE_AVATAR);
+            $this->avatar = $avatar;
         }
 
-        return $this->avatars;
+        return $this->avatar;
     }
 
     public function sendEmailVerificationNotificationOnRegister(string $password): void
@@ -346,4 +343,11 @@ class User extends Authenticatable implements MustVerifyEmail
             ->companyProfile()
             ->save($companyProfile);
     }
+
+    /*public function toArray()
+    {
+        $userData = [];
+        // @todo implement short user info
+        return $userData;
+    }*/
 }

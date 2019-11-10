@@ -24,11 +24,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
 
         Route::group(['middleware' => ['hasProfile']], function () {
             Route::post('/main/event', ['uses' => 'Main\EventsController@create', 'as' => 'eventCreate']);
+            Route::post('/main/action', ['uses' => 'Main\ActionsController@create', 'as' => 'actionCreate']);
         });
     });
 
     Route::get('/user/companies/search', ['uses' => 'User\UsersController@findCompanies', 'companiesSearch']);
     Route::get('/main/events/{event}', ['uses' => 'Main\EventsController@view', 'eventView']);
+    Route::get('/main/actions/{action}', ['uses' => 'Main\ActionsController@view', 'actionView']);
 
     /** Common data */
     Route::group(['prefix' => 'common', 'namespace' => 'Common'], function () {
