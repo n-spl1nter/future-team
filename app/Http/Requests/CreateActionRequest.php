@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateEventRequest extends FormRequest
+class CreateActionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreateEventRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -25,10 +25,10 @@ class CreateEventRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:5|max:255',
-            'conditions' => 'required|string|min:5|max:1000',
-            'reasons' => 'required|string|min:5|max:400',
-            'contact_data' => 'required|string|min:5|max:255',
-            'additional_info' => 'required|string|min:5|max:1000',
+            'about' => 'required|string|min:5',
+            'success_secret' => 'required|string|min:5|max:400',
+            'domains' => 'required|array|min:2|max:5',
+            'domains.*' => 'required|string|min:2|max:255',
             'photos' => 'required|array|min:2|max:5',
             'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=1280,min_height=800',
             'city_id' => 'required|integer|exists:_cities,city_id',

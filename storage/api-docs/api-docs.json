@@ -307,6 +307,145 @@
                 }
             }
         },
+        "/main/actions/{action}": {
+            "get": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Акция",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\ActionsController::view",
+                "parameters": [
+                    {
+                        "name": "action",
+                        "in": "path",
+                        "description": "Slug акции",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает акцию",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Не найдено",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/main/action": {
+            "post": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Создание акции",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\ActionsController::create",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Название(5+ символов)"
+                                    },
+                                    "about": {
+                                        "description": "В чем именно заключается Ваше доброе дело(5+ символов)"
+                                    },
+                                    "success_secret": {
+                                        "description": "Секрет успеха(5-400 символов)"
+                                    },
+                                    "domains[0]": {
+                                        "description": "Сферы(массив [2-5])",
+                                        "type": "string"
+                                    },
+                                    "domains[1]": {
+                                        "description": "Сферы",
+                                        "type": "string"
+                                    },
+                                    "photos[0]": {
+                                        "description": "Массив фото(min_width=1280,min_height=800)",
+                                        "type": "file",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "photos[1]": {
+                                        "description": "Массив фото",
+                                        "type": "file",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "city_id": {
+                                        "description": "ID города"
+                                    },
+                                    "start_at": {
+                                        "description": "Дата и время начало в формате Y-m-d H:i:s"
+                                    },
+                                    "end_at": {
+                                        "description": "Дата и время конца в формате Y-m-d H:i:s"
+                                    },
+                                    "terms": {
+                                        "description": "Согласие на обработку данных"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное создание акции",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка аутентификации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Ошибка авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/main/events/{event}": {
             "get": {
                 "tags": [

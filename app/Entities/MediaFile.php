@@ -38,10 +38,11 @@ class MediaFile extends Model
     const TYPE_AVATAR = 'TYPE_AVATAR';
     const TYPE_ICON = 'TYPE_ICON';
     const TYPE_EVENT = 'TYPE_EVENT';
+    const TYPE_ACTION = 'TYPE_ACTION';
 
     protected $table = 'media_files';
     protected $fillable = ['path', 'url', 'entity', 'entity_id', 'file_type'];
-    protected $hidden = ['id', 'entity_id', 'entity', 'file_type', 'path', 'uploaded_by'];
+    protected $visible = ['url'];
     protected $casts = [
         'path' => 'array',
         'url' => 'array',
@@ -65,6 +66,11 @@ class MediaFile extends Model
                     mkdir(storage_path('app/public/event'));
                 }
                 return 'event';
+            case self::TYPE_ACTION:
+                if (!is_dir(storage_path('app/public/action'))) {
+                    mkdir(storage_path('app/public/action'));
+                }
+                return 'action';
             default:
                 if (!is_dir(storage_path('app/public/common'))) {
                     mkdir(storage_path('app/public/common'));

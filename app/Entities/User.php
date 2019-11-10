@@ -65,7 +65,7 @@ use Illuminate\Http\UploadedFile;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens, Sortable;
+    use Notifiable, HasApiTokens, Sortable, HasImage;
 
     private $avatars = [];
 
@@ -213,16 +213,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this;
         }
         MediaFile::removeFile(static::class, $this->id, MediaFile::TYPE_AVATAR);
-
-        list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($file, MediaFile::TYPE_AVATAR);
-        $image = \Image::make($file);
-        $image
-            ->widen(600)
-            ->save(storage_path('app/public/') . $fullFileName, 75)
-            ->widen(180)
-            ->save(storage_path('app/public/') . $smallFileName);
-
-        MediaFile::addFile(static::class, $this->id, MediaFile::TYPE_AVATAR, [$fullFileName, $smallFileName]);
+        $this->setImage($file, MediaFile::TYPE_AVATAR, 600, 180);
         return $this;
     }
 

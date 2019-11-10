@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Entities\Action;
 use App\Entities\Event;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -25,11 +26,7 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-        Route::bind('event', function ($value) {
-            return Event::
-                whereSlug($value)
-                ->whereNotIn('status', [Event::DELETED, Event::BLOCKED])->firstOrFail();
-        });
+        $this->bindRouteParams();
     }
 
     /**
@@ -73,5 +70,19 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    protected function bindRouteParams()
+    {
+        Route::bind('event', function ($value) {
+            return Event::
+            whereSlug($value)
+                ->whereNotIn('status', [Event::DELETED, Event::BLOCKED])->firstOrFail();
+        });
+        Route::bind('action', function ($value) {
+            return Action::
+            whereSlug($value)
+                ->whereNotIn('status', [Action::DELETED, Action::BLOCKED])->firstOrFail();
+        });
     }
 }

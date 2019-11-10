@@ -1,0 +1,118 @@
+<?php
+
+namespace App\Http\Controllers\Api\V1\Main;
+
+use App\Entities\Action;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateActionRequest;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+class ActionsController extends Controller
+{
+    public function index()
+    {
+        // @todo implement
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/main/actions/{action}",
+     *     summary="Акция",
+     *     tags={"Main"},
+     *     @OA\Parameter(name="action", required=true, in="path", description="Slug акции"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Возвращает акцию",
+     *     @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *      response=404,
+     *      description="Не найдено",
+     *     @OA\JsonContent()
+     *     ),
+     * )
+     * @param Action $action
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function view(Action $action)
+    {
+        return response()->json($action);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/main/action",
+     *     summary="Создание акции",
+     *     tags={"Main"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *      @OA\MediaType(
+     *          mediaType="multipart/form-data",
+     *          @OA\Schema(
+     *              @OA\Property(property="name", description="Название(5+ символов)"),
+     *              @OA\Property(property="about", description="В чем именно заключается Ваше доброе дело(5+ символов)"),
+     *              @OA\Property(property="success_secret", description="Секрет успеха(5-400 символов)"),
+     *              @OA\Property(property="domains[0]", description="Сферы(массив [2-5])", type="string"),
+     *              @OA\Property(property="domains[1]", description="Сферы", type="string"),
+     *              @OA\Property(
+     *                   property="photos[0]", description="Массив фото(min_width=1280,min_height=800)", type="file",
+     *                   @OA\Items(type="string", format="binary")
+     *              ),
+     *              @OA\Property(
+     *                   property="photos[1]", description="Массив фото", type="file",
+     *                   @OA\Items(type="string", format="binary")
+     *              ),
+     *              @OA\Property(property="city_id", description="ID города"),
+     *              @OA\Property(property="start_at", description="Дата и время начало в формате Y-m-d H:i:s"),
+     *              @OA\Property(property="end_at", description="Дата и время конца в формате Y-m-d H:i:s"),
+     *              @OA\Property(property="terms", description="Согласие на обработку данных"),
+     *          ),
+     *      )
+     *     ),
+     *     @OA\Response(
+     *        response=201,
+     *        description="Успешное создание акции",
+     *        @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *        response=422,
+     *        description="Возвращает массив ошибок",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=401,
+     *        description="Ошибка аутентификации",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=403,
+     *        description="Ошибка авторизации",
+     *        @OA\JsonContent()
+     *    ),
+     * )
+     * @param CreateActionRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function create(CreateActionRequest $request)
+    {
+        $action = Action::make($request);
+
+        return response()->json($action, Response::HTTP_CREATED);
+    }
+
+    public function update()
+    {
+        // @todo implement
+    }
+
+    public function delete()
+    {
+        // @todo implement
+    }
+
+    public function deleteImage()
+    {
+        // @todo implement
+    }
+}
