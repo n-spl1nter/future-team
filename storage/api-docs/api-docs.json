@@ -615,6 +615,33 @@
                 ]
             }
         },
+        "/user/{user}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Возвращает публичный профиль пользователя",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::view",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Id пользователя",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает публичный профиль пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/profile": {
             "post": {
                 "tags": [

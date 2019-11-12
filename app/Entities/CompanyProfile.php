@@ -58,6 +58,13 @@ class CompanyProfile extends Model
         return $this->belongsTo(OrganizationType::class, 'organization_type_id', 'id');
     }
 
+    public function getPublicProfile()
+    {
+        $data = $this->toArray();
+        unset($data['contact_person_email']);
+        return $data;
+    }
+
     public static function getOnCreateValidationRules(): array
     {
         return [
@@ -90,5 +97,11 @@ class CompanyProfile extends Model
             'contact_person_email' => 'required|email',
             'cooperation_type' => 'required|string|min:10|max:1500',
         ];
+    }
+
+    public function toArray()
+    {
+        $this->load('organizationType');
+        return parent::toArray();
     }
 }

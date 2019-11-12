@@ -97,9 +97,16 @@ class Action extends Model
 
     public function toArray()
     {
+        return array_merge(parent::toArray(), [
+            'images' => $this->getImages(MediaFile::TYPE_ACTION)->toArray(),
+        ]);
+    }
+
+    public function getAllInfo()
+    {
         $this->load('city', 'user');
-        return array_merge(parent::toArray(),[
-            'images' => $this->getImages(MediaFile::TYPE_ACTION),
+        return array_merge(parent::toArray(), [
+            'images' => $this->getImages(MediaFile::TYPE_ACTION)->toArray(),
         ]);
     }
 }

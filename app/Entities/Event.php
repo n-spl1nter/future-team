@@ -102,6 +102,13 @@ class Event extends Model
 
     public function toArray()
     {
+        return array_merge(parent::toArray(), [
+            'images' => $this->getImages(MediaFile::TYPE_EVENT)->toArray(),
+        ]);
+    }
+
+    public function getAllInfo()
+    {
         $this->load('city', 'user');
         return array_merge(parent::toArray(), [
             'images' => $this->getImages(MediaFile::TYPE_EVENT)->toArray(),

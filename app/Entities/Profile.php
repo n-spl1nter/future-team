@@ -68,6 +68,11 @@ class Profile extends Model
         return $this->belongsTo(ActivityField::class, 'activity_field_id', 'id');
     }
 
+    public function isAgreeToLanguageExchange(): bool
+    {
+        return $this->language_exchange_agreement === 1;
+    }
+
     public function setBirthDate(string $date): self
     {
         if ($date) {

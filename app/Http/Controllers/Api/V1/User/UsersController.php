@@ -39,6 +39,26 @@ class UsersController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/user/{user}",
+     *     summary="Возвращает публичный профиль пользователя",
+     *     tags={"User"},
+     *     @OA\Parameter(name="user", required=true, in="path", description="Id пользователя"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Возвращает публичный профиль пользователя",
+     *      @OA\JsonContent()
+     *     ),
+     * )
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function view(User $user)
+    {
+        return response()->json($user->getPublicProfile());
+    }
+
+    /**
      * @OA\Post(
      *     path="/user/profile",
      *     summary="Добавление\обновление профиля пользователя",

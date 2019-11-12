@@ -3,7 +3,6 @@
 namespace App\Entities;
 
 use App\Notifications\Auth\RegistrationNotification;
-use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,9 +27,13 @@ use Illuminate\Http\UploadedFile;
  * @property int $role_id
  * @property string|null $organization_name
  * @property int|null $organization_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Action[] $actions
+ * @property-read int|null $actions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
  * @property-read int|null $clients_count
  * @property-read \App\Entities\CompanyProfile $companyProfile
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Event[] $events
+ * @property-read int|null $events_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Goal[] $goals
  * @property-read int|null $goals_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Language[] $knownLanguages
@@ -118,6 +121,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function goals()
     {
         return $this->belongsToMany(Goal::class, 'users_to_goals', 'user_id', 'goal_id');
+    }
+
+    public function actions()
+    {
+        return $this->hasMany(Action::class, 'user_id', 'id');
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'user_id', 'id');
     }
 
     public function isCompany(): bool
@@ -287,9 +300,39 @@ class User extends Authenticatable implements MustVerifyEmail
         $data = [
             'type' => $this->role->name,
             'avatar' => $this->getAvatar(),
+            'goals' => $this->goals->toArray(),
+            'actions' => [
+                'items' => $this->actions()->limit(3)->get()->toArray(),
+                'totalCount' => $this->actions()->count(),
+            ],
+            'events' => [
+                'items' => $this->events()->limit(3)->get()->toArray(),
+                'totalCount' => $this->events()->count(),
+            ],
         ];
-        // @todo implement short user info
-        return [];
+
+        if ($this->isMember() && $this->profile) {
+            $data = array_merge(
+                $data,
+                $this->profile->toArray()
+            );
+            if ($this->profile->language_exchange_agreement) {
+                $data = array_merge(
+                    $data,
+                    [
+                        'known_languages' => $this->knownLanguages->toArray(),
+                        'would_like_to_learn_languages' => $this->wouldLikeToLearnLanguages->toArray(),
+                    ]
+                );
+            }
+        } elseif ($this->isCompany() && $this->companyProfile) {
+            $data = array_merge(
+                $data,
+                $this->companyProfile->getPublicProfile()
+            );
+        }
+
+        return $data;
     }
 
     public function getAccountInfo(): array

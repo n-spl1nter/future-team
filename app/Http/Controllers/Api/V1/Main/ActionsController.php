@@ -37,7 +37,7 @@ class ActionsController extends Controller
      */
     public function view(Action $action)
     {
-        return response()->json($action);
+        return response()->json($action->getAllInfo());
     }
 
     /**
@@ -98,7 +98,7 @@ class ActionsController extends Controller
     {
         $action = Action::make($request);
 
-        return response()->json($action, Response::HTTP_CREATED);
+        return response()->json($action->getAllInfo(), Response::HTTP_CREATED);
     }
 
     public function update()

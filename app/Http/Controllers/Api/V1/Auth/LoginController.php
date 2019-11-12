@@ -64,7 +64,8 @@ class LoginController extends Controller
             return response()->json(['errors' => ['process' => [__('auth.failed')]]], 401);
         }
 
-        return response()->json(\Auth::getUser()->makeToken());
+        $accessToken = \Auth::getUser()->makeToken()->accessToken;
+        return response()->json(compact('accessToken'));
     }
 
     /**

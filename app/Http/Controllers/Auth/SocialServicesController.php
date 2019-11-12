@@ -34,8 +34,8 @@ class SocialServicesController extends Controller
         ];
         $user = User::findOrCreateViaNetworkService($serviceName, $attributes);
         if ($user->hasVerifiedEmail()) {
-            $token = $user->makeToken();
-            return view('auth-success', compact('token'));
+            $accessToken = $user->makeToken()->accessToken;
+            return view('auth-success', compact('accessToken'));
         }
 
         return view('auth-success', [

@@ -36,7 +36,7 @@ class EventsController extends Controller
      */
     public function view(Event $event)
     {
-        return response()->json($event);
+        return response()->json($event->getAllInfo());
     }
 
     /**
@@ -96,7 +96,7 @@ class EventsController extends Controller
     public function create(CreateEventRequest $request)
     {
         $event = Event::make($request);
-        return response()->json($event, 201);
+        return response()->json($event->getAllInfo(), 201);
     }
 
     public function update()
