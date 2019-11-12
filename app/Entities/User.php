@@ -271,8 +271,14 @@ class User extends Authenticatable implements MustVerifyEmail
         $userData = [
             'type' => $this->role->name,
             'avatar' => $this->getAvatar(),
+            'id' => $this->id,
         ];
-        // @todo implement short user info
+        if ($this->isMember()) {
+            $userData['first_name'] = $this->profile->first_name;
+            $userData['last_name'] = $this->profile->last_name;
+        } elseif ($this->isCompany()) {
+            $userData['full_name'] = $this->companyProfile->full_name;
+        }
         return $userData;
     }
 
