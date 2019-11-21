@@ -51,7 +51,7 @@ class PlacesController extends Controller
     public function cities(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'country_id' => 'required|integer|exists:_cities,city_id',
+            'country_id' => 'required|integer',
             'value' => 'required|string|min:2',
         ]);
         if ($validator->fails()) {
