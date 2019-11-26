@@ -99,22 +99,16 @@
                 ],
                 "summary": "Register by email",
                 "operationId": "App\\Http\\Controllers\\Api\\V1\\Auth\\RegisterController::register",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "unique email",
-                        "required": true,
-                        "example": "test@test.com"
-                    },
-                    {
-                        "name": "type",
-                        "in": "query",
-                        "description": "'company' or 'member'",
-                        "required": true,
-                        "example": "member"
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "property": null,
+                                "$ref": "#/components/schemas/RegisterMember"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "201": {
                         "description": "Успешная регистрация, возвращает сущность User",
@@ -926,6 +920,24 @@
                     }
                 },
                 "type": "object"
+            },
+            "RegisterMember": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "email": {
+                                "description": "unique email"
+                            },
+                            "type": {
+                                "description": "'company' or 'member'"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MemberProfile"
+                    }
+                ]
             }
         },
         "parameters": {

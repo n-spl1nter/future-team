@@ -15,8 +15,12 @@ class RegisterController extends Controller
      *  path="/auth/register",
      *  summary="Register by email",
      *  tags={"Auth"},
-     *  @OA\Parameter(name="email", required=true, in="query", example="test@test.com", description="unique email"),
-     *  @OA\Parameter(name="type", required=true, in="query", example="member", description="'company' or 'member'"),
+     *     @OA\RequestBody(
+     *      @OA\MediaType(
+     *          mediaType="multipart/form-data",
+     *          @OA\Property(ref="#/components/schemas/RegisterMember"),
+     *      ),
+     *     ),
      *  @OA\Response(
      *     response=201,
      *     description="Успешная регистрация, возвращает сущность User",

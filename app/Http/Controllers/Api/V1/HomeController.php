@@ -111,6 +111,18 @@ use Illuminate\Http\Request;
  *              @OA\Property(property="organization_id", description="id существующей организации", type="integer"),
  *              @OA\Property(property="organization_name", description="Имя организации", type="string"),
  *          ),
+ *
+ * /**
+ * @OA\Schema(
+ *   schema="RegisterMember",
+ *   allOf={
+ *     @OA\Schema(
+ *       @OA\Property(property="email", description="unique email"),
+ *       @OA\Property(property="type",  description="'company' or 'member'"),
+ *     ),
+ *     @OA\Schema(ref="#/components/schemas/MemberProfile"),
+ *   }
+ * )
  */
 class HomeController extends Controller
 {
