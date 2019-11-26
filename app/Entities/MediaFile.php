@@ -103,7 +103,7 @@ class MediaFile extends Model
             'entity_id' => $entityId,
             'file_type' => $fileType,
         ]);
-        $file->uploaded_by = \Auth::user()->id;
+        $file->uploaded_by = \Auth::user() ? \Auth::user()->id : null;
         $file->save();
         return $file;
     }

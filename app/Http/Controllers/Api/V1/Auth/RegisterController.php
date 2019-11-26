@@ -37,7 +37,7 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        $user = User::makeFromEmail($request->all());
+        $user = User::makeFromEmail($request);
 
         return response()->json(['user' => $user], 201);
     }

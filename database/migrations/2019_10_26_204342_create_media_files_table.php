@@ -20,7 +20,7 @@ class CreateMediaFilesTable extends Migration
             $table->string('entity');
             $table->unsignedBigInteger('entity_id');
             $table->string('file_type');
-            $table->unsignedBigInteger('uploaded_by');
+            $table->unsignedBigInteger('uploaded_by')->nullable();
             $table->timestamps();
 
             $table->foreign('uploaded_by')

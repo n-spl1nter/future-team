@@ -245,16 +245,26 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->notify(new RegistrationNotification($password));
     }
 
-    public static function makeFromEmail(array $attributes): self
+    public static function makeFromEmail(Request $request): self
     {
-        $password = Str::random(8);
-        $user = new self();
-        $user->email = $attributes['email'];
-        $user->email_verified_at = now();
-        $user->setRole($attributes['type'] === 'member' ? Role::MEMBER : Role::COMPANY)
-            ->setPassword($password)
-            ->save();
-        $user->sendEmailVerificationNotificationOnRegister($password);
+        $user = null;
+        \DB::transaction(function () use ($request, &$user) {
+            $userType = $request->get('type');
+            $password = Str::random(8);
+            $user = new self();
+            $user->email = $request->get('email');
+            $user->email_verified_at = now();
+            $user->setRole($userType === 'member' ? Role::MEMBER : Role::COMPANY)
+                ->setPassword($password)
+                ->save();
+            if ($user->isMember()) {
+                $user->setProfile($request);
+            } else {
+                $user->setCompanyProfile($request);
+            }
+            $user->sendEmailVerificationNotificationOnRegister($password);
+        });
+
         return $user;
     }
 
