@@ -117,10 +117,20 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Успешная регистрация, возвращает сущность User"
+                        "description": "Успешная регистрация, возвращает сущность User",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "422": {
-                        "description": "Возвращает массив ошибок"
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
@@ -279,25 +289,6 @@
                 "responses": {
                     "200": {
                         "description": "Возвращает город по его id",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/": {
-            "get": {
-                "tags": [
-                    "Api base"
-                ],
-                "summary": "Base path",
-                "operationId": "App\\Http\\Controllers\\Api\\V1\\HomeController::index",
-                "responses": {
-                    "200": {
-                        "description": "Api information",
                         "content": {
                             "application/json": {
                                 "schema": {}
@@ -653,96 +644,8 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "description": "Имя",
-                                        "type": "string"
-                                    },
-                                    "middle_name": {
-                                        "description": "Отчество",
-                                        "type": "string"
-                                    },
-                                    "last_name": {
-                                        "description": "Фамилия",
-                                        "type": "string"
-                                    },
-                                    "phone": {
-                                        "description": "Телефон",
-                                        "type": "string"
-                                    },
-                                    "birth_date_at": {
-                                        "description": "Дата рождения",
-                                        "type": "string"
-                                    },
-                                    "city_id": {
-                                        "description": "ID города",
-                                        "type": "integer"
-                                    },
-                                    "activity_field_id": {
-                                        "description": "ID Сферы деятельности",
-                                        "type": "integer"
-                                    },
-                                    "goals[0]": {
-                                        "description": "ID Цели",
-                                        "type": "integer"
-                                    },
-                                    "goals[1]": {
-                                        "description": "ID Цели",
-                                        "type": "integer"
-                                    },
-                                    "known_languages[]": {
-                                        "description": "Языки, которыми владею(массив Id)",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "integer"
-                                        },
-                                        "collectionFormat": "multi"
-                                    },
-                                    "languages_wltl[]": {
-                                        "description": "Языки, которые хочу выучить(массив Id)",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "integer"
-                                        },
-                                        "collectionFormat": "multi"
-                                    },
-                                    "language_exchange_agreement": {
-                                        "description": "Согласие на участие в языковом обмене (0 или 1)",
-                                        "type": "integer"
-                                    },
-                                    "motivation[]": {
-                                        "description": "Цели(массив строк, длинна 1-5)",
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        },
-                                        "collectionFormat": "multi"
-                                    },
-                                    "photo": {
-                                        "description": "Фото",
-                                        "type": "file",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "binary"
-                                        }
-                                    },
-                                    "about": {
-                                        "description": "О себе",
-                                        "type": "string"
-                                    },
-                                    "terms": {
-                                        "description": "Согласие на обработку данных"
-                                    },
-                                    "organization_id": {
-                                        "description": "id существующей организации",
-                                        "type": "integer"
-                                    },
-                                    "organization_name": {
-                                        "description": "Имя организации",
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
+                                "property": null,
+                                "$ref": "#/components/schemas/MemberProfile"
                             }
                         }
                     }
@@ -799,60 +702,8 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "properties": {
-                                    "full_name": {
-                                        "description": "Полное название",
-                                        "type": "string"
-                                    },
-                                    "country_id": {
-                                        "description": "ID страны",
-                                        "type": "integer"
-                                    },
-                                    "description": {
-                                        "description": "Описание(макс 1500 символов)",
-                                        "type": "string"
-                                    },
-                                    "contact_person_name": {
-                                        "description": "Контактное лицо",
-                                        "type": "string"
-                                    },
-                                    "contact_person_email": {
-                                        "description": "Email контактного лица",
-                                        "type": "string"
-                                    },
-                                    "cooperation_type": {
-                                        "description": "Пример желаемого сотрудничества(10-1500 символов)",
-                                        "type": "string"
-                                    },
-                                    "organization_type_id": {
-                                        "description": "Тип организации (id)",
-                                        "type": "integer"
-                                    },
-                                    "organization_type": {
-                                        "description": "Тип организации (свой)",
-                                        "type": "string"
-                                    },
-                                    "goals[0]": {
-                                        "description": "ID Цели",
-                                        "type": "integer"
-                                    },
-                                    "goals[1]": {
-                                        "description": "ID Цели",
-                                        "type": "integer"
-                                    },
-                                    "photo": {
-                                        "description": "Фото",
-                                        "type": "file",
-                                        "items": {
-                                            "type": "string",
-                                            "format": "binary"
-                                        }
-                                    },
-                                    "terms": {
-                                        "description": "Согласие на обработку данных"
-                                    }
-                                },
-                                "type": "object"
+                                "property": null,
+                                "$ref": "#/components/schemas/CompanyProfile"
                             }
                         }
                     }
@@ -927,6 +778,156 @@
         }
     },
     "components": {
+        "schemas": {
+            "CompanyProfile": {
+                "properties": {
+                    "full_name": {
+                        "description": "Полное название",
+                        "type": "string"
+                    },
+                    "country_id": {
+                        "description": "ID страны",
+                        "type": "integer"
+                    },
+                    "description": {
+                        "description": "Описание(макс 1500 символов)",
+                        "type": "string"
+                    },
+                    "contact_person_name": {
+                        "description": "Контактное лицо",
+                        "type": "string"
+                    },
+                    "contact_person_email": {
+                        "description": "Email контактного лица",
+                        "type": "string"
+                    },
+                    "cooperation_type": {
+                        "description": "Пример желаемого сотрудничества(10-1500 символов)",
+                        "type": "string"
+                    },
+                    "organization_type_id": {
+                        "description": "Тип организации (id)",
+                        "type": "integer"
+                    },
+                    "organization_type": {
+                        "description": "Тип организации (свой)",
+                        "type": "string"
+                    },
+                    "goals[0]": {
+                        "description": "ID Цели",
+                        "type": "integer"
+                    },
+                    "goals[1]": {
+                        "description": "ID Цели",
+                        "type": "integer"
+                    },
+                    "photo": {
+                        "description": "Фото",
+                        "type": "file",
+                        "items": {
+                            "type": "string",
+                            "format": "binary"
+                        }
+                    },
+                    "terms": {
+                        "description": "Согласие на обработку данных"
+                    }
+                },
+                "type": "object"
+            },
+            "MemberProfile": {
+                "properties": {
+                    "first_name": {
+                        "description": "Имя",
+                        "type": "string"
+                    },
+                    "middle_name": {
+                        "description": "Отчество",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "Фамилия",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "Телефон",
+                        "type": "string"
+                    },
+                    "birth_date_at": {
+                        "description": "Дата рождения",
+                        "type": "string"
+                    },
+                    "city_id": {
+                        "description": "ID города",
+                        "type": "integer"
+                    },
+                    "activity_field_id": {
+                        "description": "ID Сферы деятельности",
+                        "type": "integer"
+                    },
+                    "goals[0]": {
+                        "description": "ID Цели",
+                        "type": "integer"
+                    },
+                    "goals[1]": {
+                        "description": "ID Цели",
+                        "type": "integer"
+                    },
+                    "known_languages[]": {
+                        "description": "Языки, которыми владею(массив Id)",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    "languages_wltl[]": {
+                        "description": "Языки, которые хочу выучить(массив Id)",
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    "language_exchange_agreement": {
+                        "description": "Согласие на участие в языковом обмене (0 или 1)",
+                        "type": "integer"
+                    },
+                    "motivation[]": {
+                        "description": "Цели(массив строк, длинна 1-5)",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi"
+                    },
+                    "photo": {
+                        "description": "Фото",
+                        "type": "file",
+                        "items": {
+                            "type": "string",
+                            "format": "binary"
+                        }
+                    },
+                    "about": {
+                        "description": "О себе",
+                        "type": "string"
+                    },
+                    "terms": {
+                        "description": "Согласие на обработку данных"
+                    },
+                    "organization_id": {
+                        "description": "id существующей организации",
+                        "type": "integer"
+                    },
+                    "organization_name": {
+                        "description": "Имя организации",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
         "parameters": {
             "token": {
                 "name": "Authorization",
@@ -944,10 +945,6 @@
         }
     },
     "tags": [
-        {
-            "name": "Api base",
-            "description": "API base page"
-        },
         {
             "name": "Auth",
             "description": "Auth"
