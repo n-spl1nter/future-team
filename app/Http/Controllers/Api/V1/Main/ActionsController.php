@@ -115,4 +115,49 @@ class ActionsController extends Controller
     {
         // @todo implement
     }
+
+    /**
+     * @OA\Post(
+     *     path="/main/action/join/{action}",
+     *     @OA\Parameter(name="action", required=true, in="path", description="Id акции"),
+     *     summary="Присоединиться к акции",
+     *     tags={"Main"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *        response=201,
+     *        description="Успешное добавление пользователя к акции",
+     *        @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *        response=401,
+     *        description="Ошибка аутентификации",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Акция не найдена",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=422,
+     *        description="Возвращает массив ошибок",
+     *        @OA\JsonContent()
+     *    ),
+     * )
+     * @param Action $action
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function joinToAction(Action $action)
+    {
+        if (!$action->joinMember(\Auth::user())) {
+            return response()->json([], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        return response()->json();
+    }
+
+    public function getMembers(Action $action)
+    {
+        $members = $action->joinedUsers()->paginate(20);
+        return response()->json($members);
+    }
 }

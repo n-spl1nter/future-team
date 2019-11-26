@@ -44,6 +44,8 @@ use Illuminate\Http\Request;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\User[] $joinedUsers
+ * @property-read int|null $joined_users_count
  */
 class Action extends Model
 {
@@ -81,6 +83,12 @@ class Action extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function joinedUsers()
+    {
+        return $this->belongsToMany(User::class, 'users_to_actions', 'action_id', 'user_id')
+            ->withTimestamps();
+    }
+
     public static function make(Request $request): self
     {
         $action = new self($request->all());
@@ -108,5 +116,15 @@ class Action extends Model
         return array_merge(parent::toArray(), [
             'images' => $this->getImages(MediaFile::TYPE_ACTION)->toArray(),
         ]);
+    }
+
+    public function joinMember(User $user): bool
+    {
+        if ($this->joinedUsers()->where('user_id', $user->id)->count() > 0) {
+            return false;
+        }
+
+        $this->joinedUsers()->attach($user->id);
+        return true;
     }
 }

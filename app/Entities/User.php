@@ -65,6 +65,8 @@ use Illuminate\Http\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRoleId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Action[] $joinedActions
+ * @property-read int|null $joined_actions_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -131,6 +133,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function events()
     {
         return $this->hasMany(Event::class, 'user_id', 'id');
+    }
+
+    public function joinedActions()
+    {
+        return $this->belongsToMany(Action::class, 'users_to_actions', 'user_id', 'action_id');
     }
 
     public function isCompany(): bool

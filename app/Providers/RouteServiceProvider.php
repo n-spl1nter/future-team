@@ -75,13 +75,11 @@ class RouteServiceProvider extends ServiceProvider
     protected function bindRouteParams()
     {
         Route::bind('event', function ($value) {
-            return Event::
-            whereSlug($value)
+            return Event::whereSlug($value)
                 ->whereNotIn('status', [Event::DELETED, Event::BLOCKED])->firstOrFail();
         });
         Route::bind('action', function ($value) {
-            return Action::
-            whereSlug($value)
+            return Action::whereSlug($value)
                 ->whereNotIn('status', [Action::DELETED, Action::BLOCKED])->firstOrFail();
         });
     }

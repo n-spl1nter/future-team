@@ -431,6 +431,62 @@
                 ]
             }
         },
+        "/main/action/join/{action}": {
+            "post": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Присоединиться к акции",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\ActionsController::joinToAction",
+                "parameters": [
+                    {
+                        "name": "action",
+                        "in": "path",
+                        "description": "Slug акции",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Успешное добавление пользователя к акции",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка аутентификации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Акция не найдена",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/main/events/{event}": {
             "get": {
                 "tags": [
