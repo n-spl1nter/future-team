@@ -119,7 +119,7 @@ class ActionsController extends Controller
     /**
      * @OA\Post(
      *     path="/main/action/join/{action}",
-     *     @OA\Parameter(name="action", required=true, in="path", description="Id акции"),
+     *     @OA\Parameter(name="action", required=true, in="path", description="Slug акции"),
      *     summary="Присоединиться к акции",
      *     tags={"Main"},
      *     security={{"bearerAuth": {}}},
@@ -155,6 +155,21 @@ class ActionsController extends Controller
         return response()->json();
     }
 
+    /**
+     * @OA\Get(
+     *     path="/main/actions/{action}/members",
+     *     summary="Получить список пользователей, присоединившихся к акции",
+     *     tags={"Main"},
+     *     @OA\Parameter(name="action", required=true, in="path", description="Slug акции"),
+     *     @OA\Parameter(name="page", required=false, in="query", description="Номер страницы"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Возвращает объект пагинации поьзваотелей",
+     *     @OA\JsonContent()
+     *     ),
+     * )
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getMembers(Action $action)
     {
         $members = $action->joinedUsers()->paginate(20);

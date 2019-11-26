@@ -33,6 +33,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
     Route::get('/user/companies/search', ['uses' => 'User\UsersController@findCompanies', 'as' => 'companiesSearch']);
     Route::get('/main/events/{event}', ['uses' => 'Main\EventsController@view', 'as' => 'eventView']);
     Route::get('/main/actions/{action}', ['uses' => 'Main\ActionsController@view', 'as' => 'actionView']);
+    Route::get('/main/actions/{action}/members', ['uses' => 'Main\ActionsController@getMembers', 'as' => 'actionMembers']);
 
     /** Common data */
     Route::group(['prefix' => 'common', 'namespace' => 'Common'], function () {

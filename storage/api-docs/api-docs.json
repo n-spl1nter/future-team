@@ -487,6 +487,39 @@
                 ]
             }
         },
+        "/main/actions/{action}/members": {
+            "get": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Получить список пользователей, присоединившихся к акции",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\ActionsController::getMembers",
+                "parameters": [
+                    {
+                        "name": "action",
+                        "in": "path",
+                        "description": "Slug акции",
+                        "required": true
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Номер страницы",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает объект пагинации поьзваотелей",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/main/events/{event}": {
             "get": {
                 "tags": [
