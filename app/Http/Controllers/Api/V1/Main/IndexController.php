@@ -80,10 +80,10 @@ class IndexController extends Controller
         $members = User::whereHas('profile', function (Builder $query) use ($request) {
             $query->where('country_id', $request->get('country_id'));
         })->get();
-        $companies = User::whereHas('profile', function (Builder $query) use ($request) {
+        $companies = User::whereHas('companyProfile', function (Builder $query) use ($request) {
             $query->where('country_id', $request->get('country_id'));
         })->get();
 
-        return response()->json(compact('actions', 'events', 'members'));
+        return response()->json(compact('actions', 'events', 'members', 'companies'));
     }
 }
