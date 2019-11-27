@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Main;
 
 use App\Entities\Event;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateEventRequest;
+use App\Http\Requests\Api\V1\Main\CreateEventRequest;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
@@ -62,6 +62,7 @@ class EventsController extends Controller
      *                   property="photos[1]", description="Массив фото", type="file",
      *                   @OA\Items(type="string", format="binary")
      *              ),
+     *              @OA\Property(property="video_links[0]", description="Ссылки на видео (массив URL)", type="string"),
      *              @OA\Property(property="city_id", description="ID города"),
      *              @OA\Property(property="country_id", description="ID страны"),
      *              @OA\Property(property="start_at", description="Дата и время начало в формате Y-m-d H:i:s"),

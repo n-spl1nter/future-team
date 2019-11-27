@@ -46,6 +46,11 @@ use Illuminate\Http\Request;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\User[] $joinedUsers
  * @property-read int|null $joined_users_count
+ * @property int $country_id
+ * @property array|null $video_links
+ * @property-read \App\Entities\Country $country
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereCountryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereVideoLinks($value)
  */
 class Action extends Model
 {
@@ -62,6 +67,7 @@ class Action extends Model
     protected $hidden = ['updated_at'];
     protected $casts = [
         'domains' => 'array',
+        'video_links' => 'array',
     ];
 
     public function sluggable(): array
@@ -101,6 +107,7 @@ class Action extends Model
         $action->end_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('end_at'));
         $action->status = static::ACTIVE;
         $action->domains = array_values($request->get('domains'));
+        $action->video_links = $request->get('video_links', []);
         $action->user_id = \Auth::id();
         $action->save();
         $action->setImage($request->file('photos'), MediaFile::TYPE_ACTION);
@@ -111,7 +118,7 @@ class Action extends Model
     public function toArray()
     {
         return array_merge(parent::toArray(), [
-            'images' => $this->getImages(MediaFile::TYPE_ACTION)->toArray(),
+            'images' => $this->getImages(MediaFile::TYPE_ACTION)->pluck('url')->toArray(),
         ]);
     }
 
@@ -119,7 +126,7 @@ class Action extends Model
     {
         $this->load('city', 'user');
         return array_merge(parent::toArray(), [
-            'images' => $this->getImages(MediaFile::TYPE_ACTION)->toArray(),
+            'images' => $this->getImages(MediaFile::TYPE_ACTION)->pluck('url')->toArray(),
         ]);
     }
 

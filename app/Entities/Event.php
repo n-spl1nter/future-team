@@ -49,6 +49,11 @@ use Illuminate\Http\Request;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereUserId($value)
  * @mixin \Eloquent
+ * @property int $country_id
+ * @property array|null $video_links
+ * @property-read \App\Entities\Country $country
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereCountryId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereVideoLinks($value)
  */
 class Event extends Model
 {
@@ -62,6 +67,7 @@ class Event extends Model
     protected $dates = ['start_at', 'end_at'];
     protected $fillable = ['name', 'conditions', 'reasons', 'contact_data', 'additional_info', 'city_id', 'country_id'];
     protected $hidden = ['updated_at'];
+    protected $casts = ['video_links' => 'array'];
 
     public function sluggable(): array
     {
@@ -98,6 +104,7 @@ class Event extends Model
         $event->start_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('start_at'));
         $event->end_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('end_at'));
         $event->status = static::ACTIVE;
+        $event->video_links = $request->get('video_links', []);
         $event->user_id = \Auth::id();
         $event->save();
         $event->setImage($request->file('photos'), MediaFile::TYPE_EVENT);
@@ -108,7 +115,7 @@ class Event extends Model
     public function toArray()
     {
         return array_merge(parent::toArray(), [
-            'images' => $this->getImages(MediaFile::TYPE_EVENT)->toArray(),
+            'images' => $this->getImages(MediaFile::TYPE_EVENT)->pluck('url')->toArray(),
         ]);
     }
 
@@ -116,7 +123,7 @@ class Event extends Model
     {
         $this->load('city', 'user');
         return array_merge(parent::toArray(), [
-            'images' => $this->getImages(MediaFile::TYPE_EVENT)->toArray(),
+            'images' => $this->getImages(MediaFile::TYPE_EVENT)->pluck('url')->toArray(),
         ]);
     }
 }

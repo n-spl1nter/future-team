@@ -39,6 +39,7 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int $country_id
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCountryId($value)
+ * @property-read \App\Entities\Country $country
  */
 class Profile extends Model
 {

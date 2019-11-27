@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereUserId($value)
  * @mixin \Eloquent
  * @property-read \App\Entities\OrganizationType|null $organizationType
+ * @property-read \App\Entities\City $city
  */
 class CompanyProfile extends Model
 {

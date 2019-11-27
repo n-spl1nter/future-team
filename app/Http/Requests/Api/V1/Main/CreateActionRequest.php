@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Api\V1\Main;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -36,6 +36,8 @@ class CreateActionRequest extends FormRequest
             'start_at' => 'required|date_format:"Y-m-d H:i:s"|after:tomorrow',
             'end_at' => 'required|date_format:"Y-m-d H:i:s"|after:start_at',
             'terms' => 'required|accepted',
+            'video_links' => 'nullable|array',
+            'video_links.*' => 'url',
         ];
     }
 }
