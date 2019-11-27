@@ -55,7 +55,7 @@ class EventsController extends Controller
      *              @OA\Property(property="contact_data", description="Контактные данные организаторов"),
      *              @OA\Property(property="additional_info", description="Дополнительная информация"),
      *              @OA\Property(
-     *                   property="photos[0]", description="Массив фото(min_width=1280,min_height=800)", type="file",
+     *                   property="photos[0]", description="Массив фото(min_width=1920,min_height=800)", type="file",
      *                   @OA\Items(type="string", format="binary")
      *              ),
      *              @OA\Property(

@@ -56,7 +56,7 @@ class ActionsController extends Controller
      *              @OA\Property(property="domains[0]", description="Сферы(массив [2-5])", type="string"),
      *              @OA\Property(property="domains[1]", description="Сферы", type="string"),
      *              @OA\Property(
-     *                   property="photos[0]", description="Массив фото(min_width=1280,min_height=800)", type="file",
+     *                   property="photos[0]", description="Массив фото(min_width=1920,min_height=800)", type="file",
      *                   @OA\Items(type="string", format="binary")
      *              ),
      *              @OA\Property(

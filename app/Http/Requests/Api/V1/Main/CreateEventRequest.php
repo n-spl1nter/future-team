@@ -29,14 +29,14 @@ class CreateEventRequest extends FormRequest
             'reasons' => 'required|string|min:5|max:400',
             'contact_data' => 'required|string|min:5|max:255',
             'additional_info' => 'required|string|min:5|max:1000',
-            'photos' => 'required|array|min:2|max:5',
-            'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=1280,min_height=800',
+            'photos' => 'required|array|min:2|max:25',
+            'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=1920,min_height=800',
             'city_id' => 'required|integer|exists:_cities,city_id',
             'country_id' => 'required|integer',
             'start_at' => 'required|date_format:"Y-m-d H:i:s"|after:tomorrow',
             'end_at' => 'required|date_format:"Y-m-d H:i:s"|after:start_at',
             'terms' => 'required|accepted',
-            'video_links' => 'nullable|array',
+            'video_links' => 'nullable|array|max:5',
             'video_links.*' => 'url',
         ];
     }
