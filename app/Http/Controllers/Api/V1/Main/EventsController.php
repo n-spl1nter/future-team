@@ -63,6 +63,7 @@ class EventsController extends Controller
      *                   @OA\Items(type="string", format="binary")
      *              ),
      *              @OA\Property(property="city_id", description="ID города"),
+     *              @OA\Property(property="country_id", description="ID страны"),
      *              @OA\Property(property="start_at", description="Дата и время начало в формате Y-m-d H:i:s"),
      *              @OA\Property(property="end_at", description="Дата и время конца в формате Y-m-d H:i:s"),
      *              @OA\Property(property="terms", description="Согласие на обработку данных"),

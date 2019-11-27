@@ -9,15 +9,13 @@ use Illuminate\Database\Eloquent\Model;
  * App\Entities\Profile
  *
  * @property int $id
- * @property string $first_name
- * @property string|null $middle_name
- * @property string $last_name
+ * @property string $full_name
  * @property string $phone
- * @property \Illuminate\Support\Carbon $birth_date_at
+ * @property \Illuminate\Support\Carbon|null $birth_date_at
  * @property int $language_exchange_agreement
  * @property int $city_id
  * @property int $activity_field_id
- * @property string $motivation
+ * @property array $motivation
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $user_id
@@ -31,16 +29,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereBirthDateAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCityId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereFullName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereLanguageExchangeAgreement($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereLastName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereMiddleName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereMotivation($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUserId($value)
  * @mixin \Eloquent
+ * @property int $country_id
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCountryId($value)
  */
 class Profile extends Model
 {
@@ -84,9 +82,7 @@ class Profile extends Model
     public static function getOnCreateValidationRules(): array
     {
         return [
-            'first_name' => 'required|string|min:2|max:255',
-            'middle_name' => 'nullable|string|min:2|max:255',
-            'last_name' => 'required|string|min:2|max:255',
+            'full_name' => 'required|string|min:2|max:255',
             'phone' => 'required|string|size:11|regex:/[0-9]{11}/',
             'birth_date_at' => 'required|date',
             'city_id' => 'required|integer|exists:_cities,city_id',
@@ -110,9 +106,7 @@ class Profile extends Model
     public static function getOnUpdateValidationRules(): array
     {
         return [
-            'first_name' => 'required|string|min:2|max:255',
-            'middle_name' => 'nullable|string|min:2|max:255',
-            'last_name' => 'required|string|min:2|max:255',
+            'full_name' => 'required|string|min:2|max:255',
             'phone' => 'required|string|size:11|regex:/[0-9]{11}/',
             'birth_date_at' => 'required|date',
             'city_id' => 'required|integer|exists:_cities,city_id',

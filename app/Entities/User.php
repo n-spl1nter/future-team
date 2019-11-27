@@ -36,6 +36,8 @@ use Illuminate\Http\UploadedFile;
  * @property-read int|null $events_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Goal[] $goals
  * @property-read int|null $goals_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Action[] $joinedActions
+ * @property-read int|null $joined_actions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Language[] $knownLanguages
  * @property-read int|null $known_languages_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
@@ -65,8 +67,6 @@ use Illuminate\Http\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRoleId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Action[] $joinedActions
- * @property-read int|null $joined_actions_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

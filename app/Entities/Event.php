@@ -60,7 +60,7 @@ class Event extends Model
     const BLOCKED = 'BLOCKED';
 
     protected $dates = ['start_at', 'end_at'];
-    protected $fillable = ['name', 'conditions', 'reasons', 'contact_data', 'additional_info', 'city_id'];
+    protected $fillable = ['name', 'conditions', 'reasons', 'contact_data', 'additional_info', 'city_id', 'country_id'];
     protected $hidden = ['updated_at'];
 
     public function sluggable(): array
@@ -75,6 +75,11 @@ class Event extends Model
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'city_id');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id', 'country_id');
     }
 
     public function user()

@@ -375,6 +375,9 @@
                                     "city_id": {
                                         "description": "ID города"
                                     },
+                                    "country_id": {
+                                        "description": "ID страны"
+                                    },
                                     "start_at": {
                                         "description": "Дата и время начало в формате Y-m-d H:i:s"
                                     },
@@ -600,6 +603,9 @@
                                     },
                                     "city_id": {
                                         "description": "ID города"
+                                    },
+                                    "country_id": {
+                                        "description": "ID страны"
                                     },
                                     "start_at": {
                                         "description": "Дата и время начало в формате Y-m-d H:i:s"
@@ -920,16 +926,8 @@
             },
             "MemberProfile": {
                 "properties": {
-                    "first_name": {
+                    "full_name": {
                         "description": "Имя",
-                        "type": "string"
-                    },
-                    "middle_name": {
-                        "description": "Отчество",
-                        "type": "string"
-                    },
-                    "last_name": {
-                        "description": "Фамилия",
                         "type": "string"
                     },
                     "phone": {
@@ -942,6 +940,10 @@
                     },
                     "city_id": {
                         "description": "ID города",
+                        "type": "integer"
+                    },
+                    "country_id": {
+                        "description": "ID Сраны",
                         "type": "integer"
                     },
                     "activity_field_id": {

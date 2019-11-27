@@ -67,12 +67,11 @@ use Illuminate\Http\Request;
  *
  *          @OA\Schema(
  *              schema="MemberProfile",
- *              @OA\Property(property="first_name", description="Имя", type="string"),
- *              @OA\Property(property="middle_name",description="Отчество", type="string"),
- *              @OA\Property(property="last_name", description="Фамилия", type="string"),
+ *              @OA\Property(property="full_name", description="Имя", type="string"),
  *              @OA\Property(property="phone", description="Телефон", type="string"),
  *              @OA\Property(property="birth_date_at", description="Дата рождения", type="string"),
  *              @OA\Property(property="city_id", description="ID города", type="integer"),
+ *              @OA\Property(property="country_id", description="ID Сраны", type="integer"),
  *              @OA\Property(property="activity_field_id", description="ID Сферы деятельности", type="integer"),
  *              @OA\Property(property="goals[0]", description="ID Цели", type="integer"),
  *              @OA\Property(property="goals[1]", description="ID Цели", type="integer"),
