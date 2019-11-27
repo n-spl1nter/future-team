@@ -357,7 +357,7 @@
                                         "type": "string"
                                     },
                                     "photos[0]": {
-                                        "description": "Массив фото(min_width=1280,min_height=800)",
+                                        "description": "Массив фото(min_width=1920,min_height=800)",
                                         "type": "file",
                                         "items": {
                                             "type": "string",
@@ -590,7 +590,7 @@
                                         "description": "Дополнительная информация"
                                     },
                                     "photos[0]": {
-                                        "description": "Массив фото(min_width=1280,min_height=800)",
+                                        "description": "Массив фото(min_width=1920,min_height=800)",
                                         "type": "file",
                                         "items": {
                                             "type": "string",
@@ -669,6 +669,25 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/summary/countries": {
+            "get": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Кол-во акций, событий и участнков сгруппированные по городам",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\IndexController::getWorldInfo",
+                "responses": {
+                    "200": {
+                        "description": "Результат",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
             }
         },
         "/user/account": {

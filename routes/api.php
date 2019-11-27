@@ -45,4 +45,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
         Route::get('/goals', ['uses' => 'GoalsController@index', 'as' => 'goals']);
         Route::get('/organizationtypes', ['uses' => 'OrganizationTypesController@index', 'as' => 'organizationTypes']);
     });
+
+    Route::get('/summary/countries', ['uses' => 'Main\IndexController@getWorldInfo']);
 });
