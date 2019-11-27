@@ -46,8 +46,8 @@ class Profile extends Model
     protected $dates = ['birth_date_at'];
     protected $casts = ['motivation' => 'array'];
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'phone', 'language_exchange_agreement',
-        'city_id', 'activity_field_id', 'motivation',
+        'full_name', 'phone', 'language_exchange_agreement',
+        'city_id', 'country_id','activity_field_id', 'motivation',
     ];
     protected $hidden = ['id'];
 
@@ -59,6 +59,11 @@ class Profile extends Model
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'city_id');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id', 'country_id');
     }
 
     public function activityField()

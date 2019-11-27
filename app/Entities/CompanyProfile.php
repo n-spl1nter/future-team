@@ -41,8 +41,8 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyProfile extends Model
 {
     protected $table = 'company_profiles';
-    protected $fillable = [ 'description', 'contact_person_name', 'contact_person_email', 'cooperation_type',
-        'country_id',
+    protected $fillable = [ 'description', 'contact_person_name', 'contact_person_email',
+        'cooperation_type', 'country_id',
     ];
     protected $hidden = [
         'contact_person_email'
@@ -51,6 +51,11 @@ class CompanyProfile extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'city_id');
     }
 
     public function organizationType()
