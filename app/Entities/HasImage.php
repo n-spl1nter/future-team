@@ -14,7 +14,7 @@ trait HasImage
      * @param int $smallWidth
      * @param int $quality
      */
-    protected function setImage($photo, string $imageType, int $fullWidth = 1280, int $smallWidth = 450, int $quality = 75): void
+    protected function setImage($photo, string $imageType, int $fullWidth = 1920, int $smallWidth = 1280, int $quality = 75): void
     {
         if (is_array($photo)) {
             foreach ($photo as $photoItem) {

@@ -233,7 +233,7 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this;
         }
         MediaFile::removeFile(static::class, $this->id, MediaFile::TYPE_AVATAR);
-        $this->setImage($file, MediaFile::TYPE_AVATAR, 600, 180);
+        $this->setImage($file, MediaFile::TYPE_AVATAR, 640, 240);
         return $this;
     }
 
