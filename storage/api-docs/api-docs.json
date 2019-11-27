@@ -676,8 +676,35 @@
                 "tags": [
                     "Main"
                 ],
-                "summary": "Кол-во акций, событий и участнков сгруппированные по городам",
+                "summary": "Кол-во акций, событий и участнков сгруппированные по странам",
                 "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\IndexController::getWorldInfo",
+                "responses": {
+                    "200": {
+                        "description": "Результат",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/summary/country": {
+            "get": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Кол-во акций, событий в стране",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\IndexController::getCountryInfo",
+                "parameters": [
+                    {
+                        "name": "country_id",
+                        "in": "query",
+                        "description": "Id страны",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Результат",

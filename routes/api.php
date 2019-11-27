@@ -47,4 +47,5 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
     });
 
     Route::get('/summary/countries', ['uses' => 'Main\IndexController@getWorldInfo']);
+    Route::get('/summary/country', ['uses' => 'Main\IndexController@getCountryInfo']);
 });
