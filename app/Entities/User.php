@@ -240,7 +240,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatar()
     {
         if (empty($this->avatars)) {
-            $avatar = $this->getImage(MediaFile::TYPE_AVATAR);
+            $avatar = $this->getImage(MediaFile::TYPE_AVATAR)->url;
             $this->avatar = $avatar;
         }
 
