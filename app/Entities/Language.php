@@ -26,5 +26,5 @@ class Language extends Model
 {
     protected $table = 'languages';
     protected $fillable = ['value_ru', 'locale'];
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at', 'pivot'];
 }
