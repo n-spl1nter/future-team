@@ -92,8 +92,9 @@ class MediaFile extends Model
     public static function addFile(string $entityName, int $entityId, string $fileType, array $filePaths): self
     {
         $urls = [];
+        $baseUrl = env('APP_URL');
         foreach ($filePaths as $filePath) {
-            $urls[] = \Storage::url($filePath);
+            $urls[] = $baseUrl . \Storage::url($filePath);
         }
 
         $file = new self([
