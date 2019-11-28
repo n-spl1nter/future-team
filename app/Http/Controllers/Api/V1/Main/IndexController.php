@@ -72,6 +72,7 @@ class IndexController extends Controller
         ]);
 
         $actions = Action::whereCountryId($request->get('country_id'))
+            ->with('city')
             ->whereStatus(Action::ACTIVE)
             ->get();
         $events = Event::whereCountryId($request->get('country_id'))

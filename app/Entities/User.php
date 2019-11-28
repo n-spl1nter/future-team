@@ -240,8 +240,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getAvatar()
     {
         if (empty($this->avatars)) {
-            $avatar = $this->getImage(MediaFile::TYPE_AVATAR)->url;
-            $this->avatar = $avatar;
+            $avatar = $this->getImage(MediaFile::TYPE_AVATAR);
+            if ($avatar) {
+                $this->avatar = $avatar->url;
+            }
         }
 
         return $this->avatar;
@@ -305,6 +307,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
         if ($this->isMember() && $this->profile) {
             $userData['full_name'] = $this->profile->full_name;
+            $userData['city'] = $this->profile->city;
         } elseif ($this->isCompany() && $this->companyProfile) {
             $userData['full_name'] = $this->companyProfile->full_name;
         }
