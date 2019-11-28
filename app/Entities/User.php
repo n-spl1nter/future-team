@@ -67,6 +67,7 @@ use Illuminate\Http\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereRoleId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Entities\User|null $organization
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -138,6 +139,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function joinedActions()
     {
         return $this->belongsToMany(Action::class, 'users_to_actions', 'user_id', 'action_id');
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo(self::class, 'organization_id', 'id');
     }
 
     public function isCompany(): bool
@@ -308,6 +314,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($this->isMember() && $this->profile) {
             $userData['full_name'] = $this->profile->full_name;
             $userData['city'] = $this->profile->city;
+
         } elseif ($this->isCompany() && $this->companyProfile) {
             $userData['full_name'] = $this->companyProfile->full_name;
         }
@@ -344,6 +351,11 @@ class User extends Authenticatable implements MustVerifyEmail
                     ]
                 );
             }
+            if ($this->organization) {
+                $data['organization'] = $this->organization->toArray();
+            } elseif ($this->organization_name) {
+                $data['organization_name'] = $this->organization_name;
+            }
         } elseif ($this->isCompany() && $this->companyProfile) {
             $data = array_merge(
                 $data,
@@ -371,6 +383,11 @@ class User extends Authenticatable implements MustVerifyEmail
                     'would_like_to_learn_languages' => $this->wouldLikeToLearnLanguages->toArray(),
                 ]
             );
+            if ($this->organization) {
+                $data['organization'] = $this->organization->toArray();
+            } elseif ($this->organization_name) {
+                $data['organization_name'] = $this->organization_name;
+            }
         } elseif ($this->isCompany() && $this->companyProfile) {
             $data = array_merge($data, $this->companyProfile->toArray());
         }
