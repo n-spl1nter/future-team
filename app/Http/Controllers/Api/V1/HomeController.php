@@ -51,7 +51,6 @@ use Illuminate\Http\Request;
  *              @OA\Property(property="country_id", description="ID страны", type="integer"),
  *              @OA\Property(property="description", description="Описание(макс 1500 символов)", type="string"),
  *              @OA\Property(property="contact_person_name", description="Контактное лицо", type="string"),
- *              @OA\Property(property="contact_person_email", description="Email контактного лица", type="string"),
  *              @OA\Property(property="cooperation_type", description="Пример желаемого сотрудничества(10-1500 символов)", type="string"),
  *              @OA\Property(property="organization_type_id", description="Тип организации (id)", type="integer"),
  *              @OA\Property(property="organization_type", description="Тип организации (свой)", type="string"),

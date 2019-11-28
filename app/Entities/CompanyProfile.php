@@ -42,12 +42,7 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyProfile extends Model
 {
     protected $table = 'company_profiles';
-    protected $fillable = [ 'description', 'contact_person_name', 'contact_person_email',
-        'cooperation_type', 'country_id',
-    ];
-    protected $hidden = [
-        'contact_person_email'
-    ];
+    protected $fillable = [ 'description', 'contact_person_name', 'cooperation_type', 'country_id' ];
 
     public function user()
     {
@@ -67,7 +62,6 @@ class CompanyProfile extends Model
     public function getPublicProfile()
     {
         $data = $this->toArray();
-        unset($data['contact_person_email']);
         return $data;
     }
 
@@ -84,7 +78,6 @@ class CompanyProfile extends Model
             'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=640,min_height=480',
             'terms' => 'required|accepted',
             'contact_person_name' => 'required|string|max:150',
-            'contact_person_email' => 'required|email',
             'cooperation_type' => 'required|string|min:10|max:1500',
         ];
     }
@@ -100,7 +93,6 @@ class CompanyProfile extends Model
             'organization_type' => 'nullable|required_without:organization_type_id|string|max:100',
             'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=640,min_height=480',
             'contact_person_name' => 'required|string|max:150',
-            'contact_person_email' => 'required|email',
             'cooperation_type' => 'required|string|min:10|max:1500',
         ];
     }
