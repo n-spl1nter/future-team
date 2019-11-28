@@ -589,6 +589,14 @@
                                     "additional_info": {
                                         "description": "Дополнительная информация"
                                     },
+                                    "domains[0]": {
+                                        "description": "Сферы(массив [2-5])",
+                                        "type": "string"
+                                    },
+                                    "domains[1]": {
+                                        "description": "Сферы",
+                                        "type": "string"
+                                    },
                                     "photos[0]": {
                                         "description": "Массив фото(min_width=1920,min_height=800)",
                                         "type": "file",
@@ -938,10 +946,6 @@
                     },
                     "contact_person_name": {
                         "description": "Контактное лицо",
-                        "type": "string"
-                    },
-                    "contact_person_email": {
-                        "description": "Email контактного лица",
                         "type": "string"
                     },
                     "cooperation_type": {

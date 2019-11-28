@@ -54,6 +54,8 @@ use Illuminate\Http\Request;
  * @property-read \App\Entities\Country $country
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereVideoLinks($value)
+ * @property array $domains
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereDomains($value)
  */
 class Event extends Model
 {
@@ -67,7 +69,10 @@ class Event extends Model
     protected $dates = ['start_at', 'end_at'];
     protected $fillable = ['name', 'conditions', 'reasons', 'contact_data', 'additional_info', 'city_id', 'country_id'];
     protected $hidden = ['updated_at'];
-    protected $casts = ['video_links' => 'array'];
+    protected $casts = [
+        'domains' => 'array',
+        'video_links' => 'array',
+    ];
 
     public function sluggable(): array
     {
@@ -103,6 +108,7 @@ class Event extends Model
         $event = new self($request->all());
         $event->start_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('start_at'));
         $event->end_at = Carbon::createFromFormat('Y-m-d H:i:s', $request->get('end_at'));
+        $event->domains = array_values($request->get('domains'));
         $event->status = static::ACTIVE;
         $event->video_links = $request->get('video_links', []);
         $event->user_id = \Auth::id();
