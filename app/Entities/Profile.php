@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property string $full_name
- * @property string $phone
  * @property \Illuminate\Support\Carbon|null $birth_date_at
  * @property int $language_exchange_agreement
  * @property int $city_id
@@ -33,7 +32,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereLanguageExchangeAgreement($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereMotivation($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUserId($value)
  * @mixin \Eloquent
@@ -47,7 +45,7 @@ class Profile extends Model
     protected $dates = ['birth_date_at'];
     protected $casts = ['motivation' => 'array'];
     protected $fillable = [
-        'full_name', 'phone', 'language_exchange_agreement',
+        'full_name', 'language_exchange_agreement',
         'city_id', 'country_id','activity_field_id', 'motivation',
     ];
     protected $hidden = ['id'];
@@ -89,7 +87,6 @@ class Profile extends Model
     {
         return [
             'full_name' => 'required|string|min:2|max:255',
-            'phone' => 'required|string|size:11|regex:/[0-9]{11}/',
             'birth_date_at' => 'required|date',
             'city_id' => 'required|integer|exists:_cities,city_id',
             'activity_field_id' => 'required|integer|exists:activity_fields,id',
@@ -113,7 +110,6 @@ class Profile extends Model
     {
         return [
             'full_name' => 'required|string|min:2|max:255',
-            'phone' => 'required|string|size:11|regex:/[0-9]{11}/',
             'birth_date_at' => 'required|date',
             'city_id' => 'required|integer|exists:_cities,city_id',
             'activity_field_id' => 'required|integer|exists:activity_fields,id',

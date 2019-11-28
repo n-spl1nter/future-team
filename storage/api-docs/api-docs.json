@@ -984,10 +984,6 @@
                         "description": "Имя",
                         "type": "string"
                     },
-                    "phone": {
-                        "description": "Телефон",
-                        "type": "string"
-                    },
                     "birth_date_at": {
                         "description": "Дата рождения",
                         "type": "string"

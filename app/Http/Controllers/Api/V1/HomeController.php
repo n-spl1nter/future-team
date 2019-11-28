@@ -68,7 +68,6 @@ use Illuminate\Http\Request;
  *          @OA\Schema(
  *              schema="MemberProfile",
  *              @OA\Property(property="full_name", description="Имя", type="string"),
- *              @OA\Property(property="phone", description="Телефон", type="string"),
  *              @OA\Property(property="birth_date_at", description="Дата рождения", type="string"),
  *              @OA\Property(property="city_id", description="ID города", type="integer"),
  *              @OA\Property(property="country_id", description="ID Сраны", type="integer"),
