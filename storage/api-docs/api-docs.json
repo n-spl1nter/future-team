@@ -926,6 +926,68 @@
                     }
                 }
             }
+        },
+        "/user/message/send": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Отправка сообщения пользователю",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::sendMessage",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "Id пользователя",
+                        "required": true
+                    },
+                    {
+                        "name": "message",
+                        "in": "query",
+                        "description": "Сообщение",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешная отправка",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка аутентификации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Ошибка авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {

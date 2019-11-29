@@ -7,6 +7,7 @@ use App\Entities\Profile;
 use App\Entities\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Validator;
 
 class UsersController extends Controller
@@ -188,5 +189,50 @@ class UsersController extends Controller
             ->get();
 
         return response()->json(['items' => $companies]);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/user/message/send",
+     *     summary="Отправка сообщения пользователю",
+     *     tags={"User"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(name="user_id", required=true, in="query", description="Id пользователя"),
+     *     @OA\Parameter(name="message", required=true, in="query", description="Сообщение"),
+     *     @OA\Response(
+     *        response=200,
+     *        description="Успешная отправка",
+     *        @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *        response=422,
+     *        description="Возвращает массив ошибок",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=401,
+     *        description="Ошибка аутентификации",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=403,
+     *        description="Ошибка авторизации",
+     *        @OA\JsonContent()
+     *    ),
+     * )
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendMessage(Request $request)
+    {
+        try {
+            /** @var User $currentUser */
+            $currentUser = \Auth::user();
+            $currentUser->sendMessageToUser(User::findOrFail($request->get('user_id')), $request->get('message'));
+        } catch (\Throwable $exception) {
+            return response()->json(['errors' => ['process' => [$exception->getMessage()]]], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return response()->json();
     }
 }

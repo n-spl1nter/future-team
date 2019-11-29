@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use App\Notifications\Auth\RegistrationNotification;
+use App\Notifications\Main\MessageToUserNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -68,6 +69,8 @@ use Illuminate\Http\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \App\Entities\User|null $organization
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\EmailMessage[] $sentEmailMessages
+ * @property-read int|null $sent_email_messages_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -144,6 +147,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function organization()
     {
         return $this->belongsTo(self::class, 'organization_id', 'id');
+    }
+
+    public function sentEmailMessages()
+    {
+        return $this->hasMany(EmailMessage::class, 'user_id_from', 'id');
     }
 
     public function isCompany(): bool
@@ -447,5 +455,28 @@ class User extends Authenticatable implements MustVerifyEmail
             ->setAvatar($request->file('photo'))
             ->companyProfile()
             ->save($companyProfile);
+    }
+
+    public function sendMessageToUser(User $user, string $text)
+    {
+        if ($user->id === $this->id) {
+            throw new \DomainException(__('common.InvalidRecipient'));
+        }
+        $attributes = [
+            'user_id_to' => $user->id,
+            'message' => $text,
+        ];
+        $sentEmail = $this->sentEmailMessages()->create($attributes);
+        $user->notify(new MessageToUserNotification($sentEmail));
+    }
+
+    public function getFullName()
+    {
+        if ($this->isMember()) {
+            return $this->profile->full_name;
+        } elseif ($this->isCompany()) {
+            return $this->companyProfile->full_name;
+        }
+        return '';
     }
 }

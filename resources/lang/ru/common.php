@@ -16,4 +16,8 @@ return [
     'userShouldBeACompany' => 'Пользовтаель должен быть компанией.',
     'userShouldNotBeACompany' => 'Пользовтаель не должен быть компанией.',
     'AlreadyHasProfile' => 'Пользоватаель уже имеет профиль.',
+
+    'MessageFromFutureTeamService' => 'Сообщение от пользователя Future Team',
+    'YouHaveANewMessageFrom' => 'У вас новое сообщение от',
+    'InvalidRecipient' => 'Неправильный получатель',
 ];

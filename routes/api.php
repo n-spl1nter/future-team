@@ -26,6 +26,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
             Route::post('/main/event', ['uses' => 'Main\EventsController@create', 'as' => 'eventCreate']);
             Route::post('/main/action', ['uses' => 'Main\ActionsController@create', 'as' => 'actionCreate']);
             Route::post('/main/action/join/{action}', ['uses' => 'Main\ActionsController@joinToAction', 'as' => 'joinToAction']);
+            Route::post('/user/message/send', ['uses' => 'User\UsersController@sendMessage', 'as' => 'sendMessage']);
         });
     });
 
