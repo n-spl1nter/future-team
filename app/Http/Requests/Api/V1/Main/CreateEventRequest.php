@@ -30,7 +30,7 @@ class CreateEventRequest extends FormRequest
             'contact_data' => 'required|string|min:5|max:255',
             'additional_info' => 'required|string|min:5|max:1000',
             'domains' => 'required|array|min:1|max:3',
-            'domains.*' => 'required|string|min:2|max:255',
+            'domains.*' => 'required|string|min:2|max:400',
             'photos' => 'required|array|min:2|max:25',
             'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=1920,min_height=800',
             'city_id' => 'required|integer|exists:_cities,city_id',
