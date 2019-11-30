@@ -44,6 +44,12 @@
                     </a>
                 </li>
                 @endcan
+                <li class="nav-item">
+                    <a href="{{ route('admin.actions.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-map-marked-alt"></i>
+                        <p>{{ __('common.actions.name') }}</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

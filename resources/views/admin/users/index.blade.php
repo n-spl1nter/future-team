@@ -33,7 +33,7 @@
                                         <td>{{ $user->id }}</td>
                                         <td>
                                             @if ($user->getAvatar())
-                                                <img src="{{ $user->getAvatar()->url[1] }}" alt="">
+                                                <img src="{{ $user->getAvatar()[1] }}" alt="">
                                             @else
                                             @endif
                                         </td>

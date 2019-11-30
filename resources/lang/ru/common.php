@@ -12,7 +12,7 @@ return [
         'rolesManagement' => 'Пользователи',
     ],
     'actions' => [
-
+        'name' => 'Акции',
     ],
     'refresh' => 'Обновить',
     'home' => 'Главная',

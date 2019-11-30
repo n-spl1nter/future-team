@@ -12,7 +12,7 @@ return [
         'rolesManagement' => 'Users',
     ],
     'actions' => [
-
+        'name' => 'Actions',
     ],
     'refresh' => 'Refresh',
     'home' => 'Home',

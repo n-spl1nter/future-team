@@ -13,6 +13,9 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::put('/permissions', ['uses' => 'PermissionsController@update', 'as' => 'permissions.update', 'middleware' => ['can:update,App\RBAC\Permission']]);
     /** Users */
     Route::get('/users', ['uses' => 'UsersController@index', 'as' => 'users.index', 'middleware' => ['can:manageUsers,App\Entities\User']]);
+    /** Actions */
+    Route::get('/actions', ['uses' => 'ActionsController@index', 'as' => 'actions.index']);
+    Route::get('/actions/{id}', ['uses' => 'ActionsController@view', 'as' => 'actions.view']);
 });
 
 Route::group(['middleware' => ['guest']], function () {
