@@ -75,5 +75,22 @@
     window.open('/login/vkontakte', 'Вход', 'width=600,height=400');
   });
 </script>
+<script>
+  async function fetchData() {
+    const data = new FormData();
+    data.append('first_name ', 'Поросёнок Пётр');
+    data.append('last_name ', 'this.surname');
+    data.append('email', 'kek@kek.ru');
+    data.append('phone', '+7 923 356 30 11'.replace(/[^\d]/g, ''));
+    data.append('source', 'Renault.ru');
+    const response = await fetch(this.rootPath + '/auth/register', {
+      headers: {
+        Accept: 'application/json',
+      },
+      method: 'POST',
+      body: data,
+    });
+  }
+</script>
 </body>
 </html>

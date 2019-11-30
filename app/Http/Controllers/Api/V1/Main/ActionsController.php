@@ -10,9 +10,33 @@ use Illuminate\Http\Response;
 
 class ActionsController extends Controller
 {
-    public function index()
+    /**
+     * @OA\Get(
+     *     path="/main/actions",
+     *     summary="Список акций",
+     *     tags={"Main"},
+     *     @OA\Parameter(name="country_id", required=false, in="query", description="Id страны"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Возвращает список акций и стран",
+     *     @OA\JsonContent()
+     *     ),
+     * )
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
     {
-        // @todo implement
+        $actionsQuery = Action::whereStatus(Action::ACTIVE);
+        if ($request->has('country_id')) {
+            $actionsQuery = $actionsQuery->whereCountryId($request->get('country_id'));
+        }
+        $actions = $actionsQuery->paginate(20)->appends($request->except('page'));
+
+        return response()->json([
+            'actions' => $actions,
+            'countries' => Action::getDistinctCountries(),
+        ]);
     }
 
     /**

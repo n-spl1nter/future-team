@@ -139,4 +139,10 @@ class Action extends Model
         $this->joinedUsers()->attach($user->id);
         return true;
     }
+
+    public static function getDistinctCountries()
+    {
+        return \DB::select(\DB::raw('SELECT DISTINCT actions.country_id, _countries.title_ru, _countries.title_en FROM `actions`
+INNER JOIN _countries ON _countries.country_id = actions.country_id'));
+    }
 }

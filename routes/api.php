@@ -30,9 +30,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
         });
     });
 
+    /** Profiles */
     Route::get('/user/{user}', ['uses' => 'User\UsersController@view', 'as' => 'viewUser']);
     Route::get('/user/companies/search', ['uses' => 'User\UsersController@findCompanies', 'as' => 'companiesSearch']);
+    /** Events */
     Route::get('/main/events/{event}', ['uses' => 'Main\EventsController@view', 'as' => 'eventView']);
+    /** Actions */
+    Route::get('/main/actions', ['uses' => 'Main\ActionsController@index', 'actionsList']);
     Route::get('/main/actions/{action}', ['uses' => 'Main\ActionsController@view', 'as' => 'actionView']);
     Route::get('/main/actions/{action}/members', ['uses' => 'Main\ActionsController@getMembers', 'as' => 'actionMembers']);
 
