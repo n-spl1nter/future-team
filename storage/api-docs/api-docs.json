@@ -1092,6 +1092,12 @@
                 "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::getCompanies",
                 "parameters": [
                     {
+                        "name": "country_id",
+                        "in": "query",
+                        "description": "ID страны",
+                        "required": false
+                    },
+                    {
                         "name": "page",
                         "in": "query",
                         "description": "номер страницы",

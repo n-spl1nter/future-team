@@ -7,6 +7,7 @@ use App\Entities\Profile;
 use App\Entities\User;
 use App\Helpers\Pagination;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Validator;
@@ -242,6 +243,7 @@ class UsersController extends Controller
      *     path="/users/companies",
      *     summary="Компании",
      *     tags={"User"},
+     *     @OA\Parameter(name="country_id", required=false, in="query", description="ID страны"),
      *     @OA\Parameter(name="page", required=false, in="query", example="1", description="номер страницы"),
      *     @OA\Parameter(name="perPage", required=false, in="query", example="20", description="Выводить на странице"),
      *     @OA\Response(
@@ -255,8 +257,13 @@ class UsersController extends Controller
      */
     public function getCompanies(Request $request)
     {
-        $companies = User::companies()
-            ->with('companyProfile')
+        $companiesQuery = User::companies();
+        if ($request->has('country_id')) {
+            $companiesQuery = $companiesQuery->whereHas('companyProfile', function (Builder $builder) use ($request) {
+                $builder->where('country_id', '=', $request->get('country_id'));
+            });
+        }
+        $companies = $companiesQuery->with('companyProfile')
             ->paginate(Pagination::resolvePerPageCount($request))
             ->appends($request->except('page'));
         return response()->json($companies);
