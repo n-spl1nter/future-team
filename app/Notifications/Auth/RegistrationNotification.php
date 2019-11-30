@@ -42,10 +42,8 @@ class RegistrationNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line(__('auth.thanksForRegistration'))
-                    ->line(__('auth.password') . ': ' . $this->password)
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Регистрация на сервисе Future Team')
+                    ->view('mail.password', ['email' => $notifiable->email, 'password' => $this->password]);
     }
 
     /**
