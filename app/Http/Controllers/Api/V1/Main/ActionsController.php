@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Main;
 
 use App\Entities\Action;
+use App\Helpers\Pagination;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Main\CreateActionRequest;
 use Illuminate\Http\Request;
@@ -17,6 +18,8 @@ class ActionsController extends Controller
      *     tags={"Main"},
      *     @OA\Parameter(name="country_id", required=false, in="query", description="Id страны"),
      *     @OA\Parameter(name="page", required=false, in="query", example="1", description="номер страницы"),
+     *     @OA\Parameter(name="perPage", required=false, in="query", example="20", description="Выводить на странице"),
+     *     @OA\Parameter(name="status", required=false, in="query", description="Статус ('archive' | 'active')"),
      *     @OA\Response(
      *      response=200,
      *      description="Возвращает список акций и стран",
@@ -28,15 +31,22 @@ class ActionsController extends Controller
      */
     public function index(Request $request)
     {
+        $status = $request->get('status');
         $actionsQuery = Action::whereStatus(Action::ACTIVE);
         if ($request->has('country_id')) {
             $actionsQuery = $actionsQuery->whereCountryId($request->get('country_id'));
         }
-        $actions = $actionsQuery->paginate(20)->appends($request->except('page'));
+        if ($status == 'archive') {
+            $actionsQuery = $actionsQuery->where('end_at', '<', now());
+        } elseif ($status == 'active') {
+            $actionsQuery = $actionsQuery->where('end_at', '>', now());
+        }
+        $actions = $actionsQuery->paginate(Pagination::resolvePerPageCount($request))
+            ->appends($request->except('page'));
 
         return response()->json([
             'items' => $actions,
-            'countries' => Action::getDistinctCountries(),
+            'countries' => Action::getDistinctCountries($request),
         ]);
     }
 

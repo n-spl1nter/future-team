@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Main;
 
 use App\Entities\Event;
+use App\Helpers\Pagination;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Main\CreateEventRequest;
 use Illuminate\Http\Request;
@@ -16,6 +17,8 @@ class EventsController extends Controller
      *     tags={"Main"},
      *     @OA\Parameter(name="country_id", required=false, in="query", description="Id страны"),
      *     @OA\Parameter(name="page", required=false, in="query", example="1", description="номер страницы"),
+     *     @OA\Parameter(name="perPage", required=false, in="query", example="20", description="Выводить на странице"),
+     *     @OA\Parameter(name="status", required=false, in="query", description="Статус ('archive' | 'active')"),
      *     @OA\Response(
      *      response=200,
      *      description="Возвращает список событий и стран",
@@ -27,15 +30,22 @@ class EventsController extends Controller
      */
     public function index(Request $request)
     {
+        $status = $request->get('status');
         $eventsQuery = Event::whereStatus(Event::ACTIVE);
         if ($request->has('country_id')) {
             $eventsQuery = $eventsQuery->whereCountryId($request->get('country_id'));
         }
-        $events = $eventsQuery->paginate(20)->appends($request->except('page'));
+        if ($status == 'archive') {
+            $eventsQuery = $eventsQuery->where('end_at', '<', now());
+        } elseif ($status == 'active') {
+            $eventsQuery = $eventsQuery->where('end_at', '>', now());
+        }
+        $events = $eventsQuery->paginate(Pagination::resolvePerPageCount($request))
+            ->appends($request->except('page'));
 
         return response()->json([
             'items' => $events,
-            'countries' => Event::getDistinctCountries(),
+            'countries' => Event::getDistinctCountries($request),
         ]);
     }
 

@@ -134,9 +134,15 @@ class Event extends Model
         ]);
     }
 
-    public static function getDistinctCountries()
+    public static function getDistinctCountries(Request $request)
     {
-        return \DB::select(\DB::raw('SELECT DISTINCT events.country_id, _countries.title_ru, _countries.title_en FROM `events`
-INNER JOIN _countries ON _countries.country_id = events.country_id'));
+        $query = "SELECT DISTINCT events.country_id, _countries.title_ru, _countries.title_en FROM `events`
+INNER JOIN _countries ON _countries.country_id = events.country_id";
+        if ($request->get('status') == 'archive') {
+            $query .= " WHERE events.end_at < NOW()";
+        } elseif ($request->get('status') == 'active') {
+            $query .= " WHERE events.end_at > NOW()";
+        }
+        return \DB::select(\DB::raw($query));
     }
 }

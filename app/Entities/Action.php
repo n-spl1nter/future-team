@@ -140,9 +140,15 @@ class Action extends Model
         return true;
     }
 
-    public static function getDistinctCountries()
+    public static function getDistinctCountries(Request $request)
     {
-        return \DB::select(\DB::raw('SELECT DISTINCT actions.country_id, _countries.title_ru, _countries.title_en FROM `actions`
-INNER JOIN _countries ON _countries.country_id = actions.country_id'));
+        $query = "SELECT DISTINCT actions.country_id, _countries.title_ru, _countries.title_en FROM `actions`
+INNER JOIN _countries ON _countries.country_id = actions.country_id";
+        if ($request->get('status') == 'archive') {
+            $query .= " WHERE actions.end_at < NOW()";
+        } elseif ($request->get('status') == 'active') {
+            $query .= " WHERE actions.end_at > NOW()";
+        }
+        return \DB::select(\DB::raw($query));
     }
 }

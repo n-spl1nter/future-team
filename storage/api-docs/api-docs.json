@@ -312,6 +312,19 @@
                         "description": "номер страницы",
                         "required": false,
                         "example": "1"
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Выводить на странице",
+                        "required": false,
+                        "example": "20"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Статус ('archive' | 'active')",
+                        "required": false
                     }
                 ],
                 "responses": {
@@ -581,6 +594,19 @@
                         "description": "номер страницы",
                         "required": false,
                         "example": "1"
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Выводить на странице",
+                        "required": false,
+                        "example": "20"
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Статус ('archive' | 'active')",
+                        "required": false
                     }
                 ],
                 "responses": {
