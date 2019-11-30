@@ -132,4 +132,10 @@ class Event extends Model
             'images' => $this->getImages(MediaFile::TYPE_EVENT)->pluck('url')->toArray(),
         ]);
     }
+
+    public static function getDistinctCountries()
+    {
+        return \DB::select(\DB::raw('SELECT DISTINCT events.country_id, _countries.title_ru, _countries.title_en FROM `events`
+INNER JOIN _countries ON _countries.country_id = events.country_id'));
+    }
 }

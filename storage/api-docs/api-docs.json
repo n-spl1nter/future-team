@@ -554,6 +554,33 @@
                 }
             }
         },
+        "/main/events": {
+            "get": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Список событий",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\EventsController::index",
+                "parameters": [
+                    {
+                        "name": "country_id",
+                        "in": "query",
+                        "description": "Id страны",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список событий и стран",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/main/events/{event}": {
             "get": {
                 "tags": [

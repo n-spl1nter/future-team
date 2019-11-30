@@ -34,7 +34,7 @@ class ActionsController extends Controller
         $actions = $actionsQuery->paginate(20)->appends($request->except('page'));
 
         return response()->json([
-            'actions' => $actions,
+            'items' => $actions,
             'countries' => Action::getDistinctCountries(),
         ]);
     }

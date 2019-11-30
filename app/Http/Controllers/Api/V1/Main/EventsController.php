@@ -9,9 +9,33 @@ use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
-    public function index()
+    /**
+     * @OA\Get(
+     *     path="/main/events",
+     *     summary="Список событий",
+     *     tags={"Main"},
+     *     @OA\Parameter(name="country_id", required=false, in="query", description="Id страны"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Возвращает список событий и стран",
+     *     @OA\JsonContent()
+     *     ),
+     * )
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function index(Request $request)
     {
-        // @todo Implement
+        $eventsQuery = Event::whereStatus(Event::ACTIVE);
+        if ($request->has('country_id')) {
+            $eventsQuery = $eventsQuery->whereCountryId($request->get('country_id'));
+        }
+        $events = $eventsQuery->paginate(20)->appends($request->except('page'));
+
+        return response()->json([
+            'items' => $events,
+            'countries' => Event::getDistinctCountries(),
+        ]);
     }
 
     /**
