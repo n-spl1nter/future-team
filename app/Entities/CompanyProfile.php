@@ -18,12 +18,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $organization_type
  * @property string $cooperation_type
  * @property string $contact_person_name
- * @property string $contact_person_email
+ * @property-read \App\Entities\Country $country
+ * @property-read \App\Entities\OrganizationType|null $organizationType
  * @property-read \App\Entities\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereContactPersonEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereContactPersonName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereCooperationType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereCountryId($value)
@@ -36,8 +36,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\CompanyProfile whereUserId($value)
  * @mixin \Eloquent
- * @property-read \App\Entities\OrganizationType|null $organizationType
- * @property-read \App\Entities\City $city
  */
 class CompanyProfile extends Model
 {
@@ -49,9 +47,9 @@ class CompanyProfile extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function city()
+    public function country()
     {
-        return $this->belongsTo(City::class, 'city_id', 'city_id');
+        return $this->belongsTo(Country::class, 'country_id', 'country_id');
     }
 
     public function organizationType()
@@ -99,7 +97,7 @@ class CompanyProfile extends Model
 
     public function toArray()
     {
-        $this->load('organizationType');
+        $this->load(['organizationType']);
         return parent::toArray();
     }
 

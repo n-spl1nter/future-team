@@ -263,7 +263,7 @@ class UsersController extends Controller
                 $builder->where('country_id', '=', $request->get('country_id'));
             });
         }
-        $companies = $companiesQuery->with('companyProfile')
+        $companies = $companiesQuery->with(['companyProfile', 'companyProfile.country'])
             ->paginate(Pagination::resolvePerPageCount($request))
             ->appends($request->except('page'));
         return response()->json([

@@ -335,6 +335,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         } elseif ($this->isCompany() && $this->companyProfile) {
             $userData['full_name'] = $this->companyProfile->full_name;
+            $userData['country'] = $this->companyProfile->country;
         }
         return $userData;
     }
