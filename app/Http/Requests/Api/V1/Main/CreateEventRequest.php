@@ -35,7 +35,7 @@ class CreateEventRequest extends FormRequest
             'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=1920,min_height=800',
             'city_id' => 'required|integer|exists:_cities,city_id',
             'country_id' => 'required|integer',
-            'start_at' => 'required|date_format:"Y-m-d H:i:s"|after:tomorrow',
+            'start_at' => 'required|date_format:"Y-m-d H:i:s"',
             'end_at' => 'required|date_format:"Y-m-d H:i:s"|after:start_at',
             'terms' => 'required|accepted',
             'video_links' => 'nullable|array|max:5',
