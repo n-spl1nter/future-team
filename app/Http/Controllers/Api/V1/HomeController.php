@@ -70,7 +70,8 @@ use Illuminate\Http\Request;
  *              @OA\Property(property="birth_date_at", description="Дата рождения", type="string"),
  *              @OA\Property(property="city_id", description="ID города", type="integer"),
  *              @OA\Property(property="country_id", description="ID Сраны", type="integer"),
- *              @OA\Property(property="activity_field_id", description="ID Сферы деятельности", type="integer"),
+ *              @OA\Property(property="activity_fields[0]", description="Сферы деятельности(1-3 До 1000 строк)", type="string"),
+ *              @OA\Property(property="activity_fields[1]", description="Сферы деятельности(1-3 До 1000 строк)", type="string"),
  *              @OA\Property(property="goals[0]", description="ID Цели", type="integer"),
  *              @OA\Property(property="goals[1]", description="ID Цели", type="integer"),
  *              @OA\Property(

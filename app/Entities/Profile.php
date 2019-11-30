@@ -13,20 +13,22 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $birth_date_at
  * @property int $language_exchange_agreement
  * @property int $city_id
- * @property int $activity_field_id
+ * @property int $country_id
  * @property array $motivation
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $user_id
- * @property-read \App\Entities\ActivityField $activityField
+ * @property array|null $activity_fields
  * @property-read \App\Entities\City $city
+ * @property-read \App\Entities\Country $country
  * @property-read \App\Entities\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereActivityFieldId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereActivityFields($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereBirthDateAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCityId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereFullName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereId($value)
@@ -35,18 +37,18 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUserId($value)
  * @mixin \Eloquent
- * @property int $country_id
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereCountryId($value)
- * @property-read \App\Entities\Country $country
  */
 class Profile extends Model
 {
     protected $table = 'profiles';
     protected $dates = ['birth_date_at'];
-    protected $casts = ['motivation' => 'array'];
+    protected $casts = [
+        'motivation' => 'array',
+        'activity_fields' => 'array',
+    ];
     protected $fillable = [
         'full_name', 'language_exchange_agreement',
-        'city_id', 'country_id','activity_field_id', 'motivation',
+        'city_id', 'country_id', 'motivation', 'activity_fields',
     ];
     protected $hidden = ['id'];
 
@@ -63,11 +65,6 @@ class Profile extends Model
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id', 'country_id');
-    }
-
-    public function activityField()
-    {
-        return $this->belongsTo(ActivityField::class, 'activity_field_id', 'id');
     }
 
     public function isAgreeToLanguageExchange(): bool
@@ -89,7 +86,8 @@ class Profile extends Model
             'full_name' => 'required|string|min:2|max:255',
             'birth_date_at' => 'required|date',
             'city_id' => 'required|integer|exists:_cities,city_id',
-            'activity_field_id' => 'required|integer|exists:activity_fields,id',
+            'activity_fields' => 'required|array|min:1|max:3',
+            'activity_fields.*' => 'required|string|max:1000',
             'goals' => 'required|array|min:1|max:5',
             'goals.*' => 'required|integer|exists:goals,id',
             'known_languages' => 'nullable|array|min:1',
@@ -112,7 +110,8 @@ class Profile extends Model
             'full_name' => 'required|string|min:2|max:255',
             'birth_date_at' => 'required|date',
             'city_id' => 'required|integer|exists:_cities,city_id',
-            'activity_field_id' => 'required|integer|exists:activity_fields,id',
+            'activity_fields' => 'required|array|min:1|max:3',
+            'activity_fields.*' => 'required|string|max:1000',
             'goals' => 'required|array|min:1|max:5',
             'goals.*' => 'required|integer|exists:goals,id',
             'known_languages' => 'nullable|array|min:1',

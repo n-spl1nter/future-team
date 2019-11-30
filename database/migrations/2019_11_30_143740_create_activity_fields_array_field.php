@@ -13,8 +13,10 @@ class CreateActivityFieldsArrayField extends Migration
      */
     public function up()
     {
-        Schema::table('profile', function (Blueprint $table) {
-            //
+        Schema::table('profiles', function (Blueprint $table) {
+            $table->text('activity_fields')->nullable();
+            $table->dropForeign(['activity_field_id']);
+            $table->dropColumn('activity_field_id');
         });
     }
 
@@ -25,8 +27,12 @@ class CreateActivityFieldsArrayField extends Migration
      */
     public function down()
     {
-        Schema::table('profile', function (Blueprint $table) {
-            //
+        Schema::table('profiles', function (Blueprint $table) {
+            $table->dropColumn('activity_fields');
+            $table->unsignedBigInteger('activity_field_id');
+            $table->foreign('activity_field_id')
+                ->references('id')
+                ->on('activity_fields');
         });
     }
 }
