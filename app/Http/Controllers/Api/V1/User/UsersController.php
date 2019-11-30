@@ -266,6 +266,9 @@ class UsersController extends Controller
         $companies = $companiesQuery->with('companyProfile')
             ->paginate(Pagination::resolvePerPageCount($request))
             ->appends($request->except('page'));
-        return response()->json($companies);
+        return response()->json([
+            'items' => $companies,
+            'countries' => CompanyProfile::getDistinctCountries(),
+        ]);
     }
 }

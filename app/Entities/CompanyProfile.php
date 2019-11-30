@@ -102,4 +102,11 @@ class CompanyProfile extends Model
         $this->load('organizationType');
         return parent::toArray();
     }
+
+    public static function getDistinctCountries()
+    {
+        $query = "SELECT DISTINCT company_profiles.country_id, _countries.title_ru, _countries.title_en FROM `company_profiles`
+INNER JOIN _countries ON _countries.country_id = company_profiles.country_id";
+        return \DB::select(\DB::raw($query));
+    }
 }

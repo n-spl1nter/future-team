@@ -11,6 +11,9 @@ return [
         'successMessage' => 'Пользователь изменен',
         'rolesManagement' => 'Пользователи',
     ],
+    'actions' => [
+
+    ],
     'refresh' => 'Обновить',
     'home' => 'Главная',
     'userShouldBeACompany' => 'Пользовтаель должен быть компанией.',

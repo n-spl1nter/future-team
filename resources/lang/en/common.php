@@ -11,6 +11,9 @@ return [
         'successMessage' => 'User has been changed',
         'rolesManagement' => 'Users',
     ],
+    'actions' => [
+
+    ],
     'refresh' => 'Refresh',
     'home' => 'Home',
     'userShouldBeACompany' => 'User should be a company',
