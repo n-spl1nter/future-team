@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\User;
 use App\Entities\CompanyProfile;
 use App\Entities\Profile;
 use App\Entities\User;
+use App\Helpers\Pagination;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -234,5 +235,30 @@ class UsersController extends Controller
         }
 
         return response()->json();
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/users/companies",
+     *     summary="Компании",
+     *     tags={"User"},
+     *     @OA\Parameter(name="page", required=false, in="query", example="1", description="номер страницы"),
+     *     @OA\Parameter(name="perPage", required=false, in="query", example="20", description="Выводить на странице"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Возвращает список наденных компаний",
+     *      @OA\JsonContent()
+     *     ),
+     * )
+     * @param Request $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getCompanies(Request $request)
+    {
+        $companies = User::companies()
+            ->with('companyProfile')
+            ->paginate(Pagination::resolvePerPageCount($request))
+            ->appends($request->except('page'));
+        return response()->json($companies);
     }
 }

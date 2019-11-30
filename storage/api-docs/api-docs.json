@@ -1082,6 +1082,41 @@
                     }
                 ]
             }
+        },
+        "/users/companies": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Компании",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::getCompanies",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "номер страницы",
+                        "required": false,
+                        "example": "1"
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Выводить на странице",
+                        "required": false,
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список наденных компаний",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {

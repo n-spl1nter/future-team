@@ -71,6 +71,8 @@ use Illuminate\Http\UploadedFile;
  * @property-read \App\Entities\User|null $organization
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\EmailMessage[] $sentEmailMessages
  * @property-read int|null $sent_email_messages_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User active()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User companies()
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -78,9 +80,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     private $avatar = null;
 
-    protected $fillable = [
-        'email', 'password',
-    ];
+    protected $fillable = ['email', 'password'];
     protected $hidden = [
         'password', 'remember_token', 'created_at', 'updated_at', 'email_verified_at', 'role_id', 'email',
     ];
@@ -88,6 +88,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
     public $sortable = ['id', 'email', 'role_id'];
+
+    public function scopeActive(Builder $builder)
+    {
+        return $builder->whereNotNull('email_verified_at');
+    }
+
+    public function scopeCompanies(Builder $builder)
+    {
+        return $builder->where('role_id', '=', Role::COMPANY);
+    }
 
     public function role()
     {
