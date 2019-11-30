@@ -120,6 +120,7 @@ class Event extends Model
 
     public function toArray()
     {
+
         return array_merge(parent::toArray(), [
             'images' => $this->getImages(MediaFile::TYPE_EVENT)->pluck('url')->toArray(),
         ]);

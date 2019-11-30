@@ -76,6 +76,7 @@ class IndexController extends Controller
             ->whereStatus(Action::ACTIVE)
             ->get();
         $events = Event::whereCountryId($request->get('country_id'))
+            ->with('city')
             ->whereStatus(Event::ACTIVE)
             ->get();
         $members = User::whereHas('profile', function (Builder $query) use ($request) {

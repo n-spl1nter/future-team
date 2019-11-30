@@ -16,6 +16,7 @@ class ActionsController extends Controller
      *     summary="Список акций",
      *     tags={"Main"},
      *     @OA\Parameter(name="country_id", required=false, in="query", description="Id страны"),
+     *     @OA\Parameter(name="page", required=false, in="query", example="1", description="номер страницы"),
      *     @OA\Response(
      *      response=200,
      *      description="Возвращает список акций и стран",
