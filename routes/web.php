@@ -1,8 +1,8 @@
 <?php
 
-Route::get('/', function () {
-    return 'Home Page';
-});
+//Route::get('/', function () {
+//    return view('mail.message-from-user', ['text' => 'dasdas', 'mailFrom' => 'vasya', 'mailFromName' => 'kek']);
+//});
 
 Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => [
     'auth', 'can:viewAdmin,App\RBAC\Permission',

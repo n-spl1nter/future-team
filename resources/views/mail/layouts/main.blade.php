@@ -15,7 +15,7 @@
                 <!--  header-->
                 <tr>
                     <td colspan="3" style="margin: 0; padding: 0; font-size: 0;">
-                        <img src="{{ asset('storage/app/gmail-ios-fix.png') }}" alt="" width="600" height="1">
+                        <img src="{{ asset('storage/gmail-ios-fix.png') }}" alt="" width="600" height="1">
                     </td>
                 </tr>
                 <tr>
@@ -26,7 +26,7 @@
                 <tr>
                     <td style="margin: 0; padding: 0;">
                         <a href="{{ env('MAIN_SERVICE_URL') }}" style="text-decoration: none; font-size: 0; line-height: 0.000001px;">
-                            <img src="{{ asset('storage/app/logo.png') }}" alt="logo" width="144" height="70">
+                            <img src="{{ asset('storage/logo.png') }}" alt="logo" width="144" height="70">
                         </a>
                     </td>
                 </tr>
