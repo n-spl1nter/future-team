@@ -55,7 +55,7 @@ class PlacesController extends Controller
             'value' => 'required|string|min:2',
         ]);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], 422);
+            return response()->json(['errors' => $validator->errors()->all()], 422);
         }
 
         $cities = City::whereCountryId($request->get('country_id'))

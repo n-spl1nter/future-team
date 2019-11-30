@@ -4,10 +4,10 @@ namespace App\Http\Requests\Api\V1\Auth;
 
 use App\Entities\CompanyProfile;
 use App\Entities\Profile;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\V1\BaseRequest;
 use Illuminate\Validation\Rule;
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends BaseRequest
 {
     public function rules()
     {

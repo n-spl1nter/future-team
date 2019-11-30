@@ -51,7 +51,7 @@ class LoginController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], 422);
+            return response()->json(['errors' => $validator->errors()->all()], 422);
         }
 
         $credentials = [
@@ -61,7 +61,7 @@ class LoginController extends Controller
 
         if (!\Auth::attempt($credentials)) {
             $this->incrementLoginAttempts($request);
-            return response()->json(['errors' => ['process' => [__('auth.failed')]]], 401);
+            return response()->json(['errors' => [__('auth.failed')]], 401);
         }
 
         $accessToken = \Auth::getUser()->makeToken()->accessToken;

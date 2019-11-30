@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Api\V1\Main;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\V1\BaseRequest;
 
-class CreateEventRequest extends FormRequest
+class CreateEventRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.

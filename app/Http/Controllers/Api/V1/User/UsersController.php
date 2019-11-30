@@ -104,7 +104,7 @@ class UsersController extends Controller
         $rules = $user->profile ? Profile::getOnUpdateValidationRules() : Profile::getOnCreateValidationRules();
         $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], 422);
+            return response()->json(['errors' => $validator->errors()->all()], 422);
         }
 
         $user->setProfile($request);
@@ -155,7 +155,7 @@ class UsersController extends Controller
         $rules = $user->companyProfile ? CompanyProfile::getOnUpdateValidationRules() : CompanyProfile::getOnCreateValidationRules();
         $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], 422);
+            return response()->json(['errors' => $validator->errors()->all()], 422);
         }
 
         $user->setCompanyProfile($request);
@@ -182,7 +182,7 @@ class UsersController extends Controller
             'companyName' => 'required|string|min:2',
         ]);
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->getMessages()], 422);
+            return response()->json(['errors' => $validator->errors()->all()], 422);
         }
 
         $value = $request->get('companyName') . '%';
@@ -232,7 +232,7 @@ class UsersController extends Controller
             $currentUser = \Auth::user();
             $currentUser->sendMessageToUser(User::findOrFail($request->get('user_id')), $request->get('message'));
         } catch (\Throwable $exception) {
-            return response()->json(['errors' => ['process' => [$exception->getMessage()]]], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return response()->json(['errors' => [$exception->getMessage()]], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return response()->json();
