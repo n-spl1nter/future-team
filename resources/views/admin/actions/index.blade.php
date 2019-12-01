@@ -39,7 +39,7 @@
                                     <tr>
                                         <td>{{ $model->id }}</td>
                                         <td>
-                                            <div style="background-size:cover;width: 100px;height: 100px;background: url('{{ $model->getImage(\App\Entities\MediaFile::TYPE_ACTION)->url[1] }}') no-repeat center"></div>
+                                            <div style="background-size:cover;width: 100px;height: 100px;background: url('{{ $model->getImage(\App\Entities\MediaFile::TYPE_ACTION)->url[1] }}') no-repeat center / cover"></div>
                                         </td>
                                         <td>
                                             <a href="{{ route('admin.actions.view', ['id' => $model->id]) }}">
