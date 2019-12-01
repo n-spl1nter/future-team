@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Main;
 
 use App\Entities\Action;
+use App\Events\ActionCreate;
 use App\Helpers\Pagination;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Main\CreateActionRequest;
@@ -134,6 +135,7 @@ class ActionsController extends Controller
     public function create(CreateActionRequest $request)
     {
         $action = Action::make($request);
+        event(new ActionCreate($action));
 
         return response()->json($action->getAllInfo(), Response::HTTP_CREATED);
     }

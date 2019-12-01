@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Events\ActionJoin;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -137,6 +138,7 @@ class Action extends Model
         }
 
         $this->joinedUsers()->attach($user->id);
+        event(new ActionJoin($this, $user));
         return true;
     }
 

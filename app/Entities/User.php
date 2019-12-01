@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Events\SendMail;
 use App\Notifications\Auth\RegistrationNotification;
 use App\Notifications\Main\MessageToUserNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -493,6 +494,7 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
         $sentEmail = $this->sentEmailMessages()->create($attributes);
         $user->notify(new MessageToUserNotification($sentEmail));
+        event(new SendMail($sentEmail));
     }
 
     public function getFullName()
