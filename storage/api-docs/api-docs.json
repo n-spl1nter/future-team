@@ -1158,6 +1158,33 @@
                     }
                 }
             }
+        },
+        "/user/activities/all": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Акции и ивенты юзера",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::getUsersActionsAndEvents",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "Id юзера",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Результат",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {

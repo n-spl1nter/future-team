@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
+use App\Entities\Action;
 use App\Entities\CompanyProfile;
+use App\Entities\Event;
 use App\Entities\Profile;
 use App\Entities\User;
 use App\Helpers\Pagination;
@@ -269,6 +271,50 @@ class UsersController extends Controller
         return response()->json([
             'items' => $companies,
             'countries' => CompanyProfile::getDistinctCountries(),
+        ]);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/user/activities/all",
+     *     summary="Акции и ивенты юзера",
+     *     tags={"User"},
+     *     @OA\Parameter(name="user_id", required=true, in="query", description="Id юзера"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Коллекция ивентов и акций",
+     *      @OA\JsonContent()
+     *     ),
+     * )
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function getUsersActionsAndEvents(Request $request)
+    {
+        $this->validate($request, [
+            'user_id' => 'required|integer',
+        ]);
+
+        $user = User::findOrFail($request->get('user_id'));
+        $actions = $user->actions()
+            ->where('status', '=', Action::ACTIVE)
+            ->get()
+            ->map(function ($model) {
+                $model['type'] = 'action';
+                return $model;
+            });
+        $events = $user->events()
+            ->where('status', '=', Event::ACTIVE)
+            ->get()
+            ->map(function ($model) {
+                $model['type'] = 'event';
+                return $model;
+            });;
+
+        $merged = $actions->merge($events)->sortBy('created_at');
+
+        return response()->json([
+            'merged' => $merged,
         ]);
     }
 }
