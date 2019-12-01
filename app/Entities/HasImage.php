@@ -47,7 +47,7 @@ trait HasImage
      * @param string $type
      * @return MediaFile|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
      */
-    public function     getImage(string $type)
+    public function getImage(string $type)
     {
         return MediaFile::whereEntity(self::class)
             ->whereEntityId($this->id)

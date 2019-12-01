@@ -12,7 +12,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Validation\Validator;
 
 class UsersController extends Controller
 {
@@ -176,6 +175,7 @@ class UsersController extends Controller
      *      @OA\JsonContent()
      *     ),
      * )
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function findCompanies(Request $request)
@@ -286,6 +286,7 @@ class UsersController extends Controller
      *      @OA\JsonContent()
      *     ),
      * )
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      */

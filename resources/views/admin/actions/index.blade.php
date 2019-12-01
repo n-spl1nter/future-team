@@ -2,16 +2,13 @@
     /** @var \Illuminate\Contracts\Pagination\LengthAwarePaginator $paginator */
 @endphp
 
-@extends('admin.layouts.main', ['title' => __('common.users.rolesManagement') ])
+@extends('admin.layouts.main', ['title' => __('common.actions.name') ])
 
 @section('content')
     <section class="content">
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header">
-                        Тут будут ссылки с экспортом
-                    </div>
                     <div class="box-body">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -42,7 +39,7 @@
                                     <tr>
                                         <td>{{ $model->id }}</td>
                                         <td>
-                                            <img src="{{ $model->getImage(\App\Entities\MediaFile::TYPE_ACTION)[1] }}" alt="">
+                                            <div style="width: 100px;height: 100px;background: url('{{ $model->getImage(\App\Entities\MediaFile::TYPE_ACTION)->url[1] }}') no-repeat center"></div>
                                         </td>
                                         <td>
                                             <a href="{{ route('admin.actions.view', ['id' => $model->id]) }}">
