@@ -340,6 +340,6 @@ class UsersController extends Controller
     {
         $company = User::findOrFail($request->get('user_id'));
 
-        return response()->json($company->organizationMembers);
+        return response()->json($company->organizationMembers()->paginate());
     }
 }
