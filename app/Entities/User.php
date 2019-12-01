@@ -75,6 +75,8 @@ use Illuminate\Http\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User companies()
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\User[] $organizationMembers
  * @property-read int|null $organization_members_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Activity[] $activities
+ * @property-read int|null $activities_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

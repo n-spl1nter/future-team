@@ -2,8 +2,15 @@
 
 namespace App\Providers;
 
+use App\Events\ActionCreate;
+use App\Events\ActionJoin;
+use App\Events\EventCreate;
+use App\Listeners\ActionCreateListener;
+use App\Listeners\ActionJoinListener;
+use App\Listeners\EventCreateListener;
+use App\Listeners\RegistrationListener;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -13,8 +20,20 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+        Registered::class => [
+            RegistrationListener::class,
+        ],
         \SocialiteProviders\Manager\SocialiteWasCalled::class => [
             'SocialiteProviders\VKontakte\VKontakteExtendSocialite@handle',
+        ],
+        ActionCreate::class => [
+            ActionCreateListener::class,
+        ],
+        ActionJoin::class => [
+            ActionJoinListener::class,
+        ],
+        EventCreate::class => [
+            EventCreateListener::class,
         ],
     ];
 
@@ -26,7 +45,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
     }
 }
