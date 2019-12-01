@@ -50,6 +50,12 @@
                         <p>{{ __('common.actions.name') }}</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.events.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-calendar-check"></i>
+                        <p>{{ __('common.events.name') }}</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

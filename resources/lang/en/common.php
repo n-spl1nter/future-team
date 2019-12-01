@@ -14,6 +14,9 @@ return [
     'actions' => [
         'name' => 'Actions',
     ],
+    'events' => [
+        'name' => 'Events',
+    ],
     'refresh' => 'Refresh',
     'home' => 'Home',
     'userShouldBeACompany' => 'User should be a company',

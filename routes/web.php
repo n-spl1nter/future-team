@@ -17,6 +17,10 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::get('/actions', ['uses' => 'ActionsController@index', 'as' => 'actions.index']);
     Route::get('/actions/{id}', ['uses' => 'ActionsController@view', 'as' => 'actions.view']);
     Route::post('/actions/{id}/status', ['uses' => 'ActionsController@status', 'as' => 'actions.setStatus']);
+    /** Events */
+    Route::get('/events', ['uses' => 'EventsController@index', 'as' => 'events.index']);
+    Route::get('/events/{id}', ['uses' => 'EventsController@view', 'as' => 'events.view']);
+    Route::post('/events/{id}/status', ['uses' => 'EventsController@status', 'as' => 'events.setStatus']);
 });
 
 Route::group(['middleware' => ['guest']], function () {

@@ -14,6 +14,9 @@ return [
     'actions' => [
         'name' => 'Акции',
     ],
+    'events' => [
+        'name' => 'События',
+    ],
     'refresh' => 'Обновить',
     'home' => 'Главная',
     'userShouldBeACompany' => 'Пользовтаель должен быть компанией.',
