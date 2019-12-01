@@ -73,7 +73,7 @@ class CompanyProfile extends Model
             'goals.*' => 'required|integer|exists:goals,id',
             'organization_type_id' => 'nullable|exists:organization_types,id',
             'organization_type' => 'nullable|required_without:organization_type_id|string|max:100',
-            'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=640,min_height=480',
+            'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=200,min_height=200',
             'terms' => 'required|accepted',
             'contact_person_name' => 'required|string|max:150',
             'cooperation_type' => 'required|string|min:10|max:1500',
@@ -89,7 +89,7 @@ class CompanyProfile extends Model
             'goals.*' => 'required|integer|exists:goals,id',
             'organization_type_id' => 'nullable|exists:organization_types,id',
             'organization_type' => 'nullable|required_without:organization_type_id|string|max:100',
-            'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=640,min_height=480',
+            'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=200,min_height=200',
             'contact_person_name' => 'required|string|max:150',
             'cooperation_type' => 'required|string|min:10|max:1500',
         ];
