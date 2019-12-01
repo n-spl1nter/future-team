@@ -12,8 +12,8 @@ class UsersController extends Controller
     {
         $usersQuery = User::with(['role', 'companyProfile', 'profile']);
         $usersQuery->where('email', 'like', $request->get('filter_email', '') . '%');
-        $users = $usersQuery->sortable()->paginate(20)->appends($request->all());
+        $paginator = $usersQuery->sortable()->paginate(20)->appends($request->all());
 
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', compact('paginator'));
     }
 }

@@ -1,5 +1,5 @@
 @php
-    /** @var \Illuminate\Contracts\Pagination\LengthAwarePaginator $users */
+    /** @var \Illuminate\Contracts\Pagination\LengthAwarePaginator $paginator */
 @endphp
 
 @extends('admin.layouts.main', ['title' => __('common.users.rolesManagement') ])
@@ -16,9 +16,14 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>#</th>
                                     <th>Аватар</th>
                                     <th>Имя\Название организации</th>
+                                    <th>Роль</th>
+                                    <th>Страна, город</th>
+                                    <th>Кол-во добавленных акций</th>
+                                    <th>Кол-во добавленных событий</th>
+                                    <th>Дата регистрации</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -26,27 +31,43 @@
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 @php /** @var \App\Entities\User $user */ @endphp
-                                @foreach( $users as $user)
+                                @foreach( $paginator as $user)
                                     <tr>
                                         <td>{{ $user->id }}</td>
                                         <td>
                                             @if ($user->getAvatar())
-                                                <img src="{{ $user->getAvatar()[1] }}" alt="">
-                                            @else
+                                                <div class="profile-user-img img-fluid img-circle" style="background-image: url({{ $user->getAvatar()[1] }});height: 100px;">
                                             @endif
                                         </td>
-                                        <td>Name
-
+                                        <td>{{ $user->getFullName() }}</td>
+                                        <td>
+                                            {{ \App\RBAC\Role::ROLE_NAME[$user->role_id] }}
                                         </td>
+                                        <td>
+                                            @if ($user->isCompany() && $user->companyProfile)
+                                                {{ $user->companyProfile->country->title_ru }}
+                                            @elseif($user->isMember() && $user->profile)
+                                                {{ $user->profile->country->title_ru }}
+                                                {{ $user->profile->city->title_ru }}
+                                            @endif
+                                        </td>
+                                        <td>{{ $user->actions()->count() }}</td>
+                                        <td>{{ $user->events()->count() }}</td>
+                                        <td>{{ $user->created_at }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                     <div class="card-footer">
-                        @include('admin._partials.pagination', ['paginator' => $users])
+                        @include('admin._partials.pagination', ['paginator' => $paginator])
                     </div>
                 </div>
             </div>

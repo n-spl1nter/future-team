@@ -490,9 +490,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getFullName()
     {
-        if ($this->isMember()) {
+        if ($this->isMember() && $this->profile) {
             return $this->profile->full_name;
-        } elseif ($this->isCompany()) {
+        } elseif ($this->isCompany() && $this->companyProfile) {
             return $this->companyProfile->full_name;
         }
         return '';
