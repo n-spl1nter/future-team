@@ -107,7 +107,7 @@
                                 </p>
                             </div>
                             <div class="post">
-                                <p class="lead">Секрет успеха:</p>
+                                <p class="lead">Сферы деятельности:</p>
                                 <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                                     <ul class="list-group">
                                     @foreach($model->domains as $domain)

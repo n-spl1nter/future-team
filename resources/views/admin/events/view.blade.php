@@ -95,9 +95,49 @@
                                 </div>
                             </div>
                             <div class="post">
-                                <p class="lead">Описание:</p>
+                                <p class="lead">Условия:</p>
                                 <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                                    {{ $model->about }}
+                                    {{ $model->conditions }}
+                                </p>
+                            </div>
+                            <div class="post">
+                                <p class="lead">Причины:</p>
+                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                    {{ $model->reasons }}
+                                </p>
+                            </div>
+                            <div class="post">
+                                <p class="lead">Доп. инфо:</p>
+                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                    {{ $model->additional_info }}
+                                </p>
+                            </div>
+                            <div class="post">
+                                <p class="lead">Контактные данные:</p>
+                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                    {{ $model->contact_data }}
+                                </p>
+                            </div>
+                            <div class="post">
+                                <p class="lead">Сферы деятельности:</p>
+                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                <ul class="list-group">
+                                    @foreach($model->domains as $domain)
+                                        <li class="list-group-item">{{ $domain }}</li>
+                                    @endforeach
+                                </ul>
+                                </p>
+                            </div>
+                            <div class="post">
+                                <p class="lead">Ссылки на видео:</p>
+                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                <ul class="list-group">
+                                    @foreach($model->video_links as $videoLinks)
+                                        <li class="list-group-item">
+                                            <a href="{{ $videoLinks }}" target="_blank">{{ $videoLinks }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
                                 </p>
                             </div>
                         </div>
