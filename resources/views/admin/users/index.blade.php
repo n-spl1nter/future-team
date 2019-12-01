@@ -43,7 +43,7 @@
                                         <td>{{ $user->id }}</td>
                                         <td>
                                             @if ($user->getAvatar())
-                                                <div class="profile-user-img img-fluid img-circle" style="background-image: url({{ $user->getAvatar()[1] }});height: 100px;">
+                                                <div class="profile-user-img img-fluid img-circle" style="background-image: url({{ $user->getAvatar()[1] }});background-size:cover; height: 100px;">
                                             @endif
                                         </td>
                                         <td>{{ $user->getFullName() }}</td>
