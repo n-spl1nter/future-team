@@ -35,6 +35,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
     Route::get('/user/activities/all', ['uses' => 'User\UsersController@getUsersActionsAndEvents']);
     Route::get('/user/companies/search', ['uses' => 'User\UsersController@findCompanies', 'as' => 'companiesSearch']);
     Route::get('/users/companies', ['uses' => 'User\UsersController@getCompanies', 'as' => 'companies']);
+    Route::get('/users/company/members', ['uses' => 'User\UsersController@companyMembers']);
     /** Events */
     Route::get('/main/events', ['uses' => 'Main\EventsController@index', 'eventsList']);
     Route::get('/main/events/{event}', ['uses' => 'Main\EventsController@view', 'as' => 'eventView']);

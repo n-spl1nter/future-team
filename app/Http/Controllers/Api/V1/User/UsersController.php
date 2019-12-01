@@ -9,6 +9,7 @@ use App\Entities\Profile;
 use App\Entities\User;
 use App\Helpers\Pagination;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\User\GetCompanyMembersRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -317,5 +318,28 @@ class UsersController extends Controller
         return response()->json([
             'merged' => $merged,
         ]);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/users/company/members",
+     *     summary="Члены организации",
+     *     tags={"User"},
+     *     @OA\Parameter(name="user_id", required=true, in="query", description="Id компании"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Пагинатор юзеров",
+     *      @OA\JsonContent()
+     *     ),
+     * )
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function companyMembers(GetCompanyMembersRequest $request)
+    {
+        $company = User::findOrFail($request->get('user_id'));
+
+        return response()->json($company->organizationMembers);
     }
 }

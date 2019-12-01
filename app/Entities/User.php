@@ -73,6 +73,8 @@ use Illuminate\Http\UploadedFile;
  * @property-read int|null $sent_email_messages_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User active()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User companies()
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\User[] $organizationMembers
+ * @property-read int|null $organization_members_count
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -157,6 +159,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function organization()
     {
         return $this->belongsTo(self::class, 'organization_id', 'id');
+    }
+
+    public function organizationMembers()
+    {
+        return $this->hasMany(self::class, 'organization_id', 'id');
     }
 
     public function sentEmailMessages()

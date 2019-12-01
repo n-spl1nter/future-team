@@ -1176,7 +1176,34 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Результат",
+                        "description": "Коллекция ивентов и акций",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/company/members": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Члены организации",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::companyMembers",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "Id компании",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Пагинатор юзеров",
                         "content": {
                             "application/json": {
                                 "schema": {}
