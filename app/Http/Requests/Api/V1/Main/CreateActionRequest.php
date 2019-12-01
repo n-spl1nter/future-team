@@ -30,7 +30,7 @@ class CreateActionRequest extends BaseRequest
             'domains' => 'required|array|min:2|max:5',
             'domains.*' => 'required|string|min:2|max:400',
             'photos' => 'required|array|min:2|max:25',
-            'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=1280,min_height=800',
+            'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=1280,min_height=700',
             'city_id' => 'required|integer|exists:_cities,city_id',
             'country_id' => 'required|integer',
             'start_at' => 'required|date_format:"Y-m-d H:i:s"',
