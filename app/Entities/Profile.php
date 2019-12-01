@@ -97,7 +97,7 @@ class Profile extends Model
             'language_exchange_agreement' => 'nullable|integer|in:0,1',
             'motivation' => 'required|array|min:1',
             'photo' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=640,min_height=480',
-            'about' => 'nullable|string|max:400',
+            'about' => 'nullable|string|max:1500',
             'terms' => 'required|accepted',
             'organization_id' => 'nullable|integer|exists:users,id',
             'organization_name' => 'nullable|string|max:100',
@@ -121,7 +121,7 @@ class Profile extends Model
             'language_exchange_agreement' => 'nullable|integer|in:0,1',
             'motivation' => 'required|array|min:1',
             'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=640,min_height=480',
-            'about' => 'nullable|string|max:400',
+            'about' => 'nullable|string|max:1500',
             'organization_id' => 'nullable|integer|exists:users,id',
             'organization_name' => 'nullable|string|max:100',
         ];
