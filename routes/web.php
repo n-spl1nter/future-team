@@ -16,6 +16,7 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     /** Actions */
     Route::get('/actions', ['uses' => 'ActionsController@index', 'as' => 'actions.index']);
     Route::get('/actions/{id}', ['uses' => 'ActionsController@view', 'as' => 'actions.view']);
+    Route::post('/actions/{id}/status', ['uses' => 'ActionsController@status', 'as' => 'actions.setStatus']);
 });
 
 Route::group(['middleware' => ['guest']], function () {

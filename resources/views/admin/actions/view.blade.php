@@ -1,27 +1,48 @@
 @php
     /** @var \App\Entities\Action $model */
 @endphp
-@extends('admin.layouts.main', ['title' => __('common.actions.name') . '\ ' . $model->name  ])
+@extends('admin.layouts.main', ['title' => 'Акция. ' . $model->name  ])
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title mb-1">{{ $model->name }}</h3>
-            <h5 class="card-subtitle">
-                @php
-                    $badgeColor = 'bg-success';
-                    if ($model->status === \App\Entities\Action::DELETED) {
-                        $badgeColor = 'bg-warning';
-                    } elseif ($model->status === \App\Entities\Action::BLOCKED) {
-                        $badgeColor = 'bg-danger';
-                    }
-                @endphp
-                @if($model->status === \App\Entities\Action::ACTIVE)
-                @elseif ($model->status === \App\Entities\Action::DELETED)
-                @elseif ($model->status === \App\Entities\Action::BLOCKED)
-                @endif
-                <span class="badge {{ $badgeColor }}">{{ $model->status }}</span>
-            </h5>
+            <div class="row">
+                <div class="col-10">
+                    <h3 class="card-title mb-1">{{ $model->name }}</h3>
+                    <h5 class="card-subtitle">
+                        @php
+                            $badgeColor = 'bg-success';
+                            if ($model->status === \App\Entities\Action::DELETED) {
+                                $badgeColor = 'bg-warning';
+                            } elseif ($model->status === \App\Entities\Action::BLOCKED) {
+                                $badgeColor = 'bg-danger';
+                            }
+                        @endphp
+                        <span class="badge {{ $badgeColor }}">{{ $model->status }}</span>
+                    </h5>
+                </div>
+                <div class="col-2">
+                    <div class="text-right">
+                        @if($model->status === \App\Entities\Action::ACTIVE)
+                            {{ Form::open([
+                                'route' => ['admin.actions.setStatus', $model->id],
+                                'method' => 'post'
+                            ]) }}
+                            <input type="hidden" value="{{ \App\Entities\Action::ACTIVE }}" name="status">
+                            <button type="submit" class="btn btn-md btn-danger">Заблокировать</button>
+                            {{ Form::close() }}
+                        @elseif ($model->status === \App\Entities\Action::BLOCKED)
+                            {{ Form::open([
+                                'route' => ['admin.actions.setStatus', $model->id],
+                                'method' => 'post'
+                            ]) }}
+                            <input type="hidden" value="{{ \App\Entities\Action::BLOCKED }}" name="status">
+                            <button type="submit" class="btn btn-md btn-success">Разблокировать</button>
+                            {{ Form::close() }}
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
@@ -148,6 +169,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="text-right">
+                <a href="{{ route('admin.actions.index') }}" class="btn btn-md btn-primary">
+                    Назад
+                </a>
             </div>
         </div>
     </div>

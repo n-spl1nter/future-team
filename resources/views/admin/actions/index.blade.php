@@ -55,10 +55,6 @@
                                                     $badgeColor = 'bg-danger';
                                                 }
                                             @endphp
-                                            @if($model->status === \App\Entities\Action::ACTIVE)
-                                            @elseif ($model->status === \App\Entities\Action::DELETED)
-                                            @elseif ($model->status === \App\Entities\Action::BLOCKED)
-                                            @endif
                                             <span class="badge {{ $badgeColor }}">{{ $model->status }}</span>
                                         </td>
                                         <td>
