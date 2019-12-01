@@ -16,6 +16,8 @@ class ActionsController extends Controller
 
     public function view(Request $request)
     {
-        $action = Action::findOrFail($request->get('id'));
+        $model = Action::findOrFail($request->route('id'));
+
+        return view('admin.actions.view', compact('model'));
     }
 }

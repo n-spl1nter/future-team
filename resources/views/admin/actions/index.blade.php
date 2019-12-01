@@ -71,8 +71,9 @@
                                             {{ $model->end_at->format('Y-m-d') }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.actions.view', ['id' => $model->id]) }}">
-                                                <i class="nav-icon fas fa-eye"></i>
+                                            <a class="btn btn-primary btn-sm" href="{{ route('admin.actions.view', ['id' => $model->id]) }}">
+                                                <i class="fas fa-folder"></i>
+                                                View
                                             </a>
                                         </td>
                                     </tr>
