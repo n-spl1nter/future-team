@@ -819,6 +819,41 @@
                 }
             }
         },
+        "/user/subscribe": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Подписка на новости",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\MailSubscribesController::subscribe",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email пользователя",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешная отправка",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/account": {
             "get": {
                 "tags": [
