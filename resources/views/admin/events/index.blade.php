@@ -42,7 +42,7 @@
                                             <div style="width: 100px;height: 100px;background: url('{{ $model->getImage(\App\Entities\MediaFile::TYPE_EVENT)->url[1] }}') no-repeat center / cover"></div>
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.actions.view', ['id' => $model->id]) }}">
+                                            <a href="{{ route('admin.events.view', ['id' => $model->id]) }}">
                                                 {{ $model->name }}
                                             </a>
                                         </td>
