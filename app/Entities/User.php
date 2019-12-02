@@ -5,6 +5,7 @@ namespace App\Entities;
 use App\Events\SendMail;
 use App\Notifications\Auth\RegistrationNotification;
 use App\Notifications\Main\MessageToUserNotification;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -313,6 +314,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $user->sendEmailVerificationNotificationOnRegister($password);
         });
 
+        event(new Registered($user));
         return $user;
     }
 
