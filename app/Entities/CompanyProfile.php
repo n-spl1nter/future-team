@@ -67,7 +67,7 @@ class CompanyProfile extends Model
     {
         return [
             'full_name' => 'required|string|unique:company_profiles,full_name',
-            'country_id' => 'required|integer|exists:_countries,country_id',
+            'country_id' => 'required|integer',
             'description' => 'nullable|string|max:1500',
             'goals' => 'required|array|min:1|max:5',
             'goals.*' => 'required|integer|exists:goals,id',
@@ -83,7 +83,7 @@ class CompanyProfile extends Model
     public static function getOnUpdateValidationRules(): array
     {
         return [
-            'country_id' => 'required|integer|exists:_countries,country_id',
+            'country_id' => 'required|integer',
             'description' => 'nullable|string|max:1500',
             'goals' => 'required|array|min:1|max:5',
             'goals.*' => 'required|integer|exists:goals,id',
