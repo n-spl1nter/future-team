@@ -1,7 +1,7 @@
 <?php
 
 //Route::get('/', function () {
-//    return view('mail.password', ['email' => 'dasdas', 'mailFrom' => 'vasya', 'mailFromName' => 'kek']);
+//    return view('mail.password-reset', ['text' => 'dasdas', 'mailFrom' => 'vasya', 'mailFromName' => 'kek']);
 //});
 
 Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => [

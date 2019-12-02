@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use App\Events\SendMail;
+use App\Notifications\Auth\PasswordResetNotification;
 use App\Notifications\Auth\RegistrationNotification;
 use App\Notifications\Main\MessageToUserNotification;
 use Illuminate\Auth\Events\Registered;
@@ -507,5 +508,10 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this->companyProfile->full_name;
         }
         return '';
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PasswordResetNotification($token));
     }
 }

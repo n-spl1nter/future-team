@@ -92,6 +92,41 @@
                 ]
             }
         },
+        "/auth/send-password-reset-link": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Запрос ссылки сброса пароля",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Auth\\PasswordResetController::sendResetLink",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email пользователя",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешная отправка",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/auth/register": {
             "post": {
                 "tags": [
