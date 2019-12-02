@@ -75,7 +75,7 @@ class Profile extends Model
     public function setBirthDate(string $date): self
     {
         if ($date) {
-            $this->birth_date_at = Carbon::createFromFormat('Y-m-d', $date);
+            $this->birth_date_at = Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d H:i:s');
         }
         return $this;
     }
