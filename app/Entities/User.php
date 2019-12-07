@@ -379,7 +379,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 $data,
                 $this->profile->toArray()
             );
-            if ($this->profile->language_exchange_agreement) {
+            if ($this->profile->isAgreeToLanguageExchange()) {
                 $data = array_merge(
                     $data,
                     [
