@@ -17,4 +17,5 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'thanksForRegistration' => 'Thanks for registration. Below is the password to enter the site',
     'password' => 'Password',
+    'wrong_password' => 'The password is wrong.',
 ];

@@ -13,6 +13,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('/auth/logout', ['uses' => 'Auth\LoginController@logout', 'as' => 'logout']);
         Route::get('/user/account', ['uses' => 'User\UsersController@account', 'as' =>'account']);
+        Route::post('/user/password/change', ['uses' => 'User\PasswordController@changePassword']);
         Route::post('/user/profile', [
                 'uses' => 'User\UsersController@setProfile',
                 'as' => 'storeProfile',

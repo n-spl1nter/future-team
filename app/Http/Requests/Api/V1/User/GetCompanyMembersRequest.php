@@ -18,7 +18,7 @@ class GetCompanyMembersRequest extends BaseRequest
 
     public function withValidator(Validator $validator)
     {
-        $validator->after(function (\Illuminate\Validation\Validator $validator) {
+        $validator->after(function (Validator $validator) {
             if (empty($validator->getData()['user_id'])) {
                 return;
             }

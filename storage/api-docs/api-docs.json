@@ -945,6 +945,58 @@
                 }
             }
         },
+        "/user/password/change": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Смена пароля",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\PasswordController::changePassword",
+                "parameters": [
+                    {
+                        "name": "current_password",
+                        "in": "query",
+                        "description": "Текущий пароль",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Новый пароль",
+                        "required": true
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "Новый пароль(повтор)",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешная отправка",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/user/account": {
             "get": {
                 "tags": [
