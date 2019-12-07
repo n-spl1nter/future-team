@@ -177,7 +177,7 @@
         </div>
         <div class="card-footer">
             <div class="text-right">
-                <a href="{{ route('admin.actions.index') }}" class="btn btn-md btn-primary">
+                <a href="{{ route('admin.events.index') }}" class="btn btn-md btn-primary">
                     Назад
                 </a>
             </div>
