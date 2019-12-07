@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 /**
  * @OA\Server(url="http://futureteam.local/api/v1")
  * @OA\Server(url="https://ft.crazy-dev.ru/api/v1")
+ * @OA\Server(url="https://ftdevbs.aliensource.org/api/v1")
  * @OA\Info(
  *   title="FutureTeam API",
  *   version="0.1.0",

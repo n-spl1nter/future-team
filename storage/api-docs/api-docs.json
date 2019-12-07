@@ -14,6 +14,9 @@
         },
         {
             "url": "https://ft.crazy-dev.ru/api/v1"
+        },
+        {
+            "url": "https://ftdevbs.aliensource.org/api/v1"
         }
     ],
     "paths": {
