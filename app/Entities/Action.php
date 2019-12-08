@@ -58,7 +58,6 @@ class Action extends Model
     use Sluggable, SluggableScopeHelpers, HasImage;
 
     const ACTIVE = 'ACTIVE';
-    const EXPIRED = 'EXPIRED';
     const DELETED = 'DELETED';
     const BLOCKED = 'BLOCKED';
 
@@ -145,11 +144,11 @@ class Action extends Model
     public static function getDistinctCountries(Request $request)
     {
         $query = "SELECT DISTINCT actions.country_id, _countries.title_ru, _countries.title_en FROM `actions`
-INNER JOIN _countries ON _countries.country_id = actions.country_id";
+INNER JOIN _countries ON _countries.country_id = actions.country_id WHERE actions.status = 'ACTIVE'";
         if ($request->get('status') == 'archive') {
-            $query .= " WHERE actions.end_at < NOW()";
+            $query .= " AND actions.end_at < NOW()";
         } elseif ($request->get('status') == 'active') {
-            $query .= " WHERE actions.end_at > NOW()";
+            $query .= " AND actions.end_at > NOW()";
         }
         return \DB::select(\DB::raw($query));
     }

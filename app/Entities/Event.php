@@ -62,7 +62,6 @@ class Event extends Model
     use Sluggable, SluggableScopeHelpers, HasImage;
 
     const ACTIVE = 'ACTIVE';
-    const EXPIRED = 'EXPIRED';
     const DELETED = 'DELETED';
     const BLOCKED = 'BLOCKED';
 
@@ -137,11 +136,11 @@ class Event extends Model
     public static function getDistinctCountries(Request $request)
     {
         $query = "SELECT DISTINCT events.country_id, _countries.title_ru, _countries.title_en FROM `events`
-INNER JOIN _countries ON _countries.country_id = events.country_id";
+INNER JOIN _countries ON _countries.country_id = events.country_id WHERE events.status = 'ACTIVE'";
         if ($request->get('status') == 'archive') {
-            $query .= " WHERE events.end_at < NOW()";
+            $query .= " AND events.end_at < NOW()";
         } elseif ($request->get('status') == 'active') {
-            $query .= " WHERE events.end_at > NOW()";
+            $query .= " AND events.end_at > NOW()";
         }
         return \DB::select(\DB::raw($query));
     }
