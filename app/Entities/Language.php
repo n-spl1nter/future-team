@@ -21,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Language whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Language whereValueRu($value)
  * @mixin \Eloquent
+ * @property string|null $value_en
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Language whereValueEn($value)
  */
 class Language extends Model
 {
