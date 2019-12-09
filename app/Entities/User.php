@@ -358,16 +358,17 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($this->isMember() && $this->profile) {
             $userData['full_name'] = $this->profile->full_name;
             $userData['city'] = $this->profile->city;
-
+            if ($this->profile->isAgreeToLanguageExchange()) {
+                if (Arr::has($this->relations, 'wouldLikeToLearnLanguages')) {
+                    $userData['wouldLikeToLearnLanguages'] = $this->relations['wouldLikeToLearnLanguages'];
+                }
+                if (Arr::has($this->relations, 'knownLanguages')) {
+                    $userData['knownLanguages'] = $this->relations['knownLanguages'];
+                }
+            }
         } elseif ($this->isCompany() && $this->companyProfile) {
             $userData['full_name'] = $this->companyProfile->full_name;
             $userData['country'] = $this->companyProfile->country;
-        }
-        if (Arr::has($this->relations, 'wouldLikeToLearnLanguages')) {
-            $userData['wouldLikeToLearnLanguages'] = $this->relations['wouldLikeToLearnLanguages'];
-        }
-        if (Arr::has($this->relations, 'knownLanguages')) {
-            $userData['knownLanguages'] = $this->relations['knownLanguages'];
         }
         return $userData;
     }
