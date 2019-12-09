@@ -13,10 +13,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use App\RBAC\Role;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Http\UploadedFile;
+use function Symfony\Component\Debug\Tests\testHeader;
 
 /**
  * App\Entities\User
@@ -80,6 +82,7 @@ use Illuminate\Http\UploadedFile;
  * @property-read int|null $organization_members_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Activity[] $activities
  * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User members()
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -360,6 +363,12 @@ class User extends Authenticatable implements MustVerifyEmail
             $userData['full_name'] = $this->companyProfile->full_name;
             $userData['country'] = $this->companyProfile->country;
         }
+        if (Arr::has($this->relations, 'wouldLikeToLearnLanguages')) {
+            $userData['wouldLikeToLearnLanguages'] = $this->relations['wouldLikeToLearnLanguages'];
+        }
+        if (Arr::has($this->relations, 'knownLanguages')) {
+            $userData['knownLanguages'] = $this->relations['knownLanguages'];
+        }
         return $userData;
     }
 
@@ -500,6 +509,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'user_id_to' => $user->id,
             'message' => $text,
         ];
+        /** @var EmailMessage $sentEmail */
         $sentEmail = $this->sentEmailMessages()->create($attributes);
         $user->notify(new MessageToUserNotification($sentEmail));
         event(new SendMail($sentEmail));

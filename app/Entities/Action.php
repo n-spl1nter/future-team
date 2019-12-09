@@ -52,6 +52,8 @@ use Illuminate\Http\Request;
  * @property-read \App\Entities\Country $country
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereCountryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereVideoLinks($value)
+ * @property string|null $notified_about_ending_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereNotifiedAboutEndingAt($value)
  */
 class Action extends Model
 {

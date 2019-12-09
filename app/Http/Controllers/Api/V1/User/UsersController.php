@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\User;
 use App\Entities\Action;
 use App\Entities\CompanyProfile;
 use App\Entities\Event;
+use App\Entities\Language;
 use App\Entities\Profile;
 use App\Entities\User;
 use App\Helpers\Pagination;
@@ -350,6 +351,8 @@ class UsersController extends Controller
      *     tags={"User"},
      *     @OA\Parameter(name="lang_wtl", required=false, in="query", description="Id языка, который юзер хочет выучить"),
      *     @OA\Parameter(name="lang_known", required=false, in="query", description="Id языка, который юзер знает"),
+     *     @OA\Parameter(name="page", required=false, in="query", example="1", description="номер страницы"),
+     *     @OA\Parameter(name="perPage", required=false, in="query", example="20", description="Выводить на странице"),
      *     @OA\Response(
      *      response=200,
      *      description="Пагинатор юзеров",
@@ -362,7 +365,9 @@ class UsersController extends Controller
      */
     public function getFaces(Request $request)
     {
-        $usersQuery = User::members()->whereHas('profile');
+        $usersQuery = User::members()
+            ->whereHas('profile')
+            ->with(['wouldLikeToLearnLanguages', 'knownLanguages']);
         if ($request->has('lang_wtl')) {
             $usersQuery->whereHas('wouldLikeToLearnLanguages', function (Builder $builder) use ($request) {
                 $builder->where('language_id', '=', $request->get('lang_wtl'));
@@ -374,11 +379,14 @@ class UsersController extends Controller
             });
         }
 
-        $users = $usersQuery->paginate(Pagination::resolvePerPageCount($request))
+//        dd($usersQuery->first());
+        $users = $usersQuery
+            ->paginate(Pagination::resolvePerPageCount($request))
                             ->appends($request->except('page'));
-
         return response()->json([
             'items' => $users,
+            'known_languages' => Language::getDistinctKnownLanguages(),
+            'languages_wltl' => Language::getDistinctWlTlLanguages(),
         ]);
 
     }

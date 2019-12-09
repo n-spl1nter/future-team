@@ -29,4 +29,16 @@ class Language extends Model
     protected $table = 'languages';
     protected $fillable = ['value_ru', 'locale'];
     protected $hidden = ['created_at', 'updated_at', 'pivot'];
+
+    public static function getDistinctKnownLanguages()
+    {
+        $query = "SELECT id, value_ru, value_en, locale FROM `languages` WHERE id IN (SELECT DISTINCT(language_id) FROM known_languages)";
+        return \DB::select(\DB::raw($query));
+    }
+
+    public static function getDistinctWlTlLanguages()
+    {
+        $query = "SELECT id, value_ru, value_en, locale FROM `languages` WHERE id IN (SELECT DISTINCT(language_id) FROM languages_wltl)";
+        return \DB::select(\DB::raw($query));
+    }
 }
