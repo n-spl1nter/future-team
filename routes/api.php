@@ -32,6 +32,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
             Route::post('/main/action/report/{action}', [
                 'uses' => 'Main\ActionsController@addReport',
             ]);
+            Route::post('/main/action/delete/{action}', [
+                'uses' => 'Main\ActionsController@delete',
+            ]);
             Route::post('/user/message/send', ['uses' => 'User\UsersController@sendMessage', 'as' => 'sendMessage']);
         });
     });

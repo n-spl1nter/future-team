@@ -9,6 +9,7 @@ use App\Helpers\Pagination;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Main\ActionReportRequest;
 use App\Http\Requests\Api\V1\Main\CreateActionRequest;
+use App\Http\Requests\Api\V1\Main\DeleteActionRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -255,5 +256,45 @@ class ActionsController extends Controller
     {
         $members = $action->joinedUsers()->paginate(20);
         return response()->json($members);
+    }
+
+
+    /**
+     * @OA\Post(
+     *     path="/main/action/delete/{action}",
+     *     summary="Удаление акции",
+     *     tags={"Main"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(name="action", required=true, in="path", description="Slug акции"),
+     *     @OA\Response(
+     *        response=200,
+     *        description="Успешное удаление отчета",
+     *        @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *        response=422,
+     *        description="Возвращает массив ошибок",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=401,
+     *        description="Ошибка аутентификации",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=403,
+     *        description="Ошибка авторизации",
+     *        @OA\JsonContent()
+     *    ),
+     * )
+     * @param Action $action
+     * @param DeleteActionRequest $request
+     * @return void
+     */
+    public function delete(Action $action, DeleteActionRequest $request)
+    {
+        $action->status = Action::DELETED;
+        $action->save();
+        return response()->json();
     }
 }
