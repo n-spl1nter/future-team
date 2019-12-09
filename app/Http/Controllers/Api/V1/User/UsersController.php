@@ -362,7 +362,7 @@ class UsersController extends Controller
      */
     public function getFaces(Request $request)
     {
-        $usersQuery = User::whereHas('profile');
+        $usersQuery = User::members()->whereHas('profile');
         if ($request->has('lang_wtl')) {
             $usersQuery->whereHas('wouldLikeToLearnLanguages', function (Builder $builder) use ($request) {
                 $builder->where('language_id', '=', $request->get('lang_wtl'));
