@@ -1355,6 +1355,39 @@
                     }
                 }
             }
+        },
+        "/users/members": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Члены Future Team",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::getFaces",
+                "parameters": [
+                    {
+                        "name": "lang_wtl",
+                        "in": "query",
+                        "description": "Id языка, который юзер хочет выучить",
+                        "required": false
+                    },
+                    {
+                        "name": "lang_known",
+                        "in": "query",
+                        "description": "Id языка, который юзер знает",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Пагинатор юзеров",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
