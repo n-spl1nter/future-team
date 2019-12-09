@@ -114,6 +114,7 @@ class City extends Model
         'city_id', 'country_id', 'title_ru', 'title_en', 'area_ru', 'area_en',
         'region_ru', 'region_en',
     ];
+    public $timestamps = [];
 
     public function country()
     {
