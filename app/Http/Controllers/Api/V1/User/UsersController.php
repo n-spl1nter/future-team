@@ -374,9 +374,8 @@ class UsersController extends Controller
             });
         }
 
-        $users = $usersQuery->orderBy('language_exchange_agreement')
-                               ->paginate(Pagination::resolvePerPageCount($request))
-                               ->appends($request->except('page'));
+        $users = $usersQuery->paginate(Pagination::resolvePerPageCount($request))
+                            ->appends($request->except('page'));
 
         return response()->json([
             'items' => $users,
