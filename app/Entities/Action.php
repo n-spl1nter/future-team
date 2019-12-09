@@ -6,6 +6,7 @@ use App\Events\ActionJoin;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -54,6 +55,7 @@ use Illuminate\Http\Request;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereVideoLinks($value)
  * @property string|null $notified_about_ending_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereNotifiedAboutEndingAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action active()
  */
 class Action extends Model
 {
@@ -64,7 +66,7 @@ class Action extends Model
     const BLOCKED = 'BLOCKED';
 
     protected $table = 'actions';
-    protected $dates = ['start_at', 'end_at'];
+    protected $dates = ['start_at', 'end_at', 'notified_about_ending_at'];
     protected $fillable = ['name', 'about', 'success_secret', 'city_id', 'country_id'];
     protected $hidden = ['updated_at'];
     protected $casts = [
@@ -79,6 +81,11 @@ class Action extends Model
                 'source' => ['city.country.title_en', 'city.title_en', 'start_at'],
             ],
         ];
+    }
+
+    public function scopeActive(Builder $builder)
+    {
+        return $builder->where('status', '=', self::ACTIVE);
     }
 
     public function city()
