@@ -106,6 +106,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $builder->where('role_id', '=', Role::COMPANY);
     }
 
+    public function scopeMembers(Builder $builder)
+    {
+        return $builder->where('role_id', '=', Role::MEMBER);
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');

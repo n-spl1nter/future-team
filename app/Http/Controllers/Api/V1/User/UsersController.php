@@ -342,4 +342,45 @@ class UsersController extends Controller
 
         return response()->json($company->organizationMembers()->paginate());
     }
+
+    /**
+     * @OA\Get(
+     *     path="/users/members",
+     *     summary="Члены Future Team",
+     *     tags={"User"},
+     *     @OA\Parameter(name="lang_wtl", required=false, in="query", description="Id языка, который юзер хочет выучить"),
+     *     @OA\Parameter(name="lang_known", required=false, in="query", description="Id языка, который юзер знает"),
+     *     @OA\Response(
+     *      response=200,
+     *      description="Пагинатор юзеров",
+     *      @OA\JsonContent()
+     *     ),
+     * )
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function getFaces(Request $request)
+    {
+        $usersQuery = User::whereHas('profile');
+        if ($request->has('lang_wtl') {
+            $usersQuery->whereHas('wouldLikeToLearnLanguages', function (Builder $builder) use($request) {
+                $builder->where('language_id', '=', $request->get('lang_wtl');
+            });
+        }
+        if ($request->has('lang_known') {
+            $usersQuery->whereHas('knownLanguages', function (Builder $builder) use($request) {
+                $builder->where('language_id', '=', $request->get('lang_known');
+            });
+        }
+
+        $usersQuery->orderBy('language_exchange_agreement');
+        $users = $usersQuery->paginate(Pagination::resolvePerPageCount($request))
+                               ->appends($request->except('page'));
+
+        return response()->json([
+            'items' => $users,
+        ]);
+
+    }
 }
