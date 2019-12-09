@@ -39,6 +39,7 @@ class MediaFile extends Model
     const TYPE_ICON = 'TYPE_ICON';
     const TYPE_EVENT = 'TYPE_EVENT';
     const TYPE_ACTION = 'TYPE_ACTION';
+    const TYPE_ACTION_REPORT = 'TYPE_ACTION_REPORT';
 
     protected $table = 'media_files';
     protected $fillable = ['path', 'url', 'entity', 'entity_id', 'file_type'];
@@ -71,6 +72,11 @@ class MediaFile extends Model
                     mkdir(storage_path('app/public/action'));
                 }
                 return 'action';
+            case self::TYPE_ACTION_REPORT:
+                if (!is_dir(storage_path('app/public/action_report'))) {
+                    mkdir(storage_path('app/public/action_report'));
+                }
+                return 'action_report';
             default:
                 if (!is_dir(storage_path('app/public/common'))) {
                     mkdir(storage_path('app/public/common'));

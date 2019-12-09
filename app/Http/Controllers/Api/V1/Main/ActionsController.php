@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\V1\Main;
 
 use App\Entities\Action;
+use App\Entities\ActionReport;
 use App\Events\ActionCreate;
 use App\Helpers\Pagination;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Main\ActionReportRequest;
 use App\Http\Requests\Api\V1\Main\CreateActionRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -92,7 +94,7 @@ class ActionsController extends Controller
      *              @OA\Property(property="domains[0]", description="Сферы(массив [2-5])", type="string"),
      *              @OA\Property(property="domains[1]", description="Сферы", type="string"),
      *              @OA\Property(
-     *                   property="photos[0]", description="Массив фото(min_width=1920,min_height=800)", type="file",
+     *                   property="photos[0]", description="Массив фото(min_width=1280,min_height=700)", type="file",
      *                   @OA\Items(type="string", format="binary")
      *              ),
      *              @OA\Property(
@@ -140,19 +142,58 @@ class ActionsController extends Controller
         return response()->json($action->getAllInfo(), Response::HTTP_CREATED);
     }
 
-    public function update()
+    /**
+     * @OA\Post(
+     *     path="/main/action/report/{action}",
+     *     summary="Добавление отчета о проведении акции",
+     *     tags={"Main"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Parameter(name="action", required=true, in="path", description="Slug акции"),
+     *     @OA\RequestBody(
+     *      @OA\MediaType(
+     *          mediaType="multipart/form-data",
+     *          @OA\Schema(
+     *              @OA\Property(
+     *                   property="photos[0]", description="Массив фото(min_width=1280,min_height=700)", type="file",
+     *                   @OA\Items(type="string", format="binary")
+     *              ),
+     *              @OA\Property(
+     *                   property="photos[1]", description="Массив фото", type="file",
+     *                   @OA\Items(type="string", format="binary")
+     *              ),
+     *              @OA\Property(property="video_links[0]", description="Ссылки на видео (массив URL)", type="string"),
+     *          ),
+     *      )
+     *     ),
+     *     @OA\Response(
+     *        response=201,
+     *        description="Успешное добавление отчета",
+     *        @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *        response=422,
+     *        description="Возвращает массив ошибок",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=401,
+     *        description="Ошибка аутентификации",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=403,
+     *        description="Ошибка авторизации",
+     *        @OA\JsonContent()
+     *    ),
+     * )
+     * @param Action $action
+     * @param ActionReportRequest $request
+     * @return void
+     */
+    public function addReport(Action $action, ActionReportRequest $request)
     {
-        // @todo implement
-    }
-
-    public function delete()
-    {
-        // @todo implement
-    }
-
-    public function deleteImage()
-    {
-        // @todo implement
+        ActionReport::add($action, $request);
+        return response()->json(null, Response::HTTP_CREATED);
     }
 
     /**

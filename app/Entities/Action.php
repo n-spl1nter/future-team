@@ -56,6 +56,7 @@ use Illuminate\Http\Request;
  * @property string|null $notified_about_ending_at
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereNotifiedAboutEndingAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action active()
+ * @property-read \App\Entities\ActionReport $report
  */
 class Action extends Model
 {
@@ -86,6 +87,11 @@ class Action extends Model
     public function scopeActive(Builder $builder)
     {
         return $builder->where('status', '=', self::ACTIVE);
+    }
+
+    public function report()
+    {
+        return $this->hasOne(ActionReport::class, 'action_id', 'id');
     }
 
     public function city()
@@ -136,6 +142,7 @@ class Action extends Model
         $this->load('city', 'user');
         return array_merge(parent::toArray(), [
             'images' => $this->getImages(MediaFile::TYPE_ACTION)->pluck('url')->toArray(),
+            'report' => $this->report,
         ]);
     }
 

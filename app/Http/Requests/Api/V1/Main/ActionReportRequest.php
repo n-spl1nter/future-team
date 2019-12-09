@@ -2,10 +2,18 @@
 
 namespace App\Http\Requests\Api\V1\Main;
 
+use App\Entities\Action;
 use App\Http\Requests\Api\V1\BaseRequest;
 
 class ActionReportRequest extends BaseRequest
 {
+    public function authorize()
+    {
+        /** @var Action $action */
+        $action = $this->route()->parameter('action');
+        return $action->user_id === $this->user()->id && !$action->report;
+    }
+
     public function rules()
     {
         return [

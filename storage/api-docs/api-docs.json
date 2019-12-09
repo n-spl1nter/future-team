@@ -495,7 +495,7 @@
                                         "type": "string"
                                     },
                                     "photos[0]": {
-                                        "description": "Массив фото(min_width=1920,min_height=800)",
+                                        "description": "Массив фото(min_width=1280,min_height=700)",
                                         "type": "file",
                                         "items": {
                                             "type": "string",
@@ -538,6 +538,93 @@
                 "responses": {
                     "201": {
                         "description": "Успешное создание акции",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка аутентификации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Ошибка авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/main/action/report/{action}": {
+            "post": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Добавление отчета о проведении акции",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\ActionsController::addReport",
+                "parameters": [
+                    {
+                        "name": "action",
+                        "in": "path",
+                        "description": "Slug акции",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "photos[0]": {
+                                        "description": "Массив фото(min_width=1280,min_height=700)",
+                                        "type": "file",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "photos[1]": {
+                                        "description": "Массив фото",
+                                        "type": "file",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "video_links[0]": {
+                                        "description": "Ссылки на видео (массив URL)",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное добавление отчета",
                         "content": {
                             "application/json": {
                                 "schema": {}
