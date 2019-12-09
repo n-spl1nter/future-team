@@ -364,13 +364,13 @@ class UsersController extends Controller
     {
         $usersQuery = User::whereHas('profile');
         if ($request->has('lang_wtl') {
-            $usersQuery->whereHas('wouldLikeToLearnLanguages', function (Builder $builder) use($request) {
-                $builder->where('language_id', '=', $request->get('lang_wtl');
+            $usersQuery->whereHas('wouldLikeToLearnLanguages', function (Builder $builder) use ($request) {
+                $builder->where('language_id', '=', $request->get('lang_wtl'));
             });
         }
         if ($request->has('lang_known') {
             $usersQuery->whereHas('knownLanguages', function (Builder $builder) use($request) {
-                $builder->where('language_id', '=', $request->get('lang_known');
+                $builder->where('language_id', '=', $request->get('lang_known'));
             });
         }
 
