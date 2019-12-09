@@ -58,9 +58,13 @@ class PlacesController extends Controller
             return response()->json(['errors' => $validator->errors()->all()], 422);
         }
 
+        $fieldName = 'title_en';
+        if (app()->getLocale() == 'ru') {
+            $fieldName = 'title_ru';
+        }
         $cities = City::whereCountryId($request->get('country_id'))
-            ->where('title_ru', 'like', $request->get('value') . '%')
-            ->select(['city_id', 'title_ru', 'area_ru', 'region_ru'])
+            ->where($fieldName, 'like', $request->get('value') . '%')
+            ->select(['city_id', 'title_ru', 'title_en'])
             ->orderBy('city_id')
             ->limit(10)
             ->get();
