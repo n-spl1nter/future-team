@@ -17,7 +17,7 @@
                 </tr>
                 <tr>
                     <td colspan="3" style="margin: 0; padding: 0; text-align: left; vertical-align: top; font-family: Arial, Helvetica, sans-serif; font-size: 18px; color: #1E1E1E;">
-                        У вас новое сообщение от <b>{{ $mailFromName }}:</b>
+                        You’ve got a new message from <b>{{ $mailFromName }}:</b>
                     </td>
                 </tr>
                 <tr>
@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <td colspan="3" style="margin: 0; padding: 0; text-align: right; vertical-align: top; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #232323;">
-                        <b>Свяжитесь со мной по почте</b>
+                        <b>You can contact me via</b>
                     </td>
                 </tr>
                 <tr>

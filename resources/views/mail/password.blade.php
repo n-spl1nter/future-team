@@ -15,7 +15,7 @@
                 </tr>
                 <tr>
                     <td style="margin: 0; padding: 0; text-align: left; vertical-align: top; font-family: Arial, Helvetica, sans-serif; font-size: 18px; color: #777777;">
-                        <b>Логин</b>
+                        <b>Login</b>
                     </td>
                 </tr>
                 <tr>
@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <td style="margin: 0; padding: 0; text-align: left; vertical-align: top; font-family: Arial, Helvetica, sans-serif; font-size: 18px; color: #777777;">
-                        <b>Пароль</b>
+                        <b>Password</b>
                     </td>
                 </tr>
                 <tr>
@@ -82,12 +82,12 @@
                                 <td style="margin: 0; padding: 0; width: 101px;"></td>
                                 <td style="margin: 0; padding: 0; vertical-align: top; font-size: 0;">
                                     <a href="{{ env('MAIN_SERVICE_URL') }}" style="background-color:#80B369;border-radius:3px;color:#ffffff;display:inline-block;font-family:Arial, sans-serif;font-size:18px;line-height:48px;text-align:center;text-decoration:none;width:210px;-webkit-text-size-adjust:none;mso-hide:all;">
-                                        <b>Перейти на сайт</b>
+                                        <b>Go to website</b>
                                     </a>
                                     <!--[if mso]>
                                     <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ env('MAIN_SERVICE_URL') }}" style="height:48px;v-text-anchor:middle;width:210px;" arcsize="5%" strokecolor="#80B369" fillcolor="#80B369">
                                         <w:anchorlock/>
-                                        <center style="color:#ffffff;font-family:Arial, sans-serif;font-size:18px;"><b>Перейти на сайт</b></center>
+                                        <center style="color:#ffffff;font-family:Arial, sans-serif;font-size:18px;"><b>Go to website</b></center>
                                     </v:roundrect>
                                     <![endif]-->
                                 </td>
