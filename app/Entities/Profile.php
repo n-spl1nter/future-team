@@ -37,6 +37,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $about
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Profile whereAbout($value)
  */
 class Profile extends Model
 {
@@ -48,7 +50,7 @@ class Profile extends Model
     ];
     protected $fillable = [
         'full_name', 'language_exchange_agreement',
-        'city_id', 'country_id', 'motivation', 'activity_fields',
+        'city_id', 'country_id', 'motivation', 'activity_fields', 'about',
     ];
     protected $hidden = ['id'];
 
