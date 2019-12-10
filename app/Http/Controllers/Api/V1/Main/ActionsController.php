@@ -36,7 +36,8 @@ class ActionsController extends Controller
     public function index(Request $request)
     {
         $status = $request->get('status');
-        $actionsQuery = Action::whereStatus(Action::ACTIVE);
+        $actionsQuery = Action::whereStatus(Action::ACTIVE)
+            ->orderByDesc('created_at');
         if ($request->has('country_id')) {
             $actionsQuery = $actionsQuery->whereCountryId($request->get('country_id'));
         }

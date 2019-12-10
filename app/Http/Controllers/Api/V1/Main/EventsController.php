@@ -32,7 +32,8 @@ class EventsController extends Controller
     public function index(Request $request)
     {
         $status = $request->get('status');
-        $eventsQuery = Event::whereStatus(Event::ACTIVE);
+        $eventsQuery = Event::whereStatus(Event::ACTIVE)
+            ->orderByDesc('created_at');
         if ($request->has('country_id')) {
             $eventsQuery = $eventsQuery->whereCountryId($request->get('country_id'));
         }
