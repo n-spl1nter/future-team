@@ -27,18 +27,22 @@ class SocialServicesController extends Controller
                 $nameParts = explode(' ', $serviceUser->user['name']);
                 $serviceUser->user['first_name'] = array_shift($nameParts);
                 $serviceUser->user['last_name'] = implode(' ', $nameParts);
-            } elseif ($serviceName == 'vkontakte') {
-                $serviceUser->user['email'] = $serviceUser->accessTokenResponseBody['email'];
             }
             $attributes = [
                 'first_name' => $serviceUser->user['first_name'],
                 'last_name' => $serviceUser->user['last_name'],
-                'email' => $serviceUser->user['email'],
+                'email' => null,
                 'token' => $serviceUser->token,
                 'identity' => $serviceUser->id,
             ];
-            if (isset($serviceUser->user['email']) && User::whereEmail($serviceUser->user['email'])->count() == 0) {
-                $attributes['email'] = $serviceUser->user['email'];
+            $email = null;
+            if (isset($serviceUser->user) && isset($serviceUser->user['email'])) {
+                $email = $serviceUser->user['email'];
+            } elseif (isset($serviceUser->accessTokenResponseBody) && isset($serviceUser->accessTokenResponseBody['email'])) {
+                $email = $serviceUser->accessTokenResponseBody['email'];
+            }
+            if ($email && User::whereEmail($email)->count() == 0) {
+                $attributes['email'] = $email;
                 $attributes['email_verified_at'] = now();
             }
             $user = User::findOrCreateViaNetworkService($serviceName, $attributes);
