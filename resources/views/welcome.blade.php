@@ -65,32 +65,18 @@
 </head>
 <body>
 <div class="flex-center position-ref full-height">
-    <button id="login-vk">Auth VK</button>
+    <button id="login-vk" onclick="openAuth('vkontakte')">Auth VK</button>
+    <button id="login-vk" onclick="openAuth('facebook')">Auth FB</button>
 </div>
 <script>
-  document.getElementById('login-vk').addEventListener('click', function (ev) {
-    window.authenticateCallback = function(token) {
-      window.accessToken = token;
-    };
-    window.open('/login/vkontakte', 'Вход', 'width=600,height=400');
-  });
+  function openAuth(serviceName) {
+    window.open('/login/' + serviceName, 'Вход', 'width=600,height=400');
+  }
+  window.addEventListener('message', function (message) {
+    console.log('---', JSON.parse(message.data));
+  }, false);
 </script>
 <script>
-  async function fetchData() {
-    const data = new FormData();
-    data.append('first_name ', 'Поросёнок Пётр');
-    data.append('last_name ', 'this.surname');
-    data.append('email', 'kek@kek.ru');
-    data.append('phone', '+7 923 356 30 11'.replace(/[^\d]/g, ''));
-    data.append('source', 'Renault.ru');
-    const response = await fetch(this.rootPath + '/auth/register', {
-      headers: {
-        Accept: 'application/json',
-      },
-      method: 'POST',
-      body: data,
-    });
-  }
 </script>
 </body>
 </html>

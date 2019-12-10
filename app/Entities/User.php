@@ -90,7 +90,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     private $avatar = null;
 
-    protected $fillable = ['email', 'password'];
+    protected $fillable = ['email', 'password', 'email_verified_at'];
     protected $hidden = [
         'password', 'remember_token', 'created_at', 'updated_at', 'email_verified_at', 'role_id', 'email',
     ];

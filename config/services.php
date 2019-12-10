@@ -33,14 +33,14 @@ return [
     'vkontakte' => [
         'client_id' => env('VK_CLIENT_ID'),
         'client_secret' => env('VK_CLIENT_SECRET_KEY'),
-        'redirect' => env('APP_URL') . '/login/vkontakte/callback',
+        'redirect' => env('APP_URL') . env('VK_REDIRECT_URL'),
         'scopes' => ['email'],
     ],
 
     'facebook' => [
         'client_id' => env('FB_CLIENT_ID'),
         'client_secret' => env('FB_CLIENT_SECRET_KEY'),
-        'redirect' => env('APP_URL') . '/login/facebook/callback',
+        'redirect' => env('APP_URL') . env('FB_REDIRECT_URL'),
         'scopes' => ['email'],
     ],
 

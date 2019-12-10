@@ -1,8 +1,8 @@
 <?php
 
-//Route::get('/', function () {
-//    return view('mail.action-end', ['url' => 'dasdas', 'actionName' => 'vasya', 'mailFromName' => 'kek']);
-//});
+Route::get('/', function () {
+    return view('welcome', ['url' => 'dasdas', 'actionName' => 'vasya', 'mailFromName' => 'kek']);
+});
 
 Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => [
     'auth', 'can:viewAdmin,App\RBAC\Permission',
@@ -38,4 +38,4 @@ Route::get('/login/{serviceName}', [
 Route::get('/login/{serviceName}/callback', [
     'uses' => 'Auth\SocialServicesController@providerCallback',
     'as' => 'login.callback'
-]);
+])->where(['serviceName' => '(vkontakte|facebook)']);
