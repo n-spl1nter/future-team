@@ -1545,6 +1545,64 @@
                     }
                 }
             }
+        },
+        "/user/profile/complete": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Дозаполняет профиль пользователя из соц.сети",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\User\\UsersController::completeRegister",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "property": null,
+                                "$ref": "#/components/schemas/CompleteProfile"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Успешное добавление профиля",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Возвращает массив ошибок",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка аутентификации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Ошибка авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1698,6 +1756,21 @@
                             },
                             "type": {
                                 "description": "'company' or 'member'"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MemberProfile"
+                    }
+                ]
+            },
+            "CompleteProfile": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "email": {
+                                "description": "unique email"
                             }
                         },
                         "type": "object"

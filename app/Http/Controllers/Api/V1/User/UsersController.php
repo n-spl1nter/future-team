@@ -10,6 +10,7 @@ use App\Entities\Profile;
 use App\Entities\User;
 use App\Helpers\Pagination;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\User\CompleteProfileForSocialUserRequest;
 use App\Http\Requests\Api\V1\User\GetCompanyMembersRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -268,6 +269,7 @@ class UsersController extends Controller
             });
         }
         $companies = $companiesQuery->with(['companyProfile', 'companyProfile.country'])
+            ->orderByDesc('created_at')
             ->paginate(Pagination::resolvePerPageCount($request))
             ->appends($request->except('page'));
         return response()->json([
@@ -314,7 +316,7 @@ class UsersController extends Controller
                 return $model;
             });;
 
-        $merged = $actions->merge($events)->sortBy('created_at');
+        $merged = $actions->merge($events)->sortByDesc('created_at');
 
         return response()->json([
             'merged' => $merged,
@@ -379,7 +381,6 @@ class UsersController extends Controller
             });
         }
 
-//        dd($usersQuery->first());
         $users = $usersQuery
             ->paginate(Pagination::resolvePerPageCount($request))
                             ->appends($request->except('page'));
@@ -389,5 +390,55 @@ class UsersController extends Controller
             'languages_wltl' => Language::getDistinctWlTlLanguages(),
         ]);
 
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/user/profile/complete",
+     *     summary="Дозаполняет профиль пользователя из соц.сети",
+     *     tags={"User"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *      @OA\MediaType(
+     *          mediaType="multipart/form-data",
+     *          @OA\Property(ref="#/components/schemas/CompleteProfile"),
+     *      ),
+     *     ),
+     *     @OA\Response(
+     *        response=201,
+     *        description="Успешное добавление профиля",
+     *        @OA\JsonContent()
+     *     ),
+     *     @OA\Response(
+     *        response=422,
+     *        description="Возвращает массив ошибок",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=401,
+     *        description="Ошибка аутентификации",
+     *        @OA\JsonContent()
+     *    ),
+     *     @OA\Response(
+     *        response=403,
+     *        description="Ошибка авторизации",
+     *        @OA\JsonContent()
+     *    ),
+     * )
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function completeRegister(CompleteProfileForSocialUserRequest $request)
+    {
+        /** @var User $user */
+        $user = \Auth::user();
+        if (is_null($user->email)) {
+            $user->email = $request->get('email');
+            $user->email_verified_at = now();
+            $user->save();
+        }
+        $user->setProfile($request);
+
+        return response()->json($user);
     }
 }
