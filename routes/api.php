@@ -6,7 +6,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
     Route::group(['middleware' => ['guest']], function () {
         Route::post('/auth/register', ['uses' => 'Auth\RegisterController@register', 'as' => 'register']);
         Route::post('/auth/login', ['uses' => 'Auth\LoginController@login', 'as' => 'login']);
-        Route::post('/auth/send-password-reset-link', ['uses' => 'Auth\PasswordResetController@sendResetLink', 'middleware' => ['throttle:2,1']]);
+        Route::post('/auth/send-password-reset-link', ['uses' => 'Auth\PasswordResetController@sendResetLink', 'middleware' => ['throttle:10,1']]);
         Route::post('/auth/reset-password', ['uses' => 'Auth\PasswordResetController@resetPassword', 'middleware' => ['throttle:100,1']]);
     });
 
