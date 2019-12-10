@@ -44,7 +44,7 @@ class MessageToUserNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject(__('common.MessageFromFutureTeamService'))
+                    ->subject('New message on Future Team')
                     ->view('mail.message-from-user', [
                         'text' => $this->emailMessage->message,
                         'mailFrom' => $this->emailMessage->userFrom->email,

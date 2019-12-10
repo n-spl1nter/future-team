@@ -43,7 +43,7 @@ class PasswordResetNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                ->subject('Сброс пароля')
+                ->subject('Password recovery')
                 ->view('mail.password-reset', [
                     'email' => $notifiable->email,
                     'url' => env('MAIN_SERVICE_PASSWORD_RESET_URL') . $this->token,

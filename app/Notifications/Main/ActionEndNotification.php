@@ -44,7 +44,7 @@ class ActionEndNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('The challenge completed.')
+                    ->subject('Would you like to share photos and videos from last challenge')
                     ->view('mail.action-end', [
                         'actionName' => $this->action->name,
                         'url' => env('MAIN_SERVICE_URL') . '/actions/' . $this->action->slug,
