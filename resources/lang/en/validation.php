@@ -181,9 +181,16 @@ return [
         'city_id'               => 'City',
         'birth_date_at'         => 'Birth date',
         'photo'                 => 'Photo',
+        'goals'                 => 'Goals',
         'goals.*'               => 'Goals',
+        'domains'               => 'Field of activity',
         'domains.*'             => 'Field of activity',
+        'photos'                => 'Photo',
         'photos.*'              => 'Photo',
+        'video_links'           => 'Video links',
+        'video_links.*'         => 'Video links',
+        'end_at'                => 'End date',
+        'start_at'              => 'Start date',
     ],
 
 ];
