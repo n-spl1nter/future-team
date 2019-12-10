@@ -57,7 +57,6 @@ class SocialServicesController extends Controller
         return view('auth-success', [
             'accessToken' => $accessToken,
             'id' => $id,
-            'emailVerified' => $emailVerified,
             'hasProfile' => $hasProfile,
         ]);
     }
