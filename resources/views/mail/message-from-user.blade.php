@@ -24,9 +24,7 @@
                     <td colspan="3" style="margin: 0; padding: 0; height: 17px; border-bottom: 1px solid #AAAAAA;"></td>
                 </tr>
                 <tr>
-                    <td rowspan="7" style="margin: 0; padding: 0; width: 43px; border-bottom: 1px solid #AAAAAA;"></td>
                     <td style="margin: 0; padding: 0; height: 46px;"></td>
-                    <td rowspan="7" style="margin: 0; padding: 0; width: 30px; border-bottom: 1px solid #AAAAAA;"></td>
                 </tr>
                 <tr>
                     <td colspan="3" style="margin: 0; padding: 0; text-align: left; vertical-align: top; font-family: Arial, Helvetica, sans-serif; font-size: 18px; line-height: 1.23; color: #6B6767;">

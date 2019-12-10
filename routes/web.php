@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', function () {
-    return view('welcome', ['url' => 'dasdas', 'actionName' => 'vasya', 'mailFromName' => 'kek']);
+    return view('welcome', ['url' => 'dasdas', 'text' => 'vasya', 'mailFrom' => 'kek', 'mailFromName' => 'kek']);
 });
 
 Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => [
