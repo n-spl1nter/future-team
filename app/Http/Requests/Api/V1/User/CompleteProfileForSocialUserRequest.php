@@ -4,9 +4,9 @@ namespace App\Http\Requests\Api\V1\User;
 
 use App\Entities\Profile;
 use App\Entities\User;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Api\V1\BaseRequest;
 
-class CompleteProfileForSocialUserRequest extends FormRequest
+class CompleteProfileForSocialUserRequest extends BaseRequest
 {
     public function authorize()
     {
