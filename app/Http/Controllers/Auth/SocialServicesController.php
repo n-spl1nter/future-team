@@ -20,6 +20,7 @@ class SocialServicesController extends Controller
         $accessToken = null;
         $id = null;
         $emailVerified = null;
+        $email = null;
         $hasProfile = null;
         $fullName = null;
         try {
@@ -51,6 +52,7 @@ class SocialServicesController extends Controller
             $id = $user->id;
             $emailVerified = $user->hasVerifiedEmail();
             $hasProfile = $user->hasFilledProfile();
+            $email = $user->email;
             $fullName = implode(' ', [$attributes['first_name'], $attributes['last_name']]);
         } catch (\Throwable $exception) {
             \Log::error($exception->getMessage());
@@ -62,6 +64,7 @@ class SocialServicesController extends Controller
             'emailVerified' => $emailVerified,
             'hasProfile' => $hasProfile,
             'fullName' => $fullName,
+            'email' => $email,
         ]);
     }
 }
