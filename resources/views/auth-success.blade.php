@@ -12,7 +12,7 @@
       id: {{ $id }},
       emailVerified: Boolean({{ $emailVerified }}),
       hasProfile: Boolean({{ $hasProfile }}),
-      fullName: Boolean({{ $fullName }}),
+      fullName: '{{ $fullName }}',
     }), '*');
     @endif
     window.close();
