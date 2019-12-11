@@ -368,7 +368,6 @@ class UsersController extends Controller
     public function getFaces(Request $request)
     {
         $usersQuery = User::members()
-            ->whereHas('profile')
             ->with(['wouldLikeToLearnLanguages', 'knownLanguages']);
         if ($request->has('lang_wtl')) {
             $usersQuery->whereHas('wouldLikeToLearnLanguages', function (Builder $builder) use ($request) {
@@ -380,6 +379,16 @@ class UsersController extends Controller
                 $builder->where('language_id', '=', $request->get('lang_known'));
             });
         }
+
+        if ($request->has('lang_wtl') || $request->has('lang_known')) {
+            $usersQuery->whereHas('profile', function (Builder $builder) {
+                $builder->where('language_exchange_agreement', '=', 1);
+            });
+        } else {
+            $usersQuery->whereHas('profile');
+        }
+
+
 
         $users = $usersQuery
             ->paginate(Pagination::resolvePerPageCount($request))
