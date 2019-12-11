@@ -3,6 +3,7 @@
 /** @var string $accessToken */
 /** @var bool $emailVerified */
 /** @var bool $hasProfile */
+/** @var bool $fullName */
 @endphp
 <script type="text/javascript">
     @if (!empty($accessToken))
@@ -11,6 +12,7 @@
       id: {{ $id }},
       emailVerified: Boolean({{ $emailVerified }}),
       hasProfile: Boolean({{ $hasProfile }}),
+      fullName: Boolean({{ $fullName }}),
     }), '*');
     @endif
     window.close();

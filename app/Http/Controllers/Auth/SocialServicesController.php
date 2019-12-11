@@ -21,6 +21,7 @@ class SocialServicesController extends Controller
         $id = null;
         $emailVerified = null;
         $hasProfile = null;
+        $fullName = null;
         try {
             $serviceUser = \Socialite::driver($serviceName)->stateless()->user();
             if ($serviceName == 'facebook') {
@@ -50,6 +51,7 @@ class SocialServicesController extends Controller
             $id = $user->id;
             $emailVerified = $user->hasVerifiedEmail();
             $hasProfile = $user->hasFilledProfile();
+            $fullName = implode(' ', [$attributes['first_name'], $attributes['last_name']]);
         } catch (\Throwable $exception) {
             \Log::error($exception->getMessage());
         }
@@ -59,6 +61,7 @@ class SocialServicesController extends Controller
             'id' => $id,
             'emailVerified' => $emailVerified,
             'hasProfile' => $hasProfile,
+            'fullName' => $fullName,
         ]);
     }
 }
