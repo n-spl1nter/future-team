@@ -26,4 +26,5 @@ return [
     'MessageFromFutureTeamService' => 'Message from Future Team service user',
     'YouHaveANewMessageFrom' => 'You have a new message from',
     'InvalidRecipient' => 'Invalid Recipient',
+    'MembersCount' => 'Members count',
 ];

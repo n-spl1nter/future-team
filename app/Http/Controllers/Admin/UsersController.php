@@ -16,4 +16,9 @@ class UsersController extends Controller
 
         return view('admin.users.index', compact('paginator'));
     }
+
+    public function view(User $user)
+    {
+        return view('admin.users.view', ['model' => $user]);
+    }
 }

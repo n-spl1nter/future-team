@@ -24,10 +24,12 @@
                                     <th>Кол-во добавленных акций</th>
                                     <th>Кол-во добавленных событий</th>
                                     <th>Дата регистрации</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -46,7 +48,9 @@
                                                 <div class="profile-user-img img-fluid img-circle" style="background-image: url({{ $user->getAvatar()[1] }});background-size:cover; height: 100px;">
                                             @endif
                                         </td>
-                                        <td>{{ $user->getFullName() }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.users.view', $user->id) }}">{{ $user->getFullName() }}</a>
+                                        </td>
                                         <td>
                                             {{ \App\RBAC\Role::ROLE_NAME[$user->role_id] }}
                                         </td>
@@ -61,6 +65,12 @@
                                         <td>{{ $user->actions()->count() }}</td>
                                         <td>{{ $user->events()->count() }}</td>
                                         <td>{{ $user->created_at }}</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-sm" href="{{ route('admin.users.view', $user->id) }}">
+                                                <i class="fas fa-folder"></i>
+                                                View
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

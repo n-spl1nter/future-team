@@ -26,4 +26,6 @@ return [
     'MessageFromFutureTeamService' => 'Сообщение от пользователя Future Team',
     'YouHaveANewMessageFrom' => 'У вас новое сообщение от',
     'InvalidRecipient' => 'Неправильный получатель',
+
+    'MembersCount' => 'Количество участников',
 ];
