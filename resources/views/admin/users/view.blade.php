@@ -1,7 +1,7 @@
 @php
     /** @var \App\Entities\User $model */
 @endphp
-@extends('admin.layouts.main', ['title' => 'Пользователь. ' . $model->id  ])
+@extends('admin.layouts.main', ['title' => 'User. ' . $model->id  ])
 
 @section('content')
     @if ($model->hasFilledProfile())
@@ -17,7 +17,7 @@
 
                             <h3 class="profile-username text-center">{{ $model->getFullName() }}</h3>
 
-                            <p class="text-muted text-center">{{ $model->isMember() ? 'Участник' : 'Компания' }}</p>
+                            <p class="text-muted text-center">{{ $model->isMember() ? 'Member' : 'Company' }}</p>
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
@@ -35,34 +35,79 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
-                    @if($model->isMember())
                     <div class="card card-primary">
                         <div class="card-header"><h3 class="card-title">Info</h3></div>
                         <div class="card-body">
-                            <strong><i class="fas fa-book mr-1"></i> Education</strong>
-                            <p class="text-muted">
-                                B.S. in Computer Science from the University of Tennessee at Knoxville
-                            </p>
+                            <strong><i class="fas fa-calendar mr-1"></i> Created At</strong>
+                            <p class="text-muted">{{ $model->created_at }}</p>
                             <hr>
                             <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-                            <p class="text-muted">Malibu, California</p>
-                            <hr>
-                            <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
-                            <p class="text-muted">
-                                <span class="tag tag-danger">UI Design</span>
-                                <span class="tag tag-success">Coding</span>
-                                <span class="tag tag-info">Javascript</span>
-                                <span class="tag tag-warning">PHP</span>
-                                <span class="tag tag-primary">Node.js</span>
-                            </p>
-                            <hr>
-                            <strong><i class="far fa-file-alt mr-1"></i> About</strong>
-                            <p class="text-muted"></p>
+                            @if($model->isMember())
+                            <p class="text-muted">{{ $model->profile->country->title_en }}, {{ $model->profile->city->title_en }}</p>
+                            @else
+                                <p class="text-muted">{{ $model->companyProfile->country->title_en }}</p>
+                            @endif
                         </div>
                     </div>
-                    @endif
                 </div>
-                <div class="col-md-9"></div>
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header p-2">
+                            <ul class="nav nav-pills">
+                                <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Timeline</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#actions" data-toggle="tab">Actions({{ $model->actions->count() }})</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#events" data-toggle="tab">Events({{ $model->events->count() }})</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="active tab-pane" id="timeline">users activity...</div>
+                                <div class="tab-pane" id="actions">
+                                    @if ($model->actions->count() > 0)
+                                    <div class="list-group">
+                                        @foreach($model->actions as $action)
+                                            <a href="{{ route('admin.actions.view', $action->id) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h5 class="mb-1">{{ $action->name }}</h5>
+                                                    <small>{{ $action->created_at->format('Y-m-d') }}</small>
+                                                </div>
+                                                <p class="mb-1">{{ \Illuminate\Support\Str::limit($action->about) }}</p>
+                                                <small>Status: {{ $action->status }}</small>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                    @else
+                                        <div class="alert alert-warning" role="alert">
+                                            Actions for current user not found.
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="tab-pane" id="events">
+                                    @if ($model->events->count() > 0)
+                                        <div class="list-group">
+                                            @foreach($model->events as $event)
+                                                <a href="{{ route('admin.events.view', $event->id) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="mb-1">{{ $event->name }}</h5>
+                                                        <small>{{ $event->created_at->format('Y-m-d') }}</small>
+                                                    </div>
+                                                    <p class="mb-1">{{ \Illuminate\Support\Str::limit($event->reasons) }}</p>
+                                                    <small>Status: {{ $event->status }}</small>
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="alert alert-warning" role="alert">
+                                            Events for current user not found.
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="tab-pane" id="settings"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
