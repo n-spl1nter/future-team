@@ -82,7 +82,7 @@
                                 <div class="user-block">
                                     <img class="img-circle img-bordered-sm" src="{{ $model->user->getAvatar()[1] }}" alt="user image">
                                     <span class="username">
-                                      <a href="#">{{ $model->user->getFullName() }}</a>
+                                      <a href="{{ route('admin.users.view', $model->user_id) }}">{{ $model->user->getFullName() }}</a>
                                     </span>
                                     <span class="description">
                                         @if($model->user->isCompany())

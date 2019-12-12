@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3">
-                    <div class="card card-primary card-outline">
+                    <div class="card card-success card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <div class="img-circle profile-user-img" style="display:inline-block;width: 100px;height: 100px;background: url({{ $model->getAvatar()[1] }}) no-repeat center / cover;"></div>
@@ -35,7 +35,7 @@
                         </div>
                         <!-- /.card-body -->
                     </div>
-                    <div class="card card-primary">
+                    <div class="card card-dark card-outline">
                         <div class="card-header"><h3 class="card-title">Info</h3></div>
                         <div class="card-body">
                             <strong><i class="fas fa-calendar mr-1"></i> Created At</strong>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="card">
+                    <div class="card card-outline card-primary">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Timeline</a></li>
