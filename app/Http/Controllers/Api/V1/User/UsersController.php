@@ -267,6 +267,8 @@ class UsersController extends Controller
             $companiesQuery = $companiesQuery->whereHas('companyProfile', function (Builder $builder) use ($request) {
                 $builder->where('country_id', '=', $request->get('country_id'));
             });
+        } else {
+            $companiesQuery->whereHas('companyProfile');
         }
         $companies = $companiesQuery->with(['companyProfile', 'companyProfile.country'])
             ->orderByDesc('created_at')
