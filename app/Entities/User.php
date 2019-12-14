@@ -280,11 +280,15 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param UploadedFile|null $file
      * @param array $avatarparams
      * @return $this
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function setAvatar(UploadedFile $file = null, array $avatarparams = []): self
     {
-        if (!$file || empty($avatarparams)) {
+        if (empty($avatarparams)) {
             return $this;
+        }
+        if (!$file) {
+            $file = \Storage::get($this->getAvatar()[0]);
         }
         MediaFile::removeFile(static::class, $this->id, MediaFile::TYPE_AVATAR);
         $this->setImage($file, MediaFile::TYPE_AVATAR, 640, 240, 75, $avatarparams);
