@@ -370,6 +370,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'type' => $this->role->name,
             'avatar' => $this->getAvatar(),
             'id' => $this->id,
+            'isFromSocial' => $this->social_networks_count > 0,
         ];
         if ($this->isMember() && $this->profile) {
             $userData['full_name'] = $this->profile->full_name;
@@ -403,6 +404,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 'items' => $this->events()->limit(3)->get()->toArray(),
                 'totalCount' => $this->events()->count(),
             ],
+            'isFromSocial' => $this->social_networks_count > 0,
         ];
 
         if ($this->isMember() && $this->profile) {
@@ -440,6 +442,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'email' => $this->email,
             'type' => $this->role->name,
             'avatar' => $this->getAvatar(),
+            'isFromSocial' => $this->social_networks_count > 0,
         ];
         $this->load(['profile', 'knownLanguages', 'wouldLikeToLearnLanguages', 'companyProfile', 'goals']);
         if ($this->isMember() && $this->profile) {
