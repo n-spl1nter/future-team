@@ -288,7 +288,14 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this;
         }
         if (!$file) {
-            $file = \Storage::get($this->getAvatar()[0]);
+            $avatar = $this->getImage(MediaFile::TYPE_AVATAR);
+            if (!$avatar) {
+                return $this;
+            }
+            $file = new \stdClass();
+            $file->path = $avatar->path[0];
+            $file->extension = pathinfo(\Storage::disk('public')->path($avatar->path[0]), PATHINFO_EXTENSION);
+            $file->resource = \Storage::disk('public')->get($avatar->path[0]);
         }
         MediaFile::removeFile(static::class, $this->id, MediaFile::TYPE_AVATAR);
         $this->setImage($file, MediaFile::TYPE_AVATAR, 640, 240, 75, $avatarparams);

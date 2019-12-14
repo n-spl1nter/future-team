@@ -9,7 +9,7 @@ use Intervention\Image\Image;
 trait HasImage
 {
     /**
-     * @param UploadedFile | UploadedFile[] $photo
+     * @param UploadedFile | UploadedFile[] | \stdClass $photo
      * @param string $imageType
      * @param int $fullWidth
      * @param int $smallWidth
@@ -25,7 +25,11 @@ trait HasImage
             return;
         }
         list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($photo, $imageType);
-        $image = \Image::make($photo);
+        if ($photo instanceof \stdClass) {
+            $image = \Image::make($photo->resource);
+        } else {
+            $image = \Image::make($photo);
+        }
         if (!empty($cropProperties)) {
             $image = $image->crop($cropProperties['width'], $cropProperties['height'], $cropProperties['x'], $cropProperties['y']);
         }

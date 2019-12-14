@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Intervention\Image\Image;
@@ -87,7 +88,7 @@ class MediaFile extends Model
     }
 
     /**
-     * @param UploadedFile | Image $file
+     * @param UploadedFile | string $file
      * @param string|null $fileType
      * @return array
      */
@@ -95,9 +96,14 @@ class MediaFile extends Model
     {
         $name = self::getStoragePathByFileType($fileType)
             . '/' . Str::random(20);
+        if ($file instanceof \stdClass) {
+            $ext = $file->extension;
+        } else {
+            $ext = $file->extension();
+        }
         return [
-            $name . '.' . $file->extension(),
-            $name . '_small' . '.' . $file->extension(),
+            $name . '.' . $ext,
+            $name . '_small' . '.' . $ext,
         ];
     }
 

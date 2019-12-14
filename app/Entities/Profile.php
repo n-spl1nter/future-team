@@ -129,7 +129,7 @@ class Profile extends Model
             'languages_wltl.*' => 'integer|exists:languages,id',
             'language_exchange_agreement' => 'nullable|integer|in:0,1',
             'motivation' => 'required|array|min:1',
-            'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=480,min_height=360',
+//            'photo' => 'present|nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=480,min_height=360',
             'avatarparams' => 'nullable|array',
             'avatarparams.x' => 'required|integer',
             'avatarparams.y' => 'required|integer',
