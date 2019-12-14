@@ -276,13 +276,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return  $this;
     }
 
-    public function setAvatar(UploadedFile $file = null): self
+    /**
+     * @param UploadedFile|null $file
+     * @param array $avatarparams
+     * @return $this
+     */
+    public function setAvatar(UploadedFile $file = null, array $avatarparams = []): self
     {
-        if (!$file) {
+        if (!$file || empty($avatarparams)) {
             return $this;
         }
         MediaFile::removeFile(static::class, $this->id, MediaFile::TYPE_AVATAR);
-        $this->setImage($file, MediaFile::TYPE_AVATAR, 640, 240);
+        $this->setImage($file, MediaFile::TYPE_AVATAR, 640, 240, 75, $avatarparams);
         return $this;
     }
 
@@ -471,7 +476,7 @@ class User extends Authenticatable implements MustVerifyEmail
         }
         $this->setOrganization($request)
             ->setGoals($request)
-            ->setAvatar($request->file('photo'))
+            ->setAvatar($request->file('photo'), $request->get('avatarparams'))
             ->profile()
             ->save($profile);
         $this->save();
@@ -496,7 +501,7 @@ class User extends Authenticatable implements MustVerifyEmail
             $companyProfile->organization_type = $orgTypeValue;
         }
         $this->setGoals($request)
-            ->setAvatar($request->file('photo'))
+            ->setAvatar($request->file('photo'), $request->get('avatarparams'))
             ->companyProfile()
             ->save($companyProfile);
     }

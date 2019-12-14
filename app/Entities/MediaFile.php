@@ -5,6 +5,7 @@ namespace App\Entities;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+use Intervention\Image\Image;
 
 /**
  * App\Entities\MediaFile
@@ -85,7 +86,12 @@ class MediaFile extends Model
         }
     }
 
-    public static function createFileNameByFileType(UploadedFile $file, string $fileType = null): array
+    /**
+     * @param UploadedFile | Image $file
+     * @param string|null $fileType
+     * @return array
+     */
+    public static function createFileNameByFileType($file, string $fileType = null): array
     {
         $name = self::getStoragePathByFileType($fileType)
             . '/' . Str::random(20);

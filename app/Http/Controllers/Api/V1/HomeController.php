@@ -105,6 +105,10 @@ use Illuminate\Http\Request;
  *                   property="photo", description="Фото", type="file",
  *                   @OA\Items(type="string", format="binary")
  *              ),
+ *              @OA\Property(property="avatarparams[x]", description="X", type="string"),
+ *              @OA\Property(property="avatarparams[y]", description="Y", type="string"),
+ *              @OA\Property(property="avatarparams[width]", description="Width", type="string"),
+ *              @OA\Property(property="avatarparams[height]", description="Height", type="string"),
  *              @OA\Property(property="about", description="О себе", type="string"),
  *              @OA\Property(property="terms", description="Согласие на обработку данных"),
  *              @OA\Property(property="organization_id", description="id существующей организации", type="integer"),

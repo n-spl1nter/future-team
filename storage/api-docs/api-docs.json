@@ -16,7 +16,7 @@
             "url": "https://ft.crazy-dev.ru/api/v1"
         },
         {
-            "url": "https://ftdevbs.aliensource.org/api/v1"
+            "url": "https://noreply.futureteam.world/api/v1"
         }
     ],
     "paths": {
@@ -1728,6 +1728,22 @@
                             "type": "string",
                             "format": "binary"
                         }
+                    },
+                    "avatarparams[x]": {
+                        "description": "X",
+                        "type": "string"
+                    },
+                    "avatarparams[y]": {
+                        "description": "Y",
+                        "type": "string"
+                    },
+                    "avatarparams[width]": {
+                        "description": "Width",
+                        "type": "string"
+                    },
+                    "avatarparams[height]": {
+                        "description": "Height",
+                        "type": "string"
                     },
                     "about": {
                         "description": "О себе",

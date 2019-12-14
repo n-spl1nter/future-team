@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
+use Intervention\Image\Image;
 
 trait HasImage
 {
@@ -13,8 +14,9 @@ trait HasImage
      * @param int $fullWidth
      * @param int $smallWidth
      * @param int $quality
+     * @param array $cropProperties
      */
-    protected function setImage($photo, string $imageType, int $fullWidth = 1920, int $smallWidth = 1280, int $quality = 75): void
+    protected function setImage($photo, string $imageType, int $fullWidth = 1920, int $smallWidth = 1280, int $quality = 75, $cropProperties = []): void
     {
         if (is_array($photo)) {
             foreach ($photo as $photoItem) {
@@ -24,11 +26,19 @@ trait HasImage
         }
         list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($photo, $imageType);
         $image = \Image::make($photo);
+        if (!empty($cropProperties)) {
+            $image = $image->crop($cropProperties['width'], $cropProperties['height'], $cropProperties['x'], $cropProperties['y']);
+        }
         $image->widen($fullWidth)
             ->save(storage_path('app/public/') . $fullFileName, $quality)
             ->widen($smallWidth)
             ->save(storage_path('app/public/') . $smallFileName);
         MediaFile::addFile(self::class, $this->id, $imageType, [$fullFileName, $smallFileName]);
+    }
+
+    protected function cropImage($photo, int $width, int $height, int $x, int $y): Image
+    {
+        return \Image::make($photo)->crop($width, $height, $x, $y);
     }
 
     /**
