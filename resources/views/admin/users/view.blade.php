@@ -62,7 +62,16 @@
                         </div>
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="active tab-pane" id="timeline">users activity...</div>
+                                <div class="active tab-pane" id="timeline">
+                                    <div class="timeline timeline-inverse">
+                                        @foreach($model->activities()->orderByDesc('created_at')->get() as $activity)
+                                            @include('admin._partials.users-activity', [ 'activity' => $activity ])
+                                        @endforeach
+                                        <li>
+                                            <i class="far fa-clock bg-gray"></i>
+                                        </li>
+                                    </div>
+                                </div>
                                 <div class="tab-pane" id="actions">
                                     @if ($model->actions->count() > 0)
                                     <div class="list-group">
@@ -103,7 +112,17 @@
                                         </div>
                                     @endif
                                 </div>
-                                <div class="tab-pane" id="settings"></div>
+                                <div class="tab-pane" id="settings">
+                                    @if($model->profile)
+                                        {{ Form::open([
+                                            'route' => ['admin.users.update', $user->id],
+                                            'method' => 'put',
+                                        ]) }}
+                                        
+                                        {{ Form::close() }}
+                                    @elseif($model->companyProfile)
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

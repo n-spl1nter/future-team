@@ -21,4 +21,9 @@ class UsersController extends Controller
     {
         return view('admin.users.view', ['model' => $user]);
     }
+
+    public function update(Request $request, User $user)
+    {
+        dd($user, $request);
+    }
 }
