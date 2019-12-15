@@ -59,11 +59,12 @@ class ReviewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Review $model
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Review $model)
+    public function edit($id)
     {
+        $model = Review::findOrFail($id);
         $countries = Country::pluck('title_en', 'country_id');
         return view('admin.reviews.form', compact('countries', 'model'));
     }
@@ -71,23 +72,38 @@ class ReviewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param Review $review
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Review $review)
     {
-        //
+        $this->validate($request, [
+            'name_ru' => 'required|string',
+            'name_en' => 'required|string',
+            'text_ru' => 'required|string',
+            'text_en' => 'required|string',
+            'country_id' => 'required|integer',
+            'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=480,min_height=360',
+        ]);
+
+        $review->update($request->all());
+        $review->setAvatar($request->file('photo'));
+        return redirect()->route('admin.reviews.index')->with('success', 'Review has been updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
-        //
+        $review = Review::findOrFail($id);
+        $review->delete();
+        return redirect()->route('admin.reviews.index')->with('success', 'Review has been deleted');
     }
 }
