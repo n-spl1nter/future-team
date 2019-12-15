@@ -57,6 +57,12 @@
                         <p>{{ __('common.events.name') }}</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.subscribers.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-envelope-open"></i>
+                        <p>{{ __('common.subscribers.name') }}</p>
+                    </a>
+                </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
