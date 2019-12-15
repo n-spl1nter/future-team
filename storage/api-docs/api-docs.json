@@ -383,6 +383,25 @@
                 }
             }
         },
+        "/common/reviews": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Отзывы",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Common\\ReviewsController::index",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список отзывов",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/main/actions": {
             "get": {
                 "tags": [

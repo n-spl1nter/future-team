@@ -56,4 +56,12 @@ class Review extends Model
     {
         return $this->getImage(MediaFile::REVIEW_AVATAR)->url;
     }
+
+    public function toArray()
+    {
+        return array_merge(parent::toArray(), [
+            'country' => $this->country,
+            'avatar' => $this->getAvatar(),
+        ]);
+    }
 }
