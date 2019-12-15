@@ -20,6 +20,9 @@ return [
     'subscribers' => [
         'name' => 'Subscribers',
     ],
+    'reviews' => [
+        'name' => 'Reviews',
+    ],
 
 
 

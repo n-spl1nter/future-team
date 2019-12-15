@@ -26,6 +26,8 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     /** Subscribers */
     Route::get('/subscribers', ['uses' => 'SubscribersController@index', 'as' => 'subscribers.index']);
     Route::get('/subscribers/export', ['uses' => 'SubscribersController@export', 'as' => 'subscribers.export']);
+    /** Reviews */
+    Route::resource('reviews', 'ReviewsController');
 });
 
 Route::group(['middleware' => ['guest']], function () {
