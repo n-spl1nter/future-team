@@ -19,3 +19,5 @@ $('input').iCheck({
     radioClass: 'iradio_square-blue',
     increaseArea: '20%' /* optional */
 });
+
+$('.select2').select2();
