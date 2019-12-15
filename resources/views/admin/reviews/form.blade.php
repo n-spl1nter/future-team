@@ -3,7 +3,7 @@
 /** @var string[] $countries */
 @endphp
 
-@extends('admin.layouts.main')
+@extends('admin.layouts.main', ['title' => isset($model) ? __('common.reviews.edit') : __('common.reviews.new') ])
 
 @section('content')
     <div class="row">
@@ -23,14 +23,14 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label>Title RU</label>
-                                    <input name="title_ru" type="text" class="form-control" placeholder="Enter russian title" value="{{ isset($model) ? $model->title_ru : old('title_ru') }}">
+                                    <label>Name RU</label>
+                                    <input name="name_ru" type="text" class="form-control" placeholder="Enter russian name" value="{{ isset($model) ? $model->name_ru : old('name_ru') }}">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label>Title EN</label>
-                                    <input name="title_en" type="text" class="form-control" placeholder="Enter english title" value="{{ isset($model) ? $model->title_en : old('title_en') }}">
+                                    <label>Name EN</label>
+                                    <input name="name_en" type="text" class="form-control" placeholder="Enter english name" value="{{ isset($model) ? $model->name_en : old('name_en') }}">
                                 </div>
                             </div>
                         </div>
@@ -52,10 +52,13 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Avatar</label>
+                                    <div class="custom-file">
+                                        {{ Form::file('photo', ['class' => 'custom-file-input']) }}
+                                        <label class="custom-file-label">Select avatar</label>
+                                    </div>
                                     @if(isset($model))
-                                        <div class=""></div>
+                                        <div style="width: 100px;height: 100px;background: url('{{ $model->getAvatar()[1] }}') no-repeat center / cover;"></div>
                                     @endif
-                                    {{ Form::file('photo', []) }}
                                 </div>
                             </div>
                             <div class="col-6">

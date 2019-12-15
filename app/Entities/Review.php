@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 /**
  * App\Entities\Review
@@ -31,12 +32,28 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Review extends Model
 {
+    use HasImage;
+
     protected $table = 'reviews';
-    protected $fillable = ['title_ru', 'title_en', 'text_ru', 'text_en', 'country_id'];
+    protected $fillable = ['name_ru', 'name_en', 'text_ru', 'text_en', 'country_id'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_id', 'country_id');
+    }
+
+    public function setAvatar(UploadedFile $file = null): void
+    {
+        if (!$file) {
+            return;
+        }
+        MediaFile::removeFile(self::class, $this->id, MediaFile::REVIEW_AVATAR);
+        $this->setImage($file, MediaFile::REVIEW_AVATAR, 640, 240);
+    }
+
+    public function getAvatar()
+    {
+        return $this->getImage(MediaFile::REVIEW_AVATAR)->url;
     }
 }

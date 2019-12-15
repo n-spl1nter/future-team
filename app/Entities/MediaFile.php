@@ -38,6 +38,7 @@ class MediaFile extends Model
 {
     // file types
     const TYPE_AVATAR = 'TYPE_AVATAR';
+    const REVIEW_AVATAR = 'REVIEW_AVATAR';
     const TYPE_ICON = 'TYPE_ICON';
     const TYPE_EVENT = 'TYPE_EVENT';
     const TYPE_ACTION = 'TYPE_ACTION';
@@ -64,6 +65,11 @@ class MediaFile extends Model
                     mkdir(storage_path('app/public/avatar'));
                 }
                 return 'avatar';
+            case self::REVIEW_AVATAR:
+                if (!is_dir(storage_path('app/public/review-avatar'))) {
+                    mkdir(storage_path('app/public/review-avatar'));
+                }
+                return 'review-avatar';
             case self::TYPE_EVENT:
                 if (!is_dir(storage_path('app/public/event'))) {
                     mkdir(storage_path('app/public/event'));

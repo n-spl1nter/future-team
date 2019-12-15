@@ -18,8 +18,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Avatar</th>
-                                    <th>Title RU</th>
-                                    <th>Title EN</th>
+                                    <th>Name RU</th>
+                                    <th>Name EN</th>
                                     <th>Country</th>
                                     <th>Created at</th>
                                     <th>Updated at</th>
@@ -31,18 +31,24 @@
                                 @foreach ($models as $model)
                                     <tr>
                                         <td>{{ $model->id }}</td>
-                                        <td>avatar</td>
-                                        <td>{{ $model->title_ru }}</td>
-                                        <td>{{ $model->title_en }}</td>
+                                        <td>
+                                            <div style="width: 100px;height: 100px;background: url('{{ $model->getAvatar()[0] }}') no-repeat center / cover; border-radius: 100%;"></div>
+                                        </td>
+                                        <td>{{ $model->name_ru }}</td>
+                                        <td>{{ $model->name_en }}</td>
                                         <td>{{ $model->country->title_en }}</td>
                                         <td>{{ $model->created_at }}</td>
                                         <td>{{ $model->updated_at }}</td>
                                         <td>
-                                            <a href="{{ route('admin.reviews.edit', $model->id) }}" class="fa fa-pencil"></a>
-                                            {{ Form::open(['route' => ['admin.reviews.destroy', $model->id], 'method' => 'delete']) }}
-                                            <button type="submit" class="delete" onclick="return confirm('Are you sure?')">
-                                                <i class="fa fa-remove"></i>
-                                            </button>
+                                            <div class="row">
+                                                <a href="{{ route('admin.reviews.edit', $model->id) }}" class="btn btn-primary mr-1 ml-2">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                {{ Form::open(['route' => ['admin.reviews.destroy', $model->id], 'method' => 'delete']) }}
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </button>
+                                            </div>
                                             {{ Form::close() }}
                                         </td>
                                     </tr>

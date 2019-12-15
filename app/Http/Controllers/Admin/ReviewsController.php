@@ -34,12 +34,26 @@ class ReviewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name_ru' => 'required|string',
+            'name_en' => 'required|string',
+            'text_ru' => 'required|string',
+            'text_en' => 'required|string',
+            'country_id' => 'required|integer',
+            'photo' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=480,min_height=360',
+        ]);
+
+        $review = new Review($request->all());
+        $review->save();
+        $review->setAvatar($request->file('photo'));
+
+        return redirect()->route('admin.reviews.index')->with('success', 'Review has been stored.');
     }
 
     /**
