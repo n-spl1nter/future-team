@@ -113,15 +113,24 @@
                                     @endif
                                 </div>
                                 <div class="tab-pane" id="settings">
+                                    {{ Form::open([
+                                        'route' => ['admin.users.update', $model->id],
+                                        'method' => 'put',
+                                    ]) }}
                                     @if($model->profile)
-                                        {{ Form::open([
-                                            'route' => ['admin.users.update', $user->id],
-                                            'method' => 'put',
-                                        ]) }}
-                                        
-                                        {{ Form::close() }}
+                                        {{--<div class="card-body">
+                                            <div class="form-group">
+                                                <label>Full name</label>
+                                                <input type="text" class="form-control" name="full_name" value="{{ $model->profile->full_name }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Birth date</label>
+                                                <input type="text" class="form-control" name="birth_date_at" value="{{ $model->profile->birth_date_at }}">
+                                            </div>
+                                        </div>--}}
                                     @elseif($model->companyProfile)
                                     @endif
+                                    {{ Form::close() }}
                                 </div>
                             </div>
                         </div>

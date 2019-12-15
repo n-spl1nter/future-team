@@ -17,6 +17,13 @@ return [
     'events' => [
         'name' => 'События',
     ],
+    'subscribers' => [
+        'name' => 'Подписчики',
+    ],
+
+
+
+
     'refresh' => 'Обновить',
     'home' => 'Главная',
     'userShouldBeACompany' => 'Пользовтаель должен быть компанией.',

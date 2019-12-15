@@ -17,6 +17,12 @@ return [
     'events' => [
         'name' => 'Events',
     ],
+    'subscribers' => [
+        'name' => 'Subscribers',
+    ],
+
+
+
     'refresh' => 'Refresh',
     'home' => 'Home',
     'userShouldBeACompany' => 'User should be a company',

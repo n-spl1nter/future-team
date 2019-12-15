@@ -57,6 +57,12 @@
                         <p>{{ __('common.events.name') }}</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.subscribers.index') }}" class="nav-link">
+                        <i class="nav-icon far fa-envelope-open"></i>
+                        <p>{{ __('common.subscribers.name') }}</p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
