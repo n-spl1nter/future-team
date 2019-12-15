@@ -22,10 +22,13 @@ return [
     ],
     'reviews' => [
         'name' => 'Reviews',
+        'new' => 'New Review',
+        'edit' => 'Edit Review',
     ],
 
 
-
+    'submit' => 'Submit',
+    'back' => 'Back',
     'refresh' => 'Refresh',
     'home' => 'Home',
     'userShouldBeACompany' => 'User should be a company',

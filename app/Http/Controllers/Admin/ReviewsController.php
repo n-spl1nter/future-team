@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\Country;
 use App\Entities\Review;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,7 +17,6 @@ class ReviewsController extends Controller
     public function index()
     {
         $models = Review::all();
-
         return view('admin.reviews.index', compact('models'));
     }
 
@@ -27,7 +27,8 @@ class ReviewsController extends Controller
      */
     public function create()
     {
-        //
+        $countries = Country::pluck('title_en', 'country_id');
+        return view('admin.reviews.form', compact('countries'));
     }
 
     /**
@@ -44,12 +45,13 @@ class ReviewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Review $model
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Review $model)
     {
-        //
+        $countries = Country::pluck('title_en', 'country_id');
+        return view('admin.reviews.form', compact('countries', 'model'));
     }
 
     /**
