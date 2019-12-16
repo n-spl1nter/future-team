@@ -26,14 +26,19 @@ trait HasImage
         }
         list($fullFileName, $smallFileName) = MediaFile::createFileNameByFileType($photo, $imageType);
         if ($photo instanceof \stdClass) {
-            $image = \Image::make($photo->resource);
+            $image = \Image::make($photo->resource)->orientate();
         } else {
-            $image = \Image::make($photo);
+            $image = \Image::make($photo)->orientate();
         }
-        if (!empty($cropProperties)) {
+        if (
+            !empty($cropProperties)
+            && $image->width() >= $cropProperties['width'] + $cropProperties['x']
+            && $image->height() >= $cropProperties['height'] + $cropProperties['y']
+        ) {
             $image = $image->crop($cropProperties['width'], $cropProperties['height'], $cropProperties['x'], $cropProperties['y']);
         }
-        $image->widen($fullWidth)
+        $image
+            ->widen($fullWidth)
             ->save(storage_path('app/public/') . $fullFileName, $quality)
             ->widen($smallWidth)
             ->save(storage_path('app/public/') . $smallFileName);
