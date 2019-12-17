@@ -55,18 +55,14 @@
                 </tr>
                 <tr>
                     <td style="margin: 0; padding: 0;">
-                  <span style="display: inline-block;background: #ECECEC;color: #6B6767;-webkit-text-size-adjust:none; font-family: Arial, Helvetica, sans-serif; font-size: 16px;border-radius: 5px;line-height:52px;text-align:center;width:414px;mso-hide:all;">
-                    {{ $password }}
-                  </span>
+                  <span style="display: inline-block;background: #ECECEC;color: #6B6767;-webkit-text-size-adjust:none; font-family: Arial, Helvetica, sans-serif; font-size: 16px;border-radius: 5px;line-height:52px;text-align:center;width:414px;mso-hide:all;">{{ $password }}</span>
                         <!--[if mso]>
                         <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
                                      style="height:52px;v-text-anchor:middle;width:414px;" arcsize="5%"
                                      strokecolor="#ECECEC" fillcolor="#ECECEC">
                             <w:anchorlock/>
                             <center>
-                      <span style="display:inline-block;color: #6B6767; text-decoration: none; font-family: Arial, Helvetica, sans-serif; font-size: 16px;">
-                        {{ $password }}
-                      </span>
+                      <span style="display:inline-block;color: #6B6767; text-decoration: none; font-family: Arial, Helvetica, sans-serif; font-size: 16px;">{{ $password }}</span>
                             </center>
                         </v:roundrect>
                         <![endif]-->
