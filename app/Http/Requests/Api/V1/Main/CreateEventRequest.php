@@ -32,7 +32,7 @@ class CreateEventRequest extends BaseRequest
             'domains' => 'required|array|min:1|max:3',
             'domains.*' => 'required|string|min:2|max:400',
             'photos' => 'required|array|min:2|max:25',
-            'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=1280,min_height=700',
+            'photos.*' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=1280,min_height=700|max:10240',
             'city_id' => 'required|integer|exists:_cities,city_id',
             'country_id' => 'required|integer',
             'start_at' => 'required|date_format:"Y-m-d H:i:s"',
