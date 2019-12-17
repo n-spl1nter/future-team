@@ -72,6 +72,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Flag</label>
+                                    <div class="custom-file">
+                                        {{ Form::file('flag', ['class' => 'custom-file-input']) }}
+                                        <label class="custom-file-label">Select Flag</label>
+                                    </div>
+                                    @if(isset($model) &&  count($model->getFlag()) > 0)
+                                        <div style="width: 32px;height: 32px;background: url('{{ $model->getFlag()[1] }}') no-repeat center / cover;"></div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">

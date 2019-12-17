@@ -47,11 +47,13 @@ class ReviewsController extends Controller
             'text_en' => 'required|string',
             'country_id' => 'required|integer',
             'photo' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=480,min_height=360',
+            'flag' => 'required|image|mimes:jpeg,bmp,png|dimensions:min_width=32,min_height=32',
         ]);
 
         $review = new Review($request->all());
         $review->save();
         $review->setAvatar($request->file('photo'));
+        $review->setFlag($request->file('flag'));
 
         return redirect()->route('admin.reviews.index')->with('success', 'Review has been stored.');
     }
@@ -86,10 +88,12 @@ class ReviewsController extends Controller
             'text_en' => 'required|string',
             'country_id' => 'required|integer',
             'photo' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=480,min_height=360',
+            'flag' => 'nullable|image|mimes:jpeg,bmp,png|dimensions:min_width=32,min_height=32',
         ]);
 
         $review->update($request->all());
         $review->setAvatar($request->file('photo'));
+        $review->setFlag($request->file('flag'));
         return redirect()->route('admin.reviews.index')->with('success', 'Review has been updated');
     }
 

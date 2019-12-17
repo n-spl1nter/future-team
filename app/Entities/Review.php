@@ -52,9 +52,31 @@ class Review extends Model
         $this->setImage($file, MediaFile::REVIEW_AVATAR, 640, 240);
     }
 
+    public function setFlag(UploadedFile $file = null): void
+    {
+        if (!$file) {
+            return;
+        }
+        MediaFile::removeFile(self::class, $this->id, MediaFile::REVIEW_FLAG);
+        $this->setImage($file, MediaFile::REVIEW_FLAG, 32, 16, 100);
+    }
+
     public function getAvatar()
     {
-        return $this->getImage(MediaFile::REVIEW_AVATAR)->url;
+        $avatar = $this->getImage(MediaFile::REVIEW_AVATAR);
+        if (!$avatar) {
+            return [];
+        }
+        return $avatar->url;
+    }
+
+    public function getFlag()
+    {
+        $flag = $this->getImage(MediaFile::REVIEW_FLAG);
+        if (!$flag) {
+            return [];
+        }
+        return $flag->url;
     }
 
     public function toArray()
@@ -62,6 +84,7 @@ class Review extends Model
         return array_merge(parent::toArray(), [
             'country' => $this->country,
             'avatar' => $this->getAvatar(),
+            'flag' => $this->getflag(),
         ]);
     }
 }
