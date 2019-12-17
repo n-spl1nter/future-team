@@ -58,7 +58,7 @@ class Review extends Model
             return;
         }
         MediaFile::removeFile(self::class, $this->id, MediaFile::REVIEW_FLAG);
-        $this->setImage($file, MediaFile::REVIEW_FLAG, 32, 16, 100);
+        $this->setImage($file, MediaFile::REVIEW_FLAG, 36, 18, 100);
     }
 
     public function getAvatar()
