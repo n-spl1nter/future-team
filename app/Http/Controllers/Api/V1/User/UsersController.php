@@ -393,6 +393,7 @@ class UsersController extends Controller
 
 
         $users = $usersQuery
+            ->orderByDesc('created_at')
             ->paginate(Pagination::resolvePerPageCount($request))
                             ->appends($request->except('page'));
         return response()->json([
