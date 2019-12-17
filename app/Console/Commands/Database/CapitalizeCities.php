@@ -48,7 +48,6 @@ class CapitalizeCities extends Command
                     return Str::ucfirst($piece);
                 }, explode(' ', $city->title_en)));
                 $city->save();
-                var_dump($city->title_en);
             }
         });
     }
