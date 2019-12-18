@@ -17,13 +17,13 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Аватар</th>
-                                    <th>Имя\Название организации</th>
-                                    <th>Роль</th>
-                                    <th>Страна, город</th>
-                                    <th>Кол-во добавленных акций</th>
-                                    <th>Кол-во добавленных событий</th>
-                                    <th>Дата регистрации</th>
+                                    <th>Avatar</th>
+                                    <th>Member\organization name</th>
+                                    <th>Role</th>
+                                    <th>Country, city</th>
+                                    <th>Actions count</th>
+                                    <th>Events count</th>
+                                    <th>Registration date</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -56,10 +56,12 @@
                                         </td>
                                         <td>
                                             @if ($user->isCompany() && $user->companyProfile)
-                                                {{ $user->companyProfile->country->title_ru }}
+                                                {{ $user->companyProfile->country->title_en }}
                                             @elseif($user->isMember() && $user->profile)
-                                                {{ $user->profile->country->title_ru }}
-                                                {{ $user->profile->city->title_ru }}
+                                                {{ $user->profile->country->title_en }}
+                                                @if ($user->profile->city)
+                                                    {{ $user->profile->city->title_en }}
+                                                @endif
                                             @endif
                                         </td>
                                         <td>{{ $user->actions()->count() }}</td>
