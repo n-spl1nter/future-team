@@ -43,9 +43,7 @@ switch ($activity->type) {
         $iconColor = 'bg-primary';
         $header = 'Send message to user ' . '<a href"' . route('admin.users.view', $activity->info['userTo']['id']) .'">'. $activity->info['userTo']['name'] .'</a>';
         $body =  $activity->info['message'];
-        $link = route('admin.actions.view', $activity->info['action_id']);
-        $linkTitle = 'View';
-
+        break;
 }
 @endphp
 
