@@ -193,4 +193,5 @@ return [
         'start_at'              => 'Start date',
     ],
 
+    'wrongPhotoDimensions' => 'The photo :index have incorrect resolution. Minimal require is :resolution.',
 ];

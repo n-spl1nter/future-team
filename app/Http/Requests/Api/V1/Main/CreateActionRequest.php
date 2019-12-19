@@ -40,4 +40,16 @@ class CreateActionRequest extends BaseRequest
             'video_links.*' => 'url',
         ];
     }
+
+    public function messages()
+    {
+        $messages = [];
+        foreach ($this->file('photos') as $key => $photo) {
+            $messages["photos.$key.dimensions"] = __('validation.wrongPhotoDimensions', [
+                'index' => $key + 1,
+                'resolution' => '1280x700px',
+            ]);
+        }
+        return $messages;
+    }
 }
