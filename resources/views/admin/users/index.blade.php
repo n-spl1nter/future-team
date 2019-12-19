@@ -58,7 +58,7 @@
                                             @if ($user->isCompany() && $user->companyProfile)
                                                 {{ $user->companyProfile->country->title_en }}
                                             @elseif($user->isMember() && $user->profile)
-                                                {{ $user->profile->country->title_en }}
+                                                {{ $user->profile->country->title_en }},
                                                 @if ($user->profile->city)
                                                     {{ $user->profile->city->title_en }}
                                                 @endif
