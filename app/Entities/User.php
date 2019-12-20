@@ -83,16 +83,21 @@ use function Symfony\Component\Debug\Tests\testHeader;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Entities\Activity[] $activities
  * @property-read int|null $activities_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User members()
+ * @property string $status
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereStatus($value)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasApiTokens, Sortable, HasImage;
 
+    const STATUS_ACTIVE = 'ACTIVE';
+    const STATUS_BLOCKED = 'BLOCKED';
+
     private $avatar = null;
 
     protected $fillable = ['email', 'password', 'email_verified_at'];
     protected $hidden = [
-        'password', 'remember_token', 'created_at', 'updated_at', 'email_verified_at', 'role_id', 'email',
+        'password', 'remember_token', 'created_at', 'updated_at', 'email_verified_at', 'role_id', 'email', 'status',
     ];
     protected $casts = [
         'email_verified_at' => 'datetime',
