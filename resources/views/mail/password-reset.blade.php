@@ -37,10 +37,10 @@
                                             <td style="margin: 0; padding: 0;">
                         <span
                             style="display: inline-block;line-height:52px;background: #ECECEC;border-radius: 5px;text-align:center;width:413px;mso-hide:all;">
-                            <a href="javascript: void(0);"
+                            <span
                                style="text-decoration:none; line-height:52px;color: #6B6767; font-family: Arial, Helvetica, sans-serif; font-size: 16px; -webkit-text-size-adjust:none;">
                               {{ $email }}
-                            </a>
+                            </span>
                         </span>
                                                 <!--[if mso]>
                                                 <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
