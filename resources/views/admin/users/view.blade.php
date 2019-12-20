@@ -18,6 +18,13 @@
                             <h3 class="profile-username text-center">{{ $model->getFullName() }}</h3>
 
                             <p class="text-muted text-center">{{ $model->isMember() ? 'Member' : 'Company' }}</p>
+                            <p class="text-muted text-center">
+                                @if ($model->status === \App\Entities\User::STATUS_ACTIVE)
+                                    <span class="text-success">{{ $model->status }}</span>
+                                @else
+                                    <span class="text-danger">{{ $model->status }}</span>
+                                @endif
+                            </p>
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
@@ -32,6 +39,20 @@
                                     </li>
                                 @endif
                             </ul>
+                            {{ Form::open([
+                               'route' => ['admin.users.changeStatus', $model->id],
+                               'method' => 'post'
+                           ]) }}
+                            @if($model->status === \App\Entities\User::STATUS_ACTIVE)
+                                <button type="submit" class="btn btn-danger btn-block">
+                                    <b>Ban</b>
+                                </button>
+                            @else
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <b>Unban</b>
+                                </button>
+                            @endif
+                            {{ Form::close() }}
                         </div>
                         <!-- /.card-body -->
                     </div>

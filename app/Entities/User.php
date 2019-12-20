@@ -539,7 +539,7 @@ class User extends Authenticatable implements MustVerifyEmail
         event(new SendMail($sentEmail));
     }
 
-    public function getFullName()
+    public function getFullName(): string
     {
         if ($this->isMember() && $this->profile) {
             return $this->profile->full_name;
@@ -549,8 +549,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return '';
     }
 
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new PasswordResetNotification($token));
+    }
+
+    public function toggleStatus(): void
+    {
+        $this->status = $this->status == self::STATUS_ACTIVE ? self::STATUS_BLOCKED : self::STATUS_ACTIVE;
+        $this->save();
     }
 }

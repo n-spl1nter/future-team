@@ -15,6 +15,7 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::get('/users', ['uses' => 'UsersController@index', 'as' => 'users.index', 'middleware' => ['can:manageUsers,App\Entities\User']]);
     Route::get('/users/{user}', ['uses' => 'UsersController@view', 'as' => 'users.view', 'middleware' => ['can:manageUsers,App\Entities\User']]);
     Route::put('/user/{user}', ['uses' => 'UsersController@update', 'as' => 'users.update', 'middleware' => ['can:manageUsers,App\Entities\User']]);
+    Route::post('/user/{user}/status', ['uses' => 'UsersController@changeStatus', 'as' => 'users.changeStatus', 'middleware' => ['can:manageUsers,App\Entities\User']]);
     /** Actions */
     Route::get('/actions', ['uses' => 'ActionsController@index', 'as' => 'actions.index']);
     Route::get('/actions/{id}', ['uses' => 'ActionsController@view', 'as' => 'actions.view']);

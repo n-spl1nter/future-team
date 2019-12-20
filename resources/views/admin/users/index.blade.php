@@ -18,17 +18,21 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Avatar</th>
+                                    <th>Email</th>
                                     <th>Member\organization name</th>
                                     <th>Role</th>
                                     <th>Country, city</th>
                                     <th>Actions count</th>
                                     <th>Events count</th>
                                     <th>Registration date</th>
+                                    <th>Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -46,6 +50,11 @@
                                         <td>
                                             @if ($user->getAvatar())
                                                 <div class="profile-user-img img-fluid img-circle" style="background-image: url({{ $user->getAvatar()[1] }});background-size:cover; height: 100px;">
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->email)
+                                                {{ $user->email }}
                                             @endif
                                         </td>
                                         <td>
@@ -67,6 +76,13 @@
                                         <td>{{ $user->actions()->count() }}</td>
                                         <td>{{ $user->events()->count() }}</td>
                                         <td>{{ $user->created_at }}</td>
+                                        <td>
+                                            @if ($user->status === \App\Entities\User::STATUS_ACTIVE)
+                                                <span class="text-success">{{ $user->status }}</span>
+                                            @else
+                                                <span class="text-danger">{{ $user->status }}</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             <a class="btn btn-primary btn-sm" href="{{ route('admin.users.view', $user->id) }}">
                                                 <i class="fas fa-folder"></i>

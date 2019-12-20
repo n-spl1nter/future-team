@@ -22,6 +22,12 @@ class UsersController extends Controller
         return view('admin.users.view', ['model' => $user]);
     }
 
+    public function changeStatus(Request $request, User $user)
+    {
+        $user->toggleStatus();
+        return redirect()->route('admin.users.view', $user->id)->with('success', 'User status has been changed');
+    }
+
     public function update(Request $request, User $user)
     {
         dd($user, $request);
