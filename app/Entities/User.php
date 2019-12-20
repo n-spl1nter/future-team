@@ -18,7 +18,6 @@ use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Http\UploadedFile;
-use function Symfony\Component\Debug\Tests\testHeader;
 
 /**
  * App\Entities\User
