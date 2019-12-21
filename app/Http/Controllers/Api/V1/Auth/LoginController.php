@@ -64,7 +64,11 @@ class LoginController extends Controller
             return response()->json(['errors' => [__('auth.failed')]], 401);
         }
 
-        $accessToken = \Auth::getUser()->makeToken()->accessToken;
+        $user = \Auth::getUser();
+        if ($user->isBlocked()) {
+            return response()->json(['errors' => [__('auth.failed')]], 401);
+        }
+        $accessToken = $user->makeToken()->accessToken;
         return response()->json(compact('accessToken'));
     }
 

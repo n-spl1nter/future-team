@@ -48,12 +48,14 @@ class SocialServicesController extends Controller
                 $attributes['email_verified_at'] = now();
             }
             $user = User::findOrCreateViaNetworkService($serviceName, $attributes);
-            $accessToken = $user->makeToken()->accessToken;
-            $id = $user->id;
-            $emailVerified = $user->hasVerifiedEmail();
-            $hasProfile = $user->hasFilledProfile();
-            $email = $user->email;
-            $fullName = implode(' ', [$attributes['first_name'], $attributes['last_name']]);
+            if (!$user->isBlocked()) {
+                $accessToken = $user->makeToken()->accessToken;
+                $id = $user->id;
+                $emailVerified = $user->hasVerifiedEmail();
+                $hasProfile = $user->hasFilledProfile();
+                $email = $user->email;
+                $fullName = implode(' ', [$attributes['first_name'], $attributes['last_name']]);
+            }
         } catch (\Throwable $exception) {
             \Log::error($exception->getMessage());
         }
