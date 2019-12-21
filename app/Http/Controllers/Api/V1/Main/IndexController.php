@@ -11,6 +11,7 @@ use App\Entities\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use function foo\func;
 
 class IndexController extends Controller
 {
@@ -40,9 +41,15 @@ class IndexController extends Controller
             ->pluck('total', 'country_id')
             ->all();
         $members = Profile::select('country_id', \DB::raw("count(*) as total"))
+            ->whereHas('user', function (Builder $builder) {
+                $builder->where('status', '<>', User::STATUS_BLOCKED);
+            })
             ->groupBy('country_id')
             ->pluck('total', 'country_id');
         $companies = CompanyProfile::select('country_id', \DB::raw("count(*) as total"))
+            ->whereHas('user', function (Builder $builder) {
+                $builder->where('status', '<>', User::STATUS_BLOCKED);
+            })
             ->groupBy('country_id')
             ->pluck('total', 'country_id');
 

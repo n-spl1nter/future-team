@@ -84,6 +84,7 @@ use Illuminate\Http\UploadedFile;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User members()
  * @property string $status
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\User notBanned()
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -116,6 +117,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeMembers(Builder $builder)
     {
         return $builder->where('role_id', '=', Role::MEMBER);
+    }
+
+    public function scopeNotBanned(Builder $builder)
+    {
+        return $builder->where('status', '<>', self::STATUS_BLOCKED);
     }
 
     public function role()
@@ -191,6 +197,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sentEmailMessages()
     {
         return $this->hasMany(EmailMessage::class, 'user_id_from', 'id');
+    }
+
+    public function isBlocked(): bool
+    {
+        return $this->status === self::STATUS_BLOCKED;
     }
 
     public function isCompany(): bool

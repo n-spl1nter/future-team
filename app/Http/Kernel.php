@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckUserHasProfile;
 use App\Http\Middleware\LocaleMiddleware;
+use App\Http\Middleware\LogoutBannedMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -44,6 +45,7 @@ class Kernel extends HttpKernel
             'throttle:400,1',
             'bindings',
             LocaleMiddleware::class,
+            LogoutBannedMiddleware::class,
         ],
     ];
 

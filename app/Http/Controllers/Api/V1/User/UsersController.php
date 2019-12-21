@@ -15,6 +15,7 @@ use App\Http\Requests\Api\V1\User\GetCompanyMembersRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UsersController extends Controller
 {
@@ -62,6 +63,9 @@ class UsersController extends Controller
      */
     public function view(User $user)
     {
+        if ($user->isBlocked()) {
+            throw new NotFoundHttpException();
+        }
         return response()->json($user->getPublicProfile());
     }
 
@@ -192,6 +196,9 @@ class UsersController extends Controller
 
         $value = $request->get('companyName') . '%';
         $companies = CompanyProfile::where('full_name', 'LIKE', $value)
+            ->whereHas('user', function (Builder $builder) {
+                $builder->where('status', '<>', User::STATUS_BLOCKED);
+            })
             ->limit(20)
             ->get();
 
@@ -262,7 +269,7 @@ class UsersController extends Controller
      */
     public function getCompanies(Request $request)
     {
-        $companiesQuery = User::companies();
+        $companiesQuery = User::companies()->notBanned();
         if ($request->has('country_id')) {
             $companiesQuery = $companiesQuery->whereHas('companyProfile', function (Builder $builder) use ($request) {
                 $builder->where('country_id', '=', $request->get('country_id'));
@@ -370,6 +377,7 @@ class UsersController extends Controller
     public function getFaces(Request $request)
     {
         $usersQuery = User::members()
+            ->notBanned()
             ->with(['wouldLikeToLearnLanguages', 'knownLanguages']);
         if ($request->has('lang_wtl')) {
             $usersQuery->whereHas('wouldLikeToLearnLanguages', function (Builder $builder) use ($request) {

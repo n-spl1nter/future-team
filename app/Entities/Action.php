@@ -112,6 +112,7 @@ class Action extends Model
     public function joinedUsers()
     {
         return $this->belongsToMany(User::class, 'users_to_actions', 'action_id', 'user_id')
+            ->where('status', '<>', User::STATUS_BLOCKED)
             ->withTimestamps();
     }
 
