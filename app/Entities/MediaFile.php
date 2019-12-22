@@ -44,6 +44,7 @@ class MediaFile extends Model
     const TYPE_EVENT = 'TYPE_EVENT';
     const TYPE_ACTION = 'TYPE_ACTION';
     const TYPE_ACTION_REPORT = 'TYPE_ACTION_REPORT';
+    const TYPE_SLIDER_PHOTO = 'TYPE_SLIDER_PHOTO';
 
     protected $table = 'media_files';
     protected $fillable = ['path', 'url', 'entity', 'entity_id', 'file_type'];
@@ -56,6 +57,11 @@ class MediaFile extends Model
     private static function getStoragePathByFileType(string $fileType): string
     {
         switch ($fileType) {
+            case self::TYPE_SLIDER_PHOTO:
+                if (!is_dir(storage_path('app/public/slider'))) {
+                    mkdir(storage_path('app/public/slider'));
+                }
+                return 'slider';
             case self::TYPE_ICON:
                 if (!is_dir(storage_path('app/public/icon'))) {
                     mkdir(storage_path('app/public/icon'));

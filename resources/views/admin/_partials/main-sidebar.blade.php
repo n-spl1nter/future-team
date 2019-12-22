@@ -78,6 +78,12 @@
                                 <p>{{ __('common.reviews.name') }}</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.sliderPhotos.index') }}" class="nav-link">
+                                <i class="nav-icon far fa-images"></i>
+                                <p>{{ __('common.sliderPhotos.name') }}</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

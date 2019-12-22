@@ -17,6 +17,7 @@
 
                             <h3 class="profile-username text-center">{{ $model->getFullName() }}</h3>
 
+                            <p class="text-muted text-center">{{ $model->email }}</p>
                             <p class="text-muted text-center">{{ $model->isMember() ? 'Member' : 'Company' }}</p>
                             <p class="text-muted text-center">
                                 @if ($model->status === \App\Entities\User::STATUS_ACTIVE)

@@ -25,6 +25,11 @@ return [
         'new' => 'New Review',
         'edit' => 'Edit Review',
     ],
+    'sliderPhotos' => [
+        'name' => 'Photos for slider',
+        'new' => 'New photo',
+        'edit' => 'Edit photo',
+    ],
 
 
     'submit' => 'Submit',

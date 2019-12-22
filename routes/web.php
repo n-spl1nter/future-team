@@ -29,6 +29,8 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::get('/subscribers/export', ['uses' => 'SubscribersController@export', 'as' => 'subscribers.export']);
     /** Reviews */
     Route::resource('reviews', 'ReviewsController');
+    /** Slider Photos */
+    Route::resource('sliderPhotos', 'SliderPhotosController');
 });
 
 Route::group(['middleware' => ['guest']], function () {
