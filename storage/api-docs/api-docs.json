@@ -402,6 +402,25 @@
                 }
             }
         },
+        "/common/mainslider/photos": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Фото для основного слайдера",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Common\\SliderPhotosController::index",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список фото для основного слайдера",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/main/actions": {
             "get": {
                 "tags": [

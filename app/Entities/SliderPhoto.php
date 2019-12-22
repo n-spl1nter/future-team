@@ -27,8 +27,9 @@ class SliderPhoto extends Model
 
     protected $table = 'main_photos';
     protected $fillable = ['order'];
+    protected $visible = ['id'];
 
-    public function setPhoto(UploadedFile $file): void
+    public function setPhoto(UploadedFile $file = null): void
     {
         if (!$file) {
             return;
@@ -48,5 +49,13 @@ class SliderPhoto extends Model
     {
         MediaFile::removeFile(self::class, $this->id, MediaFile::TYPE_SLIDER_PHOTO);
         return $this->delete();
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'photo' => $this->getPhoto(),
+        ];
     }
 }

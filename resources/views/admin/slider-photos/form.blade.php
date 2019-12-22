@@ -24,7 +24,7 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Order</label>
-                                    <input name="order" type="text" class="form-control" placeholder="Enter russian name" value="{{ isset($model) ? $model->order : old('order') ? old('order') : 100 }}">
+                                    <input name="order" type="text" class="form-control" placeholder="Enter order" value="{{ isset($model) ? $model->order : (old('order') ? old('order') : 100) }}">
                                 </div>
                             </div>
                         </div>
