@@ -167,6 +167,33 @@
                                 </p>
                             </div>
                         </div>
+                        @if ($model->report)
+                        <div class="col-12">
+                            <div class="post">
+                                <p class="lead">Отчет о проведении акции:</p>
+                                @if (!empty($model->report->video_links))
+                                    <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                    <ul class="list-group">
+                                        @foreach($model->report->video_links as $videoLinks)
+                                            <li class="list-group-item">
+                                                <a href="{{ $videoLinks }}" target="_blank">{{ $videoLinks }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                    </p>
+                                @endif
+                                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                                <ul class="list-group">
+                                @foreach($model->report->getImages(\App\Entities\MediaFile::TYPE_ACTION_REPORT)->pluck('url') as $image)
+                                    <li class="list-group-item">
+                                        <img src="{{ $image[0] }}" alt="" style="max-width: 300px;width: 100%; max-height: 300px">
+                                    </li>
+                                    @endforeach
+                                    </ul>
+                                </p>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
