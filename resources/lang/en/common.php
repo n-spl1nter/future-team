@@ -30,6 +30,9 @@ return [
         'new' => 'New photo',
         'edit' => 'Edit photo',
     ],
+    'mainNews' => [
+        'name' => 'Main news',
+    ],
 
 
     'submit' => 'Submit',

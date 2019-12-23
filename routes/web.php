@@ -31,6 +31,8 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::resource('reviews', 'ReviewsController');
     /** Slider Photos */
     Route::resource('sliderPhotos', 'SliderPhotosController');
+    /** Main news */
+    Route::get('/main-news', ['uses' => 'HomeController@mainNews', 'as' => 'mainNews']);
 });
 
 Route::group(['middleware' => ['guest']], function () {

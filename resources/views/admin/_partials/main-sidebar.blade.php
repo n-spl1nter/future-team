@@ -58,6 +58,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('admin.mainNews') }}" class="nav-link">
+                        <i class="nav-icon fas fa-star"></i>
+                        <p>{{ __('common.mainNews.name') }}</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.subscribers.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-envelope-open"></i>
                         <p>{{ __('common.subscribers.name') }}</p>
