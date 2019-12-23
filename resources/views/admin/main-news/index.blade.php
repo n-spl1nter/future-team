@@ -53,16 +53,17 @@
                                     <td>
                                         <div class="row">
                                             @php
-                                            $route = $model instanceof \App\Entities\Event ? 'admin.events.view' : 'admin.actions.view';
+                                            $viewRoute = $model instanceof \App\Entities\Event ? 'admin.events.view' : 'admin.actions.view';
+                                            $removeRoute = $model instanceof \App\Entities\Event ? 'admin.events.toggleFavoriteStatus' : 'admin.actions.toggleFavoriteStatus';
                                             @endphp
-                                            <a href="{{ route($route, $model->id) }}" class="btn btn-primary mr-1 ml-2">
+                                            <a href="{{ route($viewRoute, $model->id) }}" class="btn btn-primary mr-1 ml-2">
                                                 <i class="fas fa-eye"></i> View
                                             </a>
-{{--                                            {{ Form::open(['route' => ['admin.reviews.destroy', $model->id], 'method' => 'delete']) }}--}}
+                                            {{ Form::open(['route' => [$removeRoute, $model->id], 'method' => 'post']) }}
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">
-                                                <i class="fas fa-trash"></i> Remove from main news list
+                                                <i class="fas fa-trash"></i> Hide from main page
                                             </button>
-{{--                                            {{ Form::close() }}--}}
+                                            {{ Form::close() }}
                                         </div>
                                     </td>
                                 </tr>
