@@ -57,6 +57,8 @@ use Illuminate\Http\Request;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereNotifiedAboutEndingAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action active()
  * @property-read \App\Entities\ActionReport $report
+ * @property int $is_main
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Action whereIsMain($value)
  */
 class Action extends Model
 {

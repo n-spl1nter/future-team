@@ -56,6 +56,8 @@ use Illuminate\Http\Request;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereVideoLinks($value)
  * @property array $domains
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereDomains($value)
+ * @property int $is_main
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereIsMain($value)
  */
 class Event extends Model
 {
