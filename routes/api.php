@@ -72,6 +72,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1'], functi
 
     Route::get('/summary/countries', ['uses' => 'Main\IndexController@getWorldInfo']);
     Route::get('/summary/country', ['uses' => 'Main\IndexController@getCountryInfo']);
+    Route::get('/summary/favorites', ['uses' => 'Main\IndexController@getFavorites']);
     Route::get('/users/members', ['uses' => 'User\UsersController@getFaces']);
     Route::post('/user/subscribe', ['uses' => 'User\MailSubscribesController@subscribe']);
 });

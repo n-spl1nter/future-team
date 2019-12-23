@@ -95,4 +95,40 @@ class IndexController extends Controller
 
         return response()->json(compact('actions', 'events', 'members', 'companies'));
     }
+
+    /**
+     * @OA\Get(
+     *     path="/summary/favorites",
+     *     summary="Акции и события для главной страницы",
+     *     tags={"Main"},
+     *     @OA\Response(
+     *      response=200,
+     *      description="Результат",
+     *     @OA\JsonContent()
+     *     ),
+     * )
+     * @param Request $request
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function getFavorites()
+    {
+        $actions = Action::active()
+            ->whereIsMain(1)
+            ->get()
+            ->map(function ($model) {
+                $model['type'] = 'action';
+                return $model;
+            });
+        $events = Event::active()
+            ->whereIsMain(1)
+            ->get()
+            ->map(function ($model) {
+                $model['type'] = 'event';
+                return $model;
+            });
+        $models = $actions->merge($events)->sortByDesc('created_at');
+
+        return response()->json($models);
+    }
 }

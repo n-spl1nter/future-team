@@ -6,6 +6,7 @@ use App\Http\Requests\CreateEventRequest;
 use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -58,6 +59,7 @@ use Illuminate\Http\Request;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereDomains($value)
  * @property int $is_main
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event whereIsMain($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Entities\Event active()
  */
 class Event extends Model
 {
@@ -82,6 +84,11 @@ class Event extends Model
                 'source' => ['city.country.title_en', 'city.title_en', 'start_at'],
             ],
         ];
+    }
+
+    public function scopeActive(Builder $builder)
+    {
+        return $builder->where('status', '=', self::ACTIVE);
     }
 
     public function city()

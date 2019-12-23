@@ -1091,6 +1091,25 @@
                 }
             }
         },
+        "/summary/favorites": {
+            "get": {
+                "tags": [
+                    "Main"
+                ],
+                "summary": "Акции и события для главной страницы",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\Main\\IndexController::getFavorites",
+                "responses": {
+                    "200": {
+                        "description": "Результат",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/user/subscribe": {
             "post": {
                 "tags": [

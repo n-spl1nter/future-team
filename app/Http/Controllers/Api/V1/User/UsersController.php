@@ -323,7 +323,7 @@ class UsersController extends Controller
             ->map(function ($model) {
                 $model['type'] = 'event';
                 return $model;
-            });;
+            });
 
         $merged = $actions->merge($events)->sortByDesc('created_at');
 
