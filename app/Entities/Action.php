@@ -171,4 +171,9 @@ INNER JOIN _countries ON _countries.country_id = actions.country_id WHERE action
         }
         return \DB::select(\DB::raw($query));
     }
+
+    public function isFavorite(): bool
+    {
+        return $this->is_main == 1;
+    }
 }

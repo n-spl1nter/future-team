@@ -36,4 +36,13 @@ class EventsController extends Controller
 
         return redirect()->route('admin.events.index')->with('success', 'Статус события изменен');
     }
+
+    public function toggleFavoriteStatus(Request $request)
+    {
+        $model = Event::findOrFail($request->route('id'));
+        $model->is_main = $model->isFavorite() ? 0 : 1;
+        $model->save();
+
+        return redirect()->back()->with('success', 'Main status changed');
+    }
 }

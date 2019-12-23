@@ -20,10 +20,12 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::get('/actions', ['uses' => 'ActionsController@index', 'as' => 'actions.index']);
     Route::get('/actions/{id}', ['uses' => 'ActionsController@view', 'as' => 'actions.view']);
     Route::post('/actions/{id}/status', ['uses' => 'ActionsController@status', 'as' => 'actions.setStatus']);
+    Route::post('/actions/{id}/favorite', ['uses' => 'ActionsController@toggleFavoriteStatus', 'as' => 'actions.toggleFavoriteStatus']);
     /** Events */
     Route::get('/events', ['uses' => 'EventsController@index', 'as' => 'events.index']);
     Route::get('/events/{id}', ['uses' => 'EventsController@view', 'as' => 'events.view']);
     Route::post('/events/{id}/status', ['uses' => 'EventsController@status', 'as' => 'events.setStatus']);
+    Route::post('/events/{id}/favorite', ['uses' => 'EventsController@toggleFavoriteStatus', 'as' => 'events.toggleFavoriteStatus']);
     /** Subscribers */
     Route::get('/subscribers', ['uses' => 'SubscribersController@index', 'as' => 'subscribers.index']);
     Route::get('/subscribers/export', ['uses' => 'SubscribersController@export', 'as' => 'subscribers.export']);

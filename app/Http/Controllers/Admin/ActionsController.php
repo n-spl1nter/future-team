@@ -36,4 +36,14 @@ class ActionsController extends Controller
 
         return redirect()->route('admin.actions.index')->with('success', 'Статус акции изменен');
     }
+
+    public function toggleFavoriteStatus(Request $request)
+    {
+        $model = Action::findOrFail($request->route('id'));
+        $model->is_main = $model->isFavorite() ? 0 : 1;
+        $model->save();
+
+
+        return redirect()->back()->with('success', 'Main status changed');
+    }
 }
