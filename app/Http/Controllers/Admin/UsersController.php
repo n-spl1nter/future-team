@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\Action;
+use App\Entities\Event;
 use App\Entities\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -25,6 +27,18 @@ class UsersController extends Controller
     public function changeStatus(Request $request, User $user)
     {
         $user->toggleStatus();
+        if ($user->isBlocked()) {
+            /** @var Event $event */
+            foreach ($user->events as $event) {
+                $event->status = Event::BLOCKED;
+                $event->save();
+            }
+            /** @var Action $action */
+            foreach ($user->actions as $action) {
+                $action->status = Action::BLOCKED;
+                $action->save();
+            }
+        }
         return redirect()->route('admin.users.view', $user->id)->with('success', 'User status has been changed');
     }
 
