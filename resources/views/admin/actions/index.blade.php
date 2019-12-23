@@ -56,6 +56,9 @@
                                                 }
                                             @endphp
                                             <span class="badge {{ $badgeColor }}">{{ $model->status }}</span>
+                                            @if ($model->isFavorite())
+                                                <span class="badge bg-success">Showing at main page</span>
+                                            @endif
                                         </td>
                                         <td>
                                             {{ $model->created_at }}

@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <div class="row">
-                <div class="col-10">
+                <div class="col-8">
                     <h3 class="card-title mb-1">{{ $model->name }}</h3>
                     <h5 class="card-subtitle">
                         @php
@@ -19,10 +19,25 @@
                             }
                         @endphp
                         <span class="badge {{ $badgeColor }}">{{ $model->status }}</span>
+                        @if ($model->isFavorite())
+                        <span class="badge bg-success">Showing at main page</span>
+                        @endif
                     </h5>
                 </div>
-                <div class="col-2">
+                <div class="col-4">
                     <div class="text-right">
+                        {{ Form::open([
+                            'route' => ['admin.actions.toggleFavoriteStatus', $model->id],
+                            'method' => 'post'
+                        ]) }}
+                        <button type="submit" class="btn btn-md btn-dark">
+                            @if ($model->isFavorite())
+                                Hide from main page
+                            @else
+                                Show at main page
+                            @endif
+                        </button>
+                        {{ Form::close() }}
                         @if($model->status === \App\Entities\Action::ACTIVE)
                             {{ Form::open([
                                 'route' => ['admin.actions.setStatus', $model->id],

@@ -43,7 +43,6 @@ class ActionsController extends Controller
         $model->is_main = $model->isFavorite() ? 0 : 1;
         $model->save();
 
-
         return redirect()->back()->with('success', 'Main status changed');
     }
 }
