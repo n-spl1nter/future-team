@@ -129,6 +129,6 @@ class IndexController extends Controller
             });
         $models = $actions->merge($events)->sortByDesc('created_at');
 
-        return response()->json($models);
+        return response()->json($models->values());
     }
 }
