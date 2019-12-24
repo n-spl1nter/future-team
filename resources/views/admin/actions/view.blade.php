@@ -26,35 +26,41 @@
                 </div>
                 <div class="col-4">
                     <div class="text-right">
-                        {{ Form::open([
-                            'route' => ['admin.actions.toggleFavoriteStatus', $model->id],
-                            'method' => 'post'
-                        ]) }}
-                        <button type="submit" class="btn btn-md btn-dark">
-                            @if ($model->isFavorite())
-                                Hide from main page
-                            @else
-                                Show at main page
-                            @endif
-                        </button>
-                        {{ Form::close() }}
-                        @if($model->status === \App\Entities\Action::ACTIVE)
-                            {{ Form::open([
-                                'route' => ['admin.actions.setStatus', $model->id],
-                                'method' => 'post'
-                            ]) }}
-                            <input type="hidden" value="{{ \App\Entities\Action::ACTIVE }}" name="status">
-                            <button type="submit" class="btn btn-md btn-danger">Заблокировать</button>
-                            {{ Form::close() }}
-                        @elseif ($model->status === \App\Entities\Action::BLOCKED)
-                            {{ Form::open([
-                                'route' => ['admin.actions.setStatus', $model->id],
-                                'method' => 'post'
-                            ]) }}
-                            <input type="hidden" value="{{ \App\Entities\Action::BLOCKED }}" name="status">
-                            <button type="submit" class="btn btn-md btn-success">Разблокировать</button>
-                            {{ Form::close() }}
-                        @endif
+                        <div class="row">
+                            <div class="col-6">
+                                {{ Form::open([
+                                    'route' => ['admin.actions.toggleFavoriteStatus', $model->id],
+                                    'method' => 'post'
+                                ]) }}
+                                <button type="submit" class="btn btn-md btn-success">
+                                    @if ($model->isFavorite())
+                                        Hide from main page
+                                    @else
+                                        Show at main page
+                                    @endif
+                                </button>
+                                {{ Form::close() }}
+                            </div>
+                            <div class="col-6">
+                                @if($model->status === \App\Entities\Action::ACTIVE)
+                                    {{ Form::open([
+                                        'route' => ['admin.actions.setStatus', $model->id],
+                                        'method' => 'post'
+                                    ]) }}
+                                    <input type="hidden" value="{{ \App\Entities\Action::ACTIVE }}" name="status">
+                                    <button type="submit" class="btn btn-md btn-danger">Заблокировать</button>
+                                    {{ Form::close() }}
+                                @elseif ($model->status === \App\Entities\Action::BLOCKED)
+                                    {{ Form::open([
+                                        'route' => ['admin.actions.setStatus', $model->id],
+                                        'method' => 'post'
+                                    ]) }}
+                                    <input type="hidden" value="{{ \App\Entities\Action::BLOCKED }}" name="status">
+                                    <button type="submit" class="btn btn-md btn-success">Разблокировать</button>
+                                    {{ Form::close() }}
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
