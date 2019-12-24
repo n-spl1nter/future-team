@@ -13,19 +13,23 @@
                         Тут будут ссылки с экспортом
                     </div>
                     <div class="box-body">
+                        {{ Form::open([
+                           'method' => 'get',
+                           'route' => 'admin.users.index',
+                       ]) }}
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>@sortablelink('id', '#')</th>
                                     <th>Avatar</th>
-                                    <th>Email</th>
+                                    <th>@sortablelink('email', 'Email')</th>
                                     <th>Member\organization name</th>
                                     <th>Role</th>
                                     <th>Country, city</th>
                                     <th>Actions count</th>
                                     <th>Events count</th>
-                                    <th>Registration date</th>
-                                    <th>Status</th>
+                                    <th>@sortablelink('created_at', 'Registration date')</th>
+                                    <th>@sortablelink('status', 'Status')</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -33,7 +37,9 @@
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
-                                    <td>&nbsp;</td>
+                                    <td>&nbsp;
+                                        <input type="text" name="filter_email" class="form-control" placeholder="Email" value="{{ request('filter_email') }}">
+                                    </td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -93,6 +99,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ Form::close() }}
                     </div>
                     <div class="card-footer">
                         @include('admin._partials.pagination', ['paginator' => $paginator])

@@ -102,7 +102,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public $sortable = ['id', 'email', 'role_id'];
+    public $sortable = ['id', 'email', 'role_id', 'created_at', 'status'];
 
     public function scopeActive(Builder $builder)
     {
