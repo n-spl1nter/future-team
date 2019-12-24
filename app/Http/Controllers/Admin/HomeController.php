@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Entities\Action;
 use App\Entities\Event;
+use App\Entities\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('admin.home');
+        $lastUsers = User::orderByDesc('created_at')->limit(8)->get();
+        $monthlyRegisters = User::getLastMonthUserRegisters();
+        return view('admin.home', compact(
+            'monthlyRegisters',
+            'lastUsers'
+        ));
     }
 
     public function mainNews()

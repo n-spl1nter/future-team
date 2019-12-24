@@ -9,6 +9,7 @@ require('select2');
 // require('admin-lte/plugins/datatables/dataTables.bootstrap4');
 // require('admin-lte/plugins/daterangepicker/daterangepicker');
 // require('admin-lte/plugins/fastclick/fastclick');
+require('admin-lte/plugins/chart.js/Chart.bundle.min');
 require('admin-lte');
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

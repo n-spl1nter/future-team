@@ -6,6 +6,7 @@ use App\Events\SendMail;
 use App\Notifications\Auth\PasswordResetNotification;
 use App\Notifications\Auth\RegistrationNotification;
 use App\Notifications\Main\MessageToUserNotification;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
@@ -569,5 +570,18 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->status = $this->status == self::STATUS_ACTIVE ? self::STATUS_BLOCKED : self::STATUS_ACTIVE;
         $this->save();
+    }
+
+    /**
+     * Возвращает количество регистраций за последние 30 дней
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getLastMonthUserRegisters()
+    {
+        $query = "COUNT(*) as count, DATE_FORMAT(email_verified_at, '%M %d') as md";
+        return self::select(\DB::raw($query))
+            ->where('email_verified_at', '>=', Carbon::createFromTimestamp(strtotime('today - 30 days')))
+            ->groupBy('md')
+            ->pluck('count', 'md');
     }
 }
