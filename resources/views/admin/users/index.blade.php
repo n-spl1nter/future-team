@@ -10,7 +10,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        Тут будут ссылки с экспортом
+                        <a href="{{ route('admin.users.exportMembers') }}" class="btn btn-primary">Export Members</a>
+                        <a href="{{ route('admin.users.exportCompanies') }}" class="btn btn-outline-primary">Export Companies</a>
                     </div>
                     <div class="box-body">
                         {{ Form::open([

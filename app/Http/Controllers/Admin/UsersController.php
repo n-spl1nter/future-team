@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Entities\Action;
 use App\Entities\Event;
 use App\Entities\User;
+use App\Helpers\Export;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -45,5 +46,65 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         dd($user, $request);
+    }
+
+    public function exportMembers()
+    {
+        $callback = function () {
+            $file = fopen('php://output', 'w');
+            fputs($file, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM
+            fputcsv($file, ['ID', 'Email', 'FullName', 'About', 'Country', 'City', 'Status', 'Crated At']);
+            User::has('profile')
+                ->with(['profile', 'profile.country', 'profile.city'])
+                ->chunk(200, function ($users) use ($file) {
+                /** @var User $user */
+                foreach ($users as $user) {
+                    $fields = [
+                        $user->id,
+                        $user->email,
+                        $user->profile->full_name,
+                        $user->profile->about,
+                        $user->profile->country->title_en,
+                        $user->profile->city->title_en,
+                        $user->status,
+                        $user->created_at,
+                    ];
+                    fputcsv($file, $fields);
+                }
+            });
+            fclose($file);
+        };
+
+        return Export::getExportStream($callback, 'members');
+    }
+
+    public function exportCompanies()
+    {
+        $callback = function () {
+            $file = fopen('php://output', 'w');
+            fputs($file, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM
+            fputcsv($file, ['ID', 'Email', 'FullName', 'Description', 'ContactPersonName', 'Country', 'Status', 'Crated At']);
+            User::has('companyProfile')
+                ->with(['companyProfile', 'companyProfile.country'])
+                ->chunk(200, function ($users) use ($file) {
+                    /** @var User $user */
+                    foreach ($users as $user) {
+                        $fields = [
+                            $user->id,
+                            $user->email,
+                            $user->companyProfile->full_name,
+                            $user->companyProfile->description,
+                            $user->companyProfile->contact_person_name,
+                            $user->companyProfile->country->title_en,
+                            $user->status,
+                            $user->created_at,
+                        ];
+                        fputcsv($file, $fields);
+                    }
+                });
+            fclose($file);
+        };
+
+        return Export::getExportStream($callback, 'companies');
     }
 }
