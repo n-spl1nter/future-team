@@ -27,6 +27,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('action-end:notify')
             ->everyFiveMinutes()
             ->withoutOverlapping();
+        /** Backups */
+        $schedule->command('backup:clean')->weekly()->at('01:00');
+        $schedule->command('backup:run')->daily()->at('03:00');
     }
 
     /**
