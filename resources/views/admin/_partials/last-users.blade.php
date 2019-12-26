@@ -23,7 +23,7 @@
                 @endphp
                 <div style="margin: 0 auto;width: 50px; height: 50px; border-radius: 50%;background: url({{ $avatar }});  background-size: cover; "></div>
                 <a class="users-list-name" href="{{ route('admin.users.view', ['user' => $user->id]) }}">{{ $user->getFullName() }}</a>
-                <span class="users-list-date">{{ $user->email_verified_at->diffForHumans() }}</span>
+                <span class="users-list-date">{{ $user->created_at->diffForHumans() }}</span>
             </li>
             @endforeach
         </ul>
