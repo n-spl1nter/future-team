@@ -22,7 +22,8 @@
         "laravel/socialite": "^4.2",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^6.0",
-        "socialiteproviders/vkontakte": "^4.0"
+        "socialiteproviders/vkontakte": "^4.0",
+        "spatie/laravel-backup": "^6.7"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
