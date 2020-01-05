@@ -29,6 +29,8 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::get('/events/{id}', ['uses' => 'EventsController@view', 'as' => 'events.view']);
     Route::post('/events/{id}/status', ['uses' => 'EventsController@status', 'as' => 'events.setStatus']);
     Route::post('/events/{id}/favorite', ['uses' => 'EventsController@toggleFavoriteStatus', 'as' => 'events.toggleFavoriteStatus']);
+    Route::get('/events/{id}/update', ['uses' => 'EventsController@update', 'as' => 'events.update']);
+    Route::put('/events/{id}/update', ['uses' => 'EventsController@change', 'as' => 'events.change']);
     /** Subscribers */
     Route::get('/subscribers', ['uses' => 'SubscribersController@index', 'as' => 'subscribers.index']);
     Route::get('/subscribers/export', ['uses' => 'SubscribersController@export', 'as' => 'subscribers.export']);

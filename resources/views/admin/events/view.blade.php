@@ -1,7 +1,7 @@
 @php
     /** @var \App\Entities\Event $model */
 @endphp
-@extends('admin.layouts.main', ['title' => 'Событие. ' . $model->name  ])
+@extends('admin.layouts.main', ['title' => 'Event. ' . $model->name  ])
 
 @section('content')
     <div class="card">
@@ -48,7 +48,7 @@
                                         'method' => 'post'
                                     ]) }}
                                     <input type="hidden" value="{{ \App\Entities\Event::ACTIVE }}" name="status">
-                                    <button type="submit" class="btn btn-md btn-danger">Заблокировать</button>
+                                    <button type="submit" class="btn btn-md btn-danger">Block</button>
                                     {{ Form::close() }}
                                 @elseif ($model->status === \App\Entities\Event::BLOCKED)
                                     {{ Form::open([
@@ -56,7 +56,7 @@
                                         'method' => 'post'
                                     ]) }}
                                     <input type="hidden" value="{{ \App\Entities\Event::BLOCKED }}" name="status">
-                                    <button type="submit" class="btn btn-md btn-success">Разблокировать</button>
+                                    <button type="submit" class="btn btn-md btn-success">Unblock</button>
                                     {{ Form::close() }}
                                 @endif
                             </div>
@@ -72,7 +72,7 @@
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-warning">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Дата добавления</span>
+                                    <span class="info-box-text text-center text-muted">Created At</span>
                                     <span
                                         class="info-box-number text-center text-muted mb-0">{{ $model->created_at }}</span>
                                 </div>
@@ -81,7 +81,7 @@
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-warning">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Дата начала</span>
+                                    <span class="info-box-text text-center text-muted">Start At</span>
                                     <span
                                         class="info-box-number text-center text-muted mb-0">{{ $model->start_at->format('Y-m-d') }}</span>
                                 </div>
@@ -90,7 +90,7 @@
                         <div class="col-12 col-sm-4">
                             <div class="info-box bg-warning">
                                 <div class="info-box-content">
-                                    <span class="info-box-text text-center text-muted">Дата окончания</span>
+                                    <span class="info-box-text text-center text-muted">End At</span>
                                     <span
                                         class="info-box-number text-center text-muted mb-0">{{ $model->end_at->format('Y-m-d') }}</span>
                                 </div>

@@ -74,6 +74,10 @@
                                                 <i class="fas fa-folder"></i>
                                                 View
                                             </a>
+                                            <a class="btn btn-success btn-sm" href="{{ route('admin.events.update', ['id' => $model->id]) }}">
+                                                <i class="far fa-edit"></i>
+                                                Edit
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

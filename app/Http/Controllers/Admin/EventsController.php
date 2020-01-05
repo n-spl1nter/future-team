@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Entities\ActivityField;
+use App\Entities\Country;
 use App\Entities\Event;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,6 +21,19 @@ class EventsController extends Controller
         $model = Event::findOrFail($request->route('id'));
 
         return view('admin.events.view', compact('model'));
+    }
+
+    public function update(Request $request)
+    {
+        $model = Event::findOrFail($request->route('id'));
+        $countries = Country::pluck('title_en', 'country_id');
+        $domains = ActivityField::pluck('value_en');
+        return view('admin.events.edit', compact('model', 'countries', 'domains'));
+    }
+
+    public function change(Request $request)
+    {
+        dd($request);
     }
 
     public function status(Request $request)
