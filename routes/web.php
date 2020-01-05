@@ -18,6 +18,7 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::post('/user/{user}/status', ['uses' => 'UsersController@changeStatus', 'as' => 'users.changeStatus', 'middleware' => ['can:manageUsers,App\Entities\User']]);
     Route::get('/user/export/members', ['uses' => 'UsersController@exportMembers', 'as' => 'users.exportMembers', 'middleware' => ['can:manageUsers,App\Entities\User']]);
     Route::get('/user/export/companies', ['uses' => 'UsersController@exportCompanies', 'as' => 'users.exportCompanies', 'middleware' => ['can:manageUsers,App\Entities\User']]);
+    Route::delete('/user/company-member', ['uses' => 'UsersController@removeCompanyMember', 'as' => 'users.removeCompanyMember', 'middleware' => ['can:manageUsers,App\Entities\User']]);
     /** Actions */
     Route::get('/actions', ['uses' => 'ActionsController@index', 'as' => 'actions.index']);
     Route::get('/actions/{id}', ['uses' => 'ActionsController@view', 'as' => 'actions.view']);

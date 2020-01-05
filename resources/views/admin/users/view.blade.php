@@ -79,6 +79,9 @@
                                 <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Timeline</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#actions" data-toggle="tab">Actions({{ $model->actions->count() }})</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#events" data-toggle="tab">Events({{ $model->events->count() }})</a></li>
+                                @if($model->isCompany())
+                                <li class="nav-item"><a class="nav-link" href="#orgmembers" data-toggle="tab">Organization Members({{ $model->organizationMembers()->count() }})</a></li>
+                                @endif
                                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
                             </ul>
                         </div>
@@ -134,6 +137,35 @@
                                         </div>
                                     @endif
                                 </div>
+                                @if($model->isCompany())
+                                <div class="tab-pane" id="orgmembers">
+                                    @if ($model->organizationMembers->count() > 0)
+                                        <div class="list-group">
+                                            @foreach($model->organizationMembers as $member)
+                                                <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <div class="d-flex align-middle">
+                                                            <div class="img-circle mr-2" style="width: 50px;height: 50px;display:inline-block; background: url({{ $member->getAvatar()[1] }}) no-repeat center / cover;"></div>
+                                                            <a class="" href="{{ route('admin.users.view', $member->id) }}">{{ $member->getFullName() }}</a>
+                                                        </div>
+                                                        {{ Form::open([
+                                                            'route' => ['admin.users.removeCompanyMember'],
+                                                            'method' => 'delete',
+                                                        ]) }}
+                                                        <input type="hidden" value="{{ $member->id }}" name="user_id">
+                                                        <button class="btn btn-sm btn-danger" type="submit">Remove</button>
+                                                        {{ Form::close() }}
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="alert alert-warning" role="alert">
+                                            Members not found.
+                                        </div>
+                                    @endif
+                                </div>
+                                @endif
                                 <div class="tab-pane" id="settings">
                                     {{ Form::open([
                                         'route' => ['admin.users.update', $model->id],

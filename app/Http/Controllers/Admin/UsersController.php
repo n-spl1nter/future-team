@@ -43,6 +43,24 @@ class UsersController extends Controller
         return redirect()->route('admin.users.view', $user->id)->with('success', 'User status has been changed');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function removeCompanyMember(Request $request)
+    {
+        $this->validate($request, [
+            'user_id' => 'required|integer',
+        ]);
+
+        $user = User::findOrFail($request->get('user_id'));
+        $user->organization_id = null;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Member has been removed.');
+    }
+
     public function update(Request $request, User $user)
     {
         dd($user, $request);
