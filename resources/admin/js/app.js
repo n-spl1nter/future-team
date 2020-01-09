@@ -22,7 +22,9 @@ $('input').iCheck({
     increaseArea: '20%' /* optional */
 });
 
-$('.select2').select2();
+$('.select2').select2({
+    width: '100%',
+});
 
 $('.datetime-mask').inputmask('datetime', {
     inputFormat: 'yyyy-mm-dd HH:MM:ss',
