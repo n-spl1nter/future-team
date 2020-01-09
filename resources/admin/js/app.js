@@ -24,4 +24,6 @@ $('input').iCheck({
 
 $('.select2').select2();
 
-$('.datetime-mask').inputmask('datetime');
+$('.datetime-mask').inputmask('datetime', {
+    inputFormat: 'yyyy-mm-dd HH:MM:ss',
+});
