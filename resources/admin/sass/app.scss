@@ -4,3 +4,18 @@
 @import "~icheck/skins/all.css";
 @import "~admin-lte/plugins/select2/css/select2.min.css";
 @import "~admin-lte/plugins/chart.js/Chart.min.css";
+@import "~admin-lte/plugins/toastr/toastr.min.css";
+
+body.loading-overlay {
+    &:after {
+        content: '';
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 100500;
+        background-color: #fff;
+        opacity: .5;
+    }
+}

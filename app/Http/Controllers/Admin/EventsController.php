@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Entities\ActivityField;
 use App\Entities\Country;
 use App\Entities\Event;
+use App\Entities\MediaFile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,26 @@ class EventsController extends Controller
         $countries = Country::pluck('title_en', 'country_id');
         $domains = ActivityField::pluck('value_en');
         return view('admin.events.edit', compact('model', 'countries', 'domains'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function uploadNewPhoto(Request $request)
+    {
+        $this->validate($request, [
+            'new_photo' => 'required|image',
+            'entity_id' => 'required|integer',
+        ]);
+
+        $event = Event::findOrFail($request->get('entity_id'));
+        $event->setNewPhoto($request->file('new_photo'));
+
+        $photos = $event->getImages(MediaFile::TYPE_EVENT)->pluck('url')->toArray();
+
+        return response()->json(['photos' => $photos]);
     }
 
     public function change(Request $request)

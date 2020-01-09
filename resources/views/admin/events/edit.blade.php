@@ -85,6 +85,28 @@
                         <h3 class="card-title">Common</h3>
                     </div>
                     <div class="card-body">
+                        <div class="form-group">
+                            <label>Images</label>
+                            <ul class="list-group">
+                                @foreach($model->getImages(\App\Entities\MediaFile::TYPE_EVENT) as $image)
+                                    <li class="list-group-item">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <img src="{{ $image->url[0] }}" alt="" style="max-width: 200px;width: 100%; max-height: 200px">
+                                            <button type="button" class="btn btn-danger main-photo-remove" data-id="{{ $image->id }}">Remove</button>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <div class="mt-2">
+                                <label class="btn btn-success" style="cursor: pointer;">
+                                    <span>Upload new Photo</span>
+                                    <input class="new-photo" id="new_photo_main" type="file" name="new_photo" style="width: 0; height: 0; visibility: hidden;"
+                                           data-url="{{ route('admin.events.newPhoto') }}"
+                                           data-entity_id="{{ $model->id }}"
+                                    >
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

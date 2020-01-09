@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 
 /**
@@ -157,5 +158,10 @@ INNER JOIN _countries ON _countries.country_id = events.country_id WHERE events.
     public function isFavorite(): bool
     {
         return $this->is_main == 1;
+    }
+
+    public function setNewPhoto(UploadedFile $file): void
+    {
+        $this->setImage($file, MediaFile::TYPE_EVENT, 1920, 1280, 100);
     }
 }
