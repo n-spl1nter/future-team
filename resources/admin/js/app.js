@@ -12,6 +12,7 @@ require('select2');
 require('admin-lte/plugins/chart.js/Chart.bundle.min');
 require('admin-lte/plugins/inputmask/jquery.inputmask.bundle');
 require('admin-lte');
+import paths from './paths';
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -24,6 +25,28 @@ $('input').iCheck({
 
 $('.select2').select2({
     width: '100%',
+});
+$('.city-select').select2({
+    width: '100%',
+    minimumInputLength: 2,
+    ajax: {
+        url: paths.v1Cities,
+        delay: 250,
+        data: function ({ term }) {
+            return {
+                value: term,
+                country_id: document.querySelector('[name="country_id"]').value,
+            };
+        },
+        cache: true,
+        processResults: function (data, params) {
+            const results = data.items.map(item => ({
+                text: item.title_en,
+                id: item.city_id,
+            }));
+            return { results };
+        }
+    },
 });
 
 $('.datetime-mask').inputmask('datetime', {

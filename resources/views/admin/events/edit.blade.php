@@ -68,6 +68,14 @@
                             ])
                              }}
                         </div>
+                        <div class="form-group">
+                            <label>City</label>
+                            {{ Form::select('city_id', [$model->city_id => $model->city->title_en], $model->city_id, [
+                                'placeholder' => 'Select City',
+                                'class' => 'form-control city-select',
+                            ])
+                             }}
+                        </div>
                     </div>
                 </div>
             </div>
