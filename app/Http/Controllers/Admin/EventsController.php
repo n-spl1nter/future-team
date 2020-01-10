@@ -7,6 +7,7 @@ use App\Entities\Country;
 use App\Entities\Event;
 use App\Entities\MediaFile;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\EventChangeRequest;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
@@ -67,9 +68,9 @@ class EventsController extends Controller
         return response()->json($mediaFile->deleteWithFiles());
     }
 
-    public function change(Request $request)
+    public function change(EventChangeRequest $request)
     {
-        dd($request);
+
     }
 
     public function status(Request $request)

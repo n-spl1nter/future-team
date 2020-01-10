@@ -76,6 +76,28 @@
                             ])
                              }}
                         </div>
+                        <div class="form-group">
+                            <label>Domains</label>
+                            @foreach($model->domains as $domain)
+                                <div class="d-flex mb-1">
+                                    <input type="text" name="domains[]" class="form-control">
+                                    <button type="button" class="btn-sm btn-danger remove-array-item">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            @endforeach
+                            <div class="d-flex mt-2">
+                                <button class="btn btn-success add-array-item" type="button" data-name="domains[]">Add new domain</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="{{ route('admin.events.index') }}" class="btn btn-primary">{{ __('common.back') }}</a>
+                                <button type="submit" class="btn btn-success">{{ __('common.submit') }}</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,12 +132,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <a href="{{ route('admin.events.index') }}" class="btn btn-primary">{{ __('common.back') }}</a>
-                <button type="submit" class="btn btn-success">{{ __('common.submit') }}</button>
             </div>
         </div>
         {{ Form::close() }}

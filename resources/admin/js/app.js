@@ -142,3 +142,23 @@ $('body').on('click', '.main-photo-remove', function ({ target }) {
         Loading.end();
         });
 });
+
+$('body').on('click', '.remove-array-item', function (ev) {
+    ev.preventDefault();
+    $(this).parent().remove();
+});
+
+$('.add-array-item').on('click', function (ev) {
+    ev.preventDefault();
+    const inputName = ev.target.dataset.name;
+    const html = `
+    <div class="d-flex mb-1">
+        <input type="text" name="${inputName}" class="form-control">
+        <button type="button" class="btn-sm btn-danger remove-array-item">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+    `;
+
+    $(this).parent().before(html);
+});
