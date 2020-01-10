@@ -20,7 +20,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Title</label>
+                            <label>Title (5-255 chars)</label>
                             <input type="text" name="name" value="{{ $model->name }}" class="form-control" placeholder="Title">
                         </div>
                         <div class="form-group">

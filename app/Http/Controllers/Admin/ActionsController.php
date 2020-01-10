@@ -7,6 +7,7 @@ use App\Entities\ActivityField;
 use App\Entities\Country;
 use App\Entities\MediaFile;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ActionUpdateRequest;
 use Illuminate\Http\Request;
 
 class ActionsController extends Controller
@@ -32,9 +33,9 @@ class ActionsController extends Controller
         return view('admin.actions.edit', compact('model', 'countries', 'domains'));
     }
 
-    public function change(Request $request)
+    public function change(ActionUpdateRequest $request)
     {
-        dd($request);
+        $action = Action::findOrFail($request->route('id'));
     }
 
     /**
@@ -49,10 +50,10 @@ class ActionsController extends Controller
             'entity_id' => 'required|integer',
         ]);
 
-        $event = Action::findOrFail($request->get('entity_id'));
-        $event->setNewPhoto($request->file('new_photo'));
+        $action = Action::findOrFail($request->get('entity_id'));
+        $action->setNewPhoto($request->file('new_photo'));
 
-        $photos = $event->getImages(MediaFile::TYPE_EVENT);
+        $photos = $action->getImages(MediaFile::TYPE_EVENT);
 
         return response()->json(['photos' => $photos]);
     }

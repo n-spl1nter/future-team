@@ -26,29 +26,35 @@
                 </div>
                 <div class="col-4">
                     <div class="text-right">
-                        <div class="row">
-                            <div class="col-6">
+                        <div class="d-flex justify-content-between">
                                 {{ Form::open([
                                     'route' => ['admin.events.toggleFavoriteStatus', $model->id],
                                     'method' => 'post'
                                 ]) }}
-                                <button type="submit" class="btn btn-md btn-success">
+                                <button type="submit" class="btn btn-md btn-warning">
                                     @if ($model->isFavorite())
+                                        <i class="fas fa-eye-slash"></i>
                                         Hide from main page
                                     @else
+                                        <i class="fas fa-eye"></i>
                                         Show at main page
                                     @endif
                                 </button>
                                 {{ Form::close() }}
-                            </div>
-                            <div class="col-6">
+                                <a href="{{ route('admin.events.update', $model->id) }}" class="btn btn-success">
+                                    <i class="far fa-edit"></i>
+                                    Edit
+                                </a>
                                 @if($model->status === \App\Entities\Event::ACTIVE)
                                     {{ Form::open([
                                         'route' => ['admin.events.setStatus', $model->id],
                                         'method' => 'post'
                                     ]) }}
                                     <input type="hidden" value="{{ \App\Entities\Event::ACTIVE }}" name="status">
-                                    <button type="submit" class="btn btn-md btn-danger">Block</button>
+                                    <button type="submit" class="btn btn-md btn-danger">
+                                        <i class="fas fa-skull-crossbones"></i>
+                                        Block
+                                    </button>
                                     {{ Form::close() }}
                                 @elseif ($model->status === \App\Entities\Event::BLOCKED)
                                     {{ Form::open([
@@ -56,10 +62,12 @@
                                         'method' => 'post'
                                     ]) }}
                                     <input type="hidden" value="{{ \App\Entities\Event::BLOCKED }}" name="status">
-                                    <button type="submit" class="btn btn-md btn-success">Unblock</button>
+                                    <button type="submit" class="btn btn-md btn-success">
+                                        <i class="fas fa-flag"></i>
+                                        Unblock
+                                    </button>
                                     {{ Form::close() }}
                                 @endif
-                            </div>
                         </div>
                     </div>
                 </div>

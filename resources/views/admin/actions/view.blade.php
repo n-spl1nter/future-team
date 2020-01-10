@@ -26,40 +26,48 @@
                 </div>
                 <div class="col-4">
                     <div class="text-right">
-                        <div class="row">
-                            <div class="col-6">
+                        <div class="d-flex justify-content-between">
                                 {{ Form::open([
                                     'route' => ['admin.actions.toggleFavoriteStatus', $model->id],
                                     'method' => 'post'
                                 ]) }}
                                 <button type="submit" class="btn btn-md btn-success">
                                     @if ($model->isFavorite())
+                                        <i class="fas fa-eye-slash"></i>
                                         Hide from main page
                                     @else
+                                        <i class="fas fa-eye"></i>
                                         Show at main page
                                     @endif
                                 </button>
                                 {{ Form::close() }}
-                            </div>
-                            <div class="col-6">
-                                @if($model->status === \App\Entities\Action::ACTIVE)
-                                    {{ Form::open([
-                                        'route' => ['admin.actions.setStatus', $model->id],
-                                        'method' => 'post'
-                                    ]) }}
-                                    <input type="hidden" value="{{ \App\Entities\Action::ACTIVE }}" name="status">
-                                    <button type="submit" class="btn btn-md btn-danger">Заблокировать</button>
-                                    {{ Form::close() }}
-                                @elseif ($model->status === \App\Entities\Action::BLOCKED)
-                                    {{ Form::open([
-                                        'route' => ['admin.actions.setStatus', $model->id],
-                                        'method' => 'post'
-                                    ]) }}
-                                    <input type="hidden" value="{{ \App\Entities\Action::BLOCKED }}" name="status">
-                                    <button type="submit" class="btn btn-md btn-success">Разблокировать</button>
-                                    {{ Form::close() }}
-                                @endif
-                            </div>
+                            <a href="{{ route('admin.actions.update', $model->id) }}" class="btn btn-success">
+                                <i class="far fa-edit"></i>
+                                Edit
+                            </a>
+                            @if($model->status === \App\Entities\Action::ACTIVE)
+                                {{ Form::open([
+                                    'route' => ['admin.actions.setStatus', $model->id],
+                                    'method' => 'post'
+                                ]) }}
+                                <input type="hidden" value="{{ \App\Entities\Action::ACTIVE }}" name="status">
+                                <button type="submit" class="btn btn-md btn-danger">
+                                    <i class="fas fa-skull-crossbones"></i>
+                                    Block
+                                </button>
+                                {{ Form::close() }}
+                            @elseif ($model->status === \App\Entities\Action::BLOCKED)
+                                {{ Form::open([
+                                    'route' => ['admin.actions.setStatus', $model->id],
+                                    'method' => 'post'
+                                ]) }}
+                                <input type="hidden" value="{{ \App\Entities\Action::BLOCKED }}" name="status">
+                                <button type="submit" class="btn btn-md btn-success">
+                                    <i class="fas fa-flag"></i>
+                                    Unblock
+                                </button>
+                                {{ Form::close() }}
+                            @endif
                         </div>
                     </div>
                 </div>
