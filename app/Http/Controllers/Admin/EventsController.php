@@ -70,7 +70,13 @@ class EventsController extends Controller
 
     public function change(EventChangeRequest $request)
     {
+        $event = Event::findOrFail($request->id);
+        $event->video_links = $request->get('video_links', []);
+        $event->domains = $request->get('domains', []);
+        $event->save();
+        $event->update($request->except(['domains', 'video_links']));
 
+        return redirect()->route('admin.events.view', $request->id)->with('success', 'Event was updated.');
     }
 
     public function status(Request $request)

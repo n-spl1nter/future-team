@@ -28,6 +28,10 @@
                             <textarea name="conditions" cols="30" rows="4" class="form-control" placeholder="Conditions">{{ $model->conditions }}</textarea>
                         </div>
                         <div class="form-group">
+                            <label>Reasons</label>
+                            <textarea name="reasons" cols="30" rows="4" class="form-control" placeholder="Reasons">{{ $model->reasons }}</textarea>
+                        </div>
+                        <div class="form-group">
                             <label>Additional Info</label>
                             <textarea name="additional_info" cols="30" rows="4" class="form-control" placeholder="Additional Info">{{ $model->additional_info }}</textarea>
                         </div>
