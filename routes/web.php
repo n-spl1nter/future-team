@@ -24,6 +24,10 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::get('/actions/{id}', ['uses' => 'ActionsController@view', 'as' => 'actions.view']);
     Route::post('/actions/{id}/status', ['uses' => 'ActionsController@status', 'as' => 'actions.setStatus']);
     Route::post('/actions/{id}/favorite', ['uses' => 'ActionsController@toggleFavoriteStatus', 'as' => 'actions.toggleFavoriteStatus']);
+    Route::get('/actions/{id}/update', ['uses' => 'ActionsController@update', 'as' => 'actions.update']);
+    Route::put('/actions/{id}/update', ['uses' => 'ActionsController@change', 'as' => 'actions.change']);
+    Route::post('/actions/new-photo', ['uses' => 'ActionsController@uploadNewPhoto', 'as' => 'actions.newPhoto']);
+    Route::delete('/actions/photo', ['uses' => 'ActionsController@removePhoto', 'as' => 'actions.removePhoto']);
     /** Events */
     Route::get('/events', ['uses' => 'EventsController@index', 'as' => 'events.index']);
     Route::get('/events/{id}', ['uses' => 'EventsController@view', 'as' => 'events.view']);
