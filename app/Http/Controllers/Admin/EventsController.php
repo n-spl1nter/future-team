@@ -47,9 +47,24 @@ class EventsController extends Controller
         $event = Event::findOrFail($request->get('entity_id'));
         $event->setNewPhoto($request->file('new_photo'));
 
-        $photos = $event->getImages(MediaFile::TYPE_EVENT)->pluck('url')->toArray();
+        $photos = $event->getImages(MediaFile::TYPE_EVENT);
 
         return response()->json(['photos' => $photos]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function removePhoto(Request $request)
+    {
+        $this->validate($request, [
+            'photo_id' => 'required|integer',
+        ]);
+
+        $mediaFile = MediaFile::findOrFail($request->get('photo_id'));
+        return response()->json($mediaFile->deleteWithFiles());
     }
 
     public function change(Request $request)

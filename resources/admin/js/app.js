@@ -13,26 +13,27 @@ require('admin-lte/plugins/chart.js/Chart.bundle.min');
 require('admin-lte/plugins/inputmask/jquery.inputmask.bundle');
 require('admin-lte');
 import paths from './paths';
+
 const toastr = require('admin-lte/plugins/toastr/toastr.min');
 
 window.axios = require('axios');
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common[ 'X-Requested-With' ] = 'XMLHttpRequest';
 toastr.options = {
-    "closeButton": false,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": false,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
+    'closeButton': false,
+    'debug': false,
+    'newestOnTop': false,
+    'progressBar': false,
+    'positionClass': 'toast-top-right',
+    'preventDuplicates': false,
+    'onclick': null,
+    'showDuration': '300',
+    'hideDuration': '1000',
+    'timeOut': '5000',
+    'extendedTimeOut': '1000',
+    'showEasing': 'swing',
+    'hideEasing': 'linear',
+    'showMethod': 'fadeIn',
+    'hideMethod': 'fadeOut'
 };
 
 const Loading = {
@@ -84,6 +85,7 @@ $('.datetime-mask').inputmask('datetime', {
 $('.new-photo').on('change', function ({ target }) {
     const { value } = target;
     const url = target.dataset.url;
+    const deleteUrl = target.dataset.removeUrl;
     const entity_id = target.dataset.entity_id;
     if (!value || !url || !entity_id) {
         return;
@@ -92,7 +94,7 @@ $('.new-photo').on('change', function ({ target }) {
     const formData = new FormData;
     const $photoList = $(this).closest('.form-group').find('.list-group');
     formData.append('entity_id', entity_id);
-    formData.append('new_photo', target.files[0]);
+    formData.append('new_photo', target.files[ 0 ]);
 
     Loading.start();
 
@@ -104,15 +106,39 @@ $('.new-photo').on('change', function ({ target }) {
         let markup = '';
         res.data.photos.forEach(photo => {
             markup += `<li class="list-group-item">
-              <img src="${photo[0]}" alt="" style="max-width: 200px;width: 100%; max-height: 200px">
+              <div class="d-flex justify-content-between align-items-center">
+                  <img src="${photo.url[ 0 ]}" alt="" style="max-width: 200px;width: 100%; max-height: 200px">
+                  <button type="button" class="btn btn-danger main-photo-remove" data-id="${photo.id}" data-url="${deleteUrl}">Remove</button>
+              </div>
             </li>`;
         });
         target.value = null;
         $photoList.html(markup);
         Loading.end();
-        toastr.success("Photo has been upload!", "Success");
+        toastr.success('Photo has been upload!', 'Success');
     }).catch(err => {
-        toastr.error("Something went wrong!", "Error")
+        toastr.error('Something went wrong!', 'Error');
         Loading.end();
     })
+});
+
+$('body').on('click', '.main-photo-remove', function ({ target }) {
+    if(!confirm('Are you sure?')) {
+        return;
+    }
+
+    Loading.start();
+    const url = target.dataset.url;
+    const id = target.dataset.id;
+
+    axios.delete(url, { params: { photo_id: id }, })
+        .then(res => {
+            target.closest('.list-group-item').remove();
+            Loading.end();
+            toastr.success('Photo was deleted!', 'Success');
+        }).catch(() => {
+
+        toastr.error('Something went wrong!', 'Error');
+        Loading.end();
+        });
 });

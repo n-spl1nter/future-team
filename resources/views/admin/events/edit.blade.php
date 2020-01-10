@@ -92,7 +92,7 @@
                                     <li class="list-group-item">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <img src="{{ $image->url[0] }}" alt="" style="max-width: 200px;width: 100%; max-height: 200px">
-                                            <button type="button" class="btn btn-danger main-photo-remove" data-id="{{ $image->id }}">Remove</button>
+                                            <button type="button" class="btn btn-danger main-photo-remove" data-id="{{ $image->id }}" data-url="{{ route('admin.events.removePhoto') }}">Remove</button>
                                         </div>
                                     </li>
                                 @endforeach
@@ -102,6 +102,7 @@
                                     <span>Upload new Photo</span>
                                     <input class="new-photo" id="new_photo_main" type="file" name="new_photo" style="width: 0; height: 0; visibility: hidden;"
                                            data-url="{{ route('admin.events.newPhoto') }}"
+                                           data-remove-url="{{ route('admin.events.removePhoto') }}"
                                            data-entity_id="{{ $model->id }}"
                                     >
                                 </label>

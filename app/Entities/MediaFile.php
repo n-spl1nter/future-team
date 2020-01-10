@@ -48,7 +48,7 @@ class MediaFile extends Model
 
     protected $table = 'media_files';
     protected $fillable = ['path', 'url', 'entity', 'entity_id', 'file_type'];
-    protected $visible = ['url'];
+    protected $visible = ['url', 'id'];
     protected $casts = [
         'path' => 'array',
         'url' => 'array',
@@ -150,9 +150,14 @@ class MediaFile extends Model
         if (!$mediaFile) {
             return;
         }
-        foreach($mediaFile->path as $path) {
+        $mediaFile->deleteWithFiles();
+    }
+
+    public function deleteWithFiles()
+    {
+        foreach($this->path as $path) {
             \Storage::disk('public')->delete($path);
         }
-        $mediaFile->delete();
+        return $this->delete();
     }
 }

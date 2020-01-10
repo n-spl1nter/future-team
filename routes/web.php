@@ -32,6 +32,7 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::get('/events/{id}/update', ['uses' => 'EventsController@update', 'as' => 'events.update']);
     Route::put('/events/{id}/update', ['uses' => 'EventsController@change', 'as' => 'events.change']);
     Route::post('/events/new-photo', ['uses' => 'EventsController@uploadNewPhoto', 'as' => 'events.newPhoto']);
+    Route::delete('/events/photo', ['uses' => 'EventsController@removePhoto', 'as' => 'events.removePhoto']);
     /** Subscribers */
     Route::get('/subscribers', ['uses' => 'SubscribersController@index', 'as' => 'subscribers.index']);
     Route::get('/subscribers/export', ['uses' => 'SubscribersController@export', 'as' => 'subscribers.export']);
