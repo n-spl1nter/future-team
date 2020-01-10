@@ -154,7 +154,7 @@ $('.add-array-item').on('click', function (ev) {
     const html = `
     <div class="d-flex mb-1">
         <input type="text" name="${inputName}" class="form-control">
-        <button type="button" class="btn-sm btn-danger remove-array-item">
+        <button type="button" class="btn-sm btn-danger remove-array-item ml-1">
             <i class="fas fa-trash"></i>
         </button>
     </div>

@@ -139,7 +139,7 @@
                             @foreach($model->video_links as $videoLink)
                                 <div class="d-flex mb-1">
                                     <input type="text" name="video_links[]" class="form-control" value="{{ $videoLink }}">
-                                    <button type="button" class="btn-sm btn-danger remove-array-item">
+                                    <button type="button" class="btn-sm btn-danger remove-array-item ml-1">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
