@@ -80,14 +80,14 @@
                             <label>Domains</label>
                             @foreach($model->domains as $domain)
                                 <div class="d-flex mb-1">
-                                    <input type="text" name="domains[]" class="form-control">
+                                    <input type="text" name="domains[]" class="form-control" value="{{ $domain }}">
                                     <button type="button" class="btn-sm btn-danger remove-array-item">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
                             @endforeach
                             <div class="d-flex mt-2">
-                                <button class="btn btn-success add-array-item" type="button" data-name="domains[]">Add new domain</button>
+                                <button class="btn btn-success add-array-item" type="button" data-name="domains[]">Add</button>
                             </div>
                         </div>
                     </div>
@@ -128,6 +128,20 @@
                                            data-entity_id="{{ $model->id }}"
                                     >
                                 </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Video links</label>
+                            @foreach($model->video_links as $videoLink)
+                                <div class="d-flex mb-1">
+                                    <input type="text" name="video_links[]" class="form-control" value="{{ $videoLink }}">
+                                    <button type="button" class="btn-sm btn-danger remove-array-item">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            @endforeach
+                            <div class="d-flex mt-2">
+                                <button class="btn btn-success add-array-item" type="button" data-name="video_links[]">Add</button>
                             </div>
                         </div>
                     </div>
