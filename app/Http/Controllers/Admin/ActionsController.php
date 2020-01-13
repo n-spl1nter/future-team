@@ -35,7 +35,13 @@ class ActionsController extends Controller
 
     public function change(ActionUpdateRequest $request)
     {
-        $action = Action::findOrFail($request->route('id'));
+        $action = Action::findOrFail($request->id);
+        $action->video_links = $request->get('video_links', []);
+        $action->domains = $request->get('domains', []);
+        $action->save();
+        $action->update($request->except(['domains', 'video_links']));
+
+        return redirect()->route('admin.actions.view', $request->id)->with('success', 'Action was updated.');
     }
 
     /**
