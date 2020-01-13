@@ -9,6 +9,7 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 /**
  * App\Entities\Action
@@ -175,5 +176,10 @@ INNER JOIN _countries ON _countries.country_id = actions.country_id WHERE action
     public function isFavorite(): bool
     {
         return $this->is_main == 1;
+    }
+
+    public function setNewPhoto(UploadedFile $file): void
+    {
+        $this->setImage($file, MediaFile::TYPE_ACTION, 1920, 1280, 100);
     }
 }

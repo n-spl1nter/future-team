@@ -39,7 +39,6 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-clock"></i></span>
                                         </div>
-
                                         <input value="{{ $model->start_at }}" type="text" class="datetime-mask form-control float-right" name="start_at">
                                     </div>
                                 </div>

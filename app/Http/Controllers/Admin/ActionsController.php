@@ -59,7 +59,7 @@ class ActionsController extends Controller
         $action = Action::findOrFail($request->get('entity_id'));
         $action->setNewPhoto($request->file('new_photo'));
 
-        $photos = $action->getImages(MediaFile::TYPE_EVENT);
+        $photos = $action->getImages(MediaFile::TYPE_ACTION);
 
         return response()->json(['photos' => $photos]);
     }
