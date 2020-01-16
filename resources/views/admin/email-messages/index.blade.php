@@ -27,9 +27,9 @@
                                     <tr>
                                         <td>{{ $model->id }}</td>
                                         <td>
-                                            <a href="{{ route('admin.users.view', $model->userFrom->id) }}" class="d-flex align-items-center">
+                                            <a href="{{ route('admin.users.view', $model->userFrom->id) }}" class="d-flex align-items-center justify-content-start">
                                                 @if ($model->userFrom->getAvatar())
-                                                    <span class="profile-user-img img-fluid img-circle" style="background-image: url({{ $model->userFrom->getAvatar()[1] }});background-size:cover; height: 100px;"></span>
+                                                    <span class="profile-user-img img-fluid img-circle" style="background-image: url({{ $model->userFrom->getAvatar()[1] }});background-size:cover; height: 100px;margin: 0;"></span>
                                                 @endif
                                                 <span class="ml-1">
                                                     {{ $model->userFrom->getFullName() }}
@@ -37,9 +37,9 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.users.view', $model->userTo->id) }}" class="d-flex align-items-center">
+                                            <a href="{{ route('admin.users.view', $model->userTo->id) }}" class="d-flex align-items-center justify-content-start">
                                                 @if ($model->userTo->getAvatar())
-                                                    <span class="profile-user-img img-fluid img-circle" style="background-image: url({{ $model->userTo->getAvatar()[1] }});background-size:cover; height: 100px;"></span>
+                                                    <span class="profile-user-img img-fluid img-circle" style="background-image: url({{ $model->userTo->getAvatar()[1] }});background-size:cover; height: 100px;margin: 0;"></span>
                                                 @endif
                                                 <span class="ml-1">
                                                 {{ $model->userTo->getFullName() }}
