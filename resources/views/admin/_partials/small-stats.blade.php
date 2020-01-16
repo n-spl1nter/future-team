@@ -34,7 +34,7 @@
         <!-- small card -->
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>{{ $userRegisteredTodayCount }}</h3>
+                <h3>{{ $eventsCreatedTodayCount }}</h3>
                 <p>events were created today</p>
             </div>
             <div class="icon">
