@@ -16,10 +16,10 @@ class HomeController extends Controller
     {
         $lastUsers = User::orderByDesc('created_at')->limit(8)->get();
         $monthlyRegisters = User::getLastMonthUserRegisters();
-        $messagesSentTodayCount = EmailMessage::where('created_at', '>', Carbon::today())->count();
-        $userRegisteredTodayCount = User::where('created_at', '>', Carbon::today())->count();
-        $eventsCreatedTodayCount = Event::where('created_at', '>', Carbon::today())->count();
-        $actionsCreatedTodayCount = Action::where('created_at', '>', Carbon::today())->count();
+        $messagesSentTodayCount = EmailMessage::where('created_at', '>=', Carbon::today())->count();
+        $userRegisteredTodayCount = User::where('created_at', '>=', Carbon::today())->count();
+        $eventsCreatedTodayCount = Event::where('created_at', '>=', Carbon::today())->count();
+        $actionsCreatedTodayCount = Action::where('created_at', '>=', Carbon::today())->count();
         return view('admin.home', compact(
             'monthlyRegisters',
             'lastUsers',
