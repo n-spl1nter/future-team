@@ -15,7 +15,7 @@ class UsersSeeder extends Seeder
         $user = new User();
         $user->email = 'admin@admin.ru';
         $user->email_verified_at = now();
-        $user->password = Hash::make('admin123');
+        $user->password = Hash::make('f7%cH@lhP6o2b'); //$2y$10$ml89fhmN8Vg4pFSQZe97NOeXDkyrYwM/W08OtWqlH139odLS6Td6e
         $user->setRole(\App\RBAC\Role::ADMIN);
         $user->save();
     }
