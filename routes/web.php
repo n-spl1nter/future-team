@@ -46,6 +46,9 @@ Route::group(['prefix' => '/admin', '', 'as' => 'admin.', 'namespace' => 'Admin'
     Route::resource('sliderPhotos', 'SliderPhotosController');
     /** Main news */
     Route::get('/main-news', ['uses' => 'HomeController@mainNews', 'as' => 'mainNews']);
+    /** Messages */
+    Route::get('/email-messages', ['uses' => 'EmailMessagesController@index', 'as' => 'emailMessages.index']);
+    Route::get('/email-messages/{emailMessage}', ['uses' => 'EmailMessagesController@view', 'as' => 'emailMessages.view']);
 });
 
 Route::group(['middleware' => ['guest']], function () {

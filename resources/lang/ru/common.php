@@ -17,6 +17,9 @@ return [
     'events' => [
         'name' => 'События',
     ],
+    'messages' => [
+        'name' => 'Сообщения',
+    ],
     'subscribers' => [
         'name' => 'Подписчики',
     ],

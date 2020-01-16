@@ -17,6 +17,9 @@ return [
     'events' => [
         'name' => 'Events',
     ],
+    'messages' => [
+        'name' => 'Messages',
+    ],
     'subscribers' => [
         'name' => 'Subscribers',
     ],
