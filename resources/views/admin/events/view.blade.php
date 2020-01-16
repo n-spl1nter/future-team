@@ -207,7 +207,7 @@
         <div class="card-footer">
             <div class="text-right">
                 <a href="{{ route('admin.events.index') }}" class="btn btn-md btn-primary">
-                    Назад
+                    Back
                 </a>
             </div>
         </div>

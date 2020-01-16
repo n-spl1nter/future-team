@@ -16,6 +16,6 @@ class EmailMessagesController extends Controller
 
     public function view(EmailMessage $emailMessage)
     {
-        dd($emailMessage);
+        return view('admin.email-messages.view', ['model' => $emailMessage]);
     }
 }
