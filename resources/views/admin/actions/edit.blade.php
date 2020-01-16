@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Title (5-255 chars)</label>
-                            <input type="text" name="name" value="{{ $model->name }}" class="form-control" placeholder="Title">
+                            <input type="text" name="name" value="{{ $model->name }}" class="form-control" placeholder="Title" data-maxlength="255">
                         </div>
                         <div class="form-group">
                             <label>About</label>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="form-group">
                             <label>Success secret</label>
-                            <textarea name="success_secret" cols="30" rows="4" class="form-control" placeholder="Success secret">{{ $model->reasons }}</textarea>
+                            <textarea name="success_secret" cols="30" rows="4" class="form-control" placeholder="Success secret" data-maxlength="400">{{ $model->reasons }}</textarea>
                         </div>
                         <div class="row">
                             <div class="col-6">

@@ -1,19 +1,12 @@
-global.$ = global.jQuery = require('jquery');
+global.$ = global.jQuery = window.jQuery = window.$ = require('jquery');
 require('bootstrap');
 require('icheck');
 require('select2');
-// require('admin-lte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker');
-// require('admin-lte/plugins/bootstrap-slider/bootstrap-slider');
-// require('admin-lte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox');
-// require('admin-lte/plugins/chart.js/Chart');
-// require('admin-lte/plugins/datatables/dataTables.bootstrap4');
-// require('admin-lte/plugins/daterangepicker/daterangepicker');
-// require('admin-lte/plugins/fastclick/fastclick');
 require('admin-lte/plugins/chart.js/Chart.bundle.min');
 require('admin-lte/plugins/inputmask/jquery.inputmask.bundle');
 require('admin-lte');
 import paths from './paths';
-
+import './maxlength';
 const toastr = require('admin-lte/plugins/toastr/toastr.min');
 
 window.axios = require('axios');

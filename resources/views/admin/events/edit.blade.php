@@ -21,23 +21,23 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Title (5-255 chars)</label>
-                            <input type="text" name="name" value="{{ $model->name }}" class="form-control" placeholder="Title">
+                            <input type="text" name="name" value="{{ $model->name }}" class="form-control" placeholder="Title" data-maxlength="255">
                         </div>
                         <div class="form-group">
                             <label>Conditions</label>
-                            <textarea name="conditions" cols="30" rows="4" class="form-control" placeholder="Conditions">{{ $model->conditions }}</textarea>
+                            <textarea name="conditions" cols="30" rows="4" class="form-control" placeholder="Conditions" data-maxlength="1000">{{ $model->conditions }}</textarea>
                         </div>
                         <div class="form-group">
                             <label>Reasons</label>
-                            <textarea name="reasons" cols="30" rows="4" class="form-control" placeholder="Reasons">{{ $model->reasons }}</textarea>
+                            <textarea name="reasons" cols="30" rows="4" class="form-control" placeholder="Reasons" data-maxlength="400">{{ $model->reasons }}</textarea>
                         </div>
                         <div class="form-group">
                             <label>Additional Info</label>
-                            <textarea name="additional_info" cols="30" rows="4" class="form-control" placeholder="Additional Info">{{ $model->additional_info }}</textarea>
+                            <textarea name="additional_info" cols="30" rows="4" class="form-control" placeholder="Additional Info" data-maxlength="1000">{{ $model->additional_info }}</textarea>
                         </div>
                         <div class="form-group">
                             <label>Contact Data</label>
-                            <input type="text" name="contact_data" value="{{ $model->contact_data }}" class="form-control" placeholder="Contact Data">
+                            <input type="text" name="contact_data" value="{{ $model->contact_data }}" class="form-control" placeholder="Contact Data" data-maxlength="255">
                         </div>
                         <div class="row">
                             <div class="col-6">
