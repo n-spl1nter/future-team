@@ -1,6 +1,7 @@
 @extends('admin.layouts.main', ['title' => 'Admin panel'])
 
 @section('content')
+    @include('admin._partials.small-stats')
     <div class="row">
         <div class="col-5">
             @include('admin._partials.last-users')
