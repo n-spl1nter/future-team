@@ -29,7 +29,7 @@
                         </div>
                         <div class="form-group">
                             <label>Success secret</label>
-                            <textarea name="success_secret" cols="30" rows="4" class="form-control" placeholder="Success secret" data-maxlength="400">{{ $model->reasons }}</textarea>
+                            <textarea name="success_secret" cols="30" rows="4" class="form-control" placeholder="Success secret" data-maxlength="400">{{ $model->success_secret }}</textarea>
                         </div>
                         <div class="row">
                             <div class="col-6">
