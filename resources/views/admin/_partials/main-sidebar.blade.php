@@ -12,8 +12,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
+                @if(Auth::user()->getAvatar())
                 <div style="background: url({{ Auth::user()->getAvatar()[1] }}) no-repeat center / cover; width: 40px;height: 40px;"
                      class="img-circle elevation-2"></div>
+                @endif
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ Auth::user()->email }}</a>
