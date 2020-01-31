@@ -6,8 +6,8 @@ services:
       context: ./docker/nginx
     restart: always
     volumes:
-      - ./:${APP_PATH_CONTAINER}
-      - ./docker/nginx/ssl:/etc/nginx/ssl
+      - ./:${APP_PATH_CONTAINER}:cached
+      - ./docker/nginx/ssl:/etc/nginx/ssl:cached
     ports:
       - 8080:80
       - 443:443
@@ -20,9 +20,18 @@ services:
       context: ./docker/web
     restart: always
     volumes:
-      - ./:${APP_PATH_CONTAINER}
+      - ./:${APP_PATH_CONTAINER}:cached
       - ~/.composer/docker-cache/:/root/.composer:cached
     working_dir: ${APP_PATH_CONTAINER}
+
+  node:
+    image: node:12.14.1
+    tty: true
+    volumes:
+      - ./:${APP_PATH_CONTAINER}:cached
+    working_dir: ${APP_PATH_CONTAINER}
+    ports:
+      - 3000:80
 
   db:
     image: mariadb
@@ -30,7 +39,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ${DB_PATH_HOST}:/var/lib/mysql
+      - ${DB_PATH_HOST}:/var/lib/mysql:cached
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
