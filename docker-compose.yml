@@ -1,15 +1,27 @@
-version: '3.7'
+version: '3'
 
 services:
+  nginx:
+    build:
+      context: ./docker/nginx
+    restart: always
+    volumes:
+      - ./:${APP_PATH_CONTAINER}
+      - ./docker/nginx/ssl:/etc/nginx/ssl
+    ports:
+      - 8080:80
+      - 443:443
+    links:
+      - web
+    command: ["nginx", "-g", "daemon off;"]
+
   web:
     build:
       context: ./docker/web
-    environment:
-      - APACHE_RUN_USER=#1000
+    restart: always
     volumes:
       - ./:${APP_PATH_CONTAINER}
-    ports:
-      - 8080:80
+      - ~/.composer/docker-cache/:/root/.composer:cached
     working_dir: ${APP_PATH_CONTAINER}
 
   db:
