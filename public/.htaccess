@@ -6,7 +6,7 @@
     Header unset X-Powered-By
 
     RewriteEngine On
-	
+
 	<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif|html|htm|xml|txt|xsl|css|woff2|woff|ttf|svg)$">
 		Header set Cache-Control "max-age=31536040"
 		Header set Access-Control-Allow-Origin "*"
