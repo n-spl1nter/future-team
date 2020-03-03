@@ -47,6 +47,7 @@ return [
     'userShouldBeACompany' => 'Пользовтаель должен быть компанией.',
     'userShouldNotBeACompany' => 'Пользовтаель не должен быть компанией.',
     'AlreadyHasProfile' => 'Пользоватаель уже имеет профиль.',
+    'NeedToFillProfile' => 'Необходимо войти через соц. сеть и заполнить профиль.',
 
     'MessageFromFutureTeamService' => 'Сообщение от пользователя Future Team',
     'YouHaveANewMessageFrom' => 'У вас новое сообщение от',
