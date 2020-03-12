@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 /**
- * @OA\Server(url="http://futureteam.local/api/v1")
+ * @OA\Server(url="https://localhost/api/v1")
  * @OA\Server(url="https://ft.crazy-dev.ru/api/v1")
  * @OA\Server(url="https://noreply.futureteam.world/api/v1")
  * @OA\Info(

@@ -39,10 +39,14 @@ class PasswordResetController extends Controller
     {
         $user = User::whereEmail($request->get('email'))->first();
         if ($user) {
+            if (!$user->hasFilledProfile()) {
+                return response()->json(['errors' => [__('common.PleaseLogInVIASocialNetwork')]], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
             Password::broker()->sendResetLink($request->only(['email']));
+            return response()->json();
         }
 
-        return response()->json();
+        return response()->json(['errors' => [__('common.userNotFound')]], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**

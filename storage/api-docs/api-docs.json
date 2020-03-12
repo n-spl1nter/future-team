@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://futureteam.local/api/v1"
+            "url": "https://localhost/api/v1"
         },
         {
             "url": "https://ft.crazy-dev.ru/api/v1"

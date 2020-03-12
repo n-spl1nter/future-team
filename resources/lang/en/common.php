@@ -46,6 +46,9 @@ return [
     'userShouldNotBeACompany' => 'User shouldn\'t be a company',
     'AlreadyHasProfile' => 'User already has profile',
     'NeedToFillProfile' => 'Enter via social network and fill your profile.',
+    'PleaseLogInVIASocialNetwork' => 'You logged in using your social media account, but haven\'t completed the '
+        . 'registration process. Please, log in via social media account once again and complete the registration.',
+    'userNotFound' => 'User not found',
 
     'MessageFromFutureTeamService' => 'Message from Future Team service user',
     'YouHaveANewMessageFrom' => 'You have a new message from',
